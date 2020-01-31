@@ -1,0 +1,32 @@
+body{
+  /*min-width: 1000px; test some time later*/
+}
+
+a{
+  text-decoration: none;
+  color: #000000;
+}
+
+.navbar{
+  width: 100%;
+  height: 50px;
+  background-color: #FF0000; /*test color*/
+  text-align: center;
+  line-height: 50px;
+  box-shadow: 2px 2px 2px #000000;
+  border-radius: 10px 10px;
+}
+
+.navbar-item{
+  width: 18%;
+  height: 100%;
+  cursor: pointer;
+  color: #000000; /*test color*/
+  display: inline-block;
+  /*border-radius: 10px 10px;*/
+}
+
+.navbar-item:hover{
+  background-color: #FFFF33; /*test color*/
+  transition: 0.5s;
+}
