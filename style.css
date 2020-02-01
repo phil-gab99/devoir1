@@ -1,3 +1,5 @@
+/*Vincent Falardeau, Munkhbat Enkhmenkh, Philippe Gabriel*/
+
 body{
   /*min-width: 1000px; test some time later*/
 }
@@ -43,13 +45,13 @@ p{
 .navbar-item:hover{
   background-color: #86c9eb; /*test color*/
   transition: 0.4s;
-  color: black;
+  color: #000000;
 }
 
 .navbar-item-main:hover{
   background-color: transparent;
   font-size: +1.6em;
-  color: #86c9eb;
+  color: #000000;
   /* font-weight: bolder; */
   /* color: red; */
 }
