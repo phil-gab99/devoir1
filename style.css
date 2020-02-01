@@ -43,7 +43,7 @@ p{
 }
 
 .navbar-item:hover{
-  background-color: #86c9eb; /*test color*/
+  /*background-color: #0b73a8; /*test color*/
   transition: 0.4s;
   color: #000000;
 }
@@ -54,6 +54,14 @@ p{
   color: #000000;
   /* font-weight: bolder; */
   /* color: red; */
+}
+
+.image{
+ display: block;
+ margin-left: auto;
+ margin-right: auto;
+ margin-top: 10px;
+ width: 80%;
 }
 
 .content{
