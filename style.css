@@ -46,7 +46,8 @@ tr:nth-child(even) {
 .navbar{
   width: 100%;
   height: 50px;
-  background-color: #cc0000; /*test color*/
+  /*background-color: #cc0000; /*test color*/
+  background-color: rgba(0, 82, 155, 255);
   text-align: center;
   line-height: 50px;
   box-shadow: 2px 2px 2px #000000;
@@ -79,7 +80,7 @@ tr:nth-child(even) {
 .navbar-item:hover{
   /*background-color: #0b73a8; /*test color*/
   transition: 0.4s;
-  color: blue;
+  color: rgba(238, 58, 67, 255);
 }
 
 .navbar-item-main:hover{
