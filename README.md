@@ -1,2 +1,2 @@
 # ExpoMontreal
-Brief history of some Quebecors
+Brief history of some Les Expos de Montreal
