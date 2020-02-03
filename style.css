@@ -5,6 +5,7 @@
 body{
   margin: 0;
   padding-top: 50px;
+  padding-bottom: 200px;
   /*Pour que le contenu ne se retourve pas sous la navbar quand on est au plus haut de la page*/
   /*min-width: 1000px; test some time later*/
 }
@@ -19,6 +20,7 @@ p{
 }
 
 table{
+  width: 80%;
   margin-left: auto;
   margin-right: auto;
 }
