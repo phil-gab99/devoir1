@@ -77,6 +77,11 @@ tr:nth-child(even) {
   width: 15%;
 }
 
+.navbar-item-logo{
+  width: 5%;
+  float: left;
+}
+
 .navbar-item:hover{
   /*background-color: #0b73a8; /*test color*/
   transition: 0.4s;
@@ -97,6 +102,11 @@ tr:nth-child(even) {
  margin-right: auto;
  margin-top: 10px;
  width: 80%;
+}
+
+.logo{
+  height: 100%;
+  margin-right: 15px;
 }
 
 .content{
