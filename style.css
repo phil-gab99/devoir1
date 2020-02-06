@@ -68,7 +68,7 @@ tr:nth-child(even) {
   margin-left: 30px;
   height: 100%;
   cursor: pointer;
-  color: #ffff99; /*test color*/
+  color: #ffffff; /*test color*/
   /* background-image: linear-gradient(.25turn, #0c85c2, #86c9eb); */
   display: inline-block;
   /*border-radius: 10px 10px;*/
