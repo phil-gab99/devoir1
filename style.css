@@ -9,6 +9,7 @@ body{
   /*Pour que le contenu ne se retourve pas sous la navbar quand on est au plus
   haut de la page*/
   /*min-width: 1000px; test some time later*/
+  min-width: 1200px;
 }
 
 a{
@@ -62,6 +63,7 @@ tr:nth-child(even) {
   top: 0;
 /*  overflow: hidden;
   display: block;*/
+  min-width: 1200px;
 }
 
 .navbar-item{
@@ -72,6 +74,8 @@ tr:nth-child(even) {
   /* background-image: linear-gradient(.25turn, #0c85c2, #86c9eb); */
   display: inline-block;
   /*border-radius: 10px 10px;*/
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .navbar-item-main{
