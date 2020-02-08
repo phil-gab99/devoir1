@@ -9,7 +9,7 @@ body{
   /*Pour que le contenu ne se retourve pas sous la navbar quand on est au plus
   haut de la page*/
   /*min-width: 1000px; test some time later*/
-  min-width: 1200px;
+  min-width: 1315px;
 }
 
 a{
@@ -59,11 +59,10 @@ tr:nth-child(even) {
   /*border-radius: 10px 10px;*/
   font-size: 125%;
   font-family: Arial, Verdana, sans-serif;
-  position: fixed;
+  position: sticky;
   top: 0;
-/*  overflow: hidden;
-  display: block;*/
-  min-width: 1200px;
+  min-width: 1315px;
+
 }
 
 .navbar-item{
@@ -71,7 +70,6 @@ tr:nth-child(even) {
   height: 100%;
   cursor: pointer;
   color: #ffffff; /*test color*/
-  /* background-image: linear-gradient(.25turn, #0c85c2, #86c9eb); */
   display: inline-block;
   /*border-radius: 10px 10px;*/
   padding-left: 10px;
@@ -108,12 +106,22 @@ tr:nth-child(even) {
   /* color: red; */
 }
 
+.somename{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  height: 250px;
+  position: static;
+}
+
 .image{
  display: block;
  margin-left: auto;
  margin-right: auto;
  margin-top: 10px;
- width: 80%;
+ width: 60%;
+ border: 2px dashed blue;
 }
 
 .logo{
