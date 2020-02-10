@@ -2,15 +2,10 @@
 
 @charset “UTF-8”;
 
-
 body{
   margin: 0;
   min-width: 1315px;
-}
-
-a{
-  text-decoration: none;
-  color: #000000;
+  font-family: sans-serif;
 }
 
 table{
@@ -19,78 +14,59 @@ table{
   border-collapse: collapse;
 }
 
+article {
+  text-align: justify;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  line-height: 30px;  
+}
+
+table th h1{
+  text-align: center;
+}
+
 th{
   width: 10%;
+}
+
+th, td{
+  text-align: left;
+  padding: 8px;
+  border: solid black 1px;
 }
 
 tr:nth-child(even) {
   background-color: #D9D9D9;
 }
 
-tr:not(:first-child):hover {
-  font-weight: 700;
-  background-color: #00ffff;
+tr:nth-child(1n+3):hover {
+  font-weight: bold;
+  background-color: #00FFFF;
   box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.5);
-}
-
-th, td{
-  text-align: left;
-  padding: 8px;
-  border: solid #000000 1px;
-}
-
-article {
-  text-align: justify;
-}
-
-footer {
-  font-size: 80%;
-}
-
-li:hover {
-  font-weight: 550;
-}
-
-.highlight {
-  color: #0000ee;
-}
-
-a.highlight:hover {
-  text-decoration: underline;
-}
-
-a.highlight:visited {
-  color: #551a8b;
-}
-
-a.highlight:active {
-  color: #ee0000;
-}
-
-.table-title{
-  text-align: center;
 }
 
 .navbar{
   width: 100%;
   height: 50px;
-  /*background-color: #cc0000; /*test color*/
   background-color: rgba(0, 82, 155, 255);
   text-align: center;
   line-height: 50px;
   box-shadow: 2px 2px 2px #000000;
   font-size: 125%;
-  font-family: Arial, Verdana, sans-serif;
   position: sticky;
   top: 0;
   min-width: 1315px;
+}
+
+.navbar a{
+  text-decoration: none;
+  color: white;
 }
 
 .navbar-item{
   margin-left: 30px;
   height: 100%;
   cursor: pointer;
-  color: #ffffff;
   display: inline-block;
   padding-left: 10px;
   padding-right: 10px;
@@ -106,6 +82,12 @@ a.highlight:active {
 .navbar-item-logo{
   width: 5%;
   float: left;
+  margin-right: 15px;
+  height: 100%;
+}
+
+.navbar-item-logo img{
+  height: 100%;
 }
 
 .navbar-item-current{
@@ -117,34 +99,17 @@ a.highlight:active {
   color: rgba(238, 58, 67, 255);
 }
 
-.navbar-item-main:hover{
-  font-size: +1.6em;
+.content{
+  margin-right: 250px;
+  margin-left: 250px;
+  margin-bottom: 300px;
 }
 
-.header-img{
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
-  position: static;
-}
-
-.img{
+.content-img{
  display: block;
  margin-left: auto;
  margin-right: auto;
  margin-top: 10px;
  width: 60%;
  border: 2px dashed blue;
-}
-
-.logo{
-  height: 100%;
-  margin-right: 15px;
-}
-
-.content{
-  margin-right: 150px;
-  margin-left: 150px;
-  margin-bottom: 200px;
 }
