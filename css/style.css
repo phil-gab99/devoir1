@@ -113,3 +113,6 @@ nav a{
  width: 60%;
  max-width: 1000px;
 }
+.content-img img{
+  width: 100%;
+}
