@@ -8,6 +8,10 @@ body{
   font-family: sans-serif;
 }
 
+i{
+  font-size: 80%;
+}
+
 table{
   width: 100%;
   margin-top: 10px;
@@ -40,7 +44,6 @@ tr:nth-child(even) {
 }
 
 tr:nth-child(1n+3):hover {
-  font-weight: bold;
   background-color: #00FFFF;
   box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.5);
 }
@@ -106,12 +109,14 @@ nav a{
 }
 
 .content-img{
- display: block;
- float: left;
- margin-right: 30px;
- margin-top: 10px;
- width: 60%;
- max-width: 1000px;
+  display: block;
+  float: left;
+  margin-right: 30px;
+  margin-top: 10px;
+  width: 40%;
+  max-width: 1000px;
+  border-style: ridge;
+  padding: 10px;
 }
 .content-img img{
   width: 100%;
