@@ -1,6 +1,6 @@
-/*Vincent Falardeau, Philippe Gabriel*/
+@charset "UTF-8";
 
-@charset “UTF-8”;
+/*Vincent Falardeau, Philippe Gabriel*/
 
 body{
     margin: 0;
@@ -9,7 +9,7 @@ body{
 }
 
 h1{
-    text-align: center; 
+    text-align: center;
 }
 
 i{
