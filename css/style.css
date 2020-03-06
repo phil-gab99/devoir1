@@ -85,6 +85,10 @@ fieldset *{
     padding: 10px;
 }
 
+select *{
+    float: right;
+}
+
 .navbar-item{
     margin-left: 30px;
     height: 100%;
