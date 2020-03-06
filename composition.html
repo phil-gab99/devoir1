@@ -38,7 +38,7 @@
             <br>
             <h1>Composition des équipes</h1>
             <br>
-            <form>
+            <form action="/rec_formul.php" method="get">
                 <fieldset>
                     <label>
                         <select name="year">
@@ -85,12 +85,45 @@
                     <label><input type="checkbox" name="throwers">Lanceurs</label>
                     <label><input type="checkbox" name="manager">Gérant</label>
                     <label><input type="checkbox" name="assistance">Assistance</label>
-                    <label><input type="checkbox" name="salaries">Masse salariale</label>
+                    <label><input type="checkbox" name="salaryMass">Masse salariale</label>
                 </fieldset>
+                <br>
+                <button type="submit">Filtrer</button>
+                <br>
             </form>
-            <table>
+            <br>
+             <fieldset>
+                <label id="managerLbl"><b>Gérant:</b> Anne</label>
+                <label id="assistanceLbl"><b>Assistance:</b> Rick</label>
+                <label id="salaryMassLbl"><b>Masse salariale:</b> 2 000 000</label>
+            </fieldset>
+            <h2>Joueurs</h2>
+            <h3>Statistiques</h3>
+            <form action="/rec_formul.php" method="get">
+                <fieldset>
+                    Offensive:
+                    <label><input type="checkbox" name="fieldPlayers">Joueurs de champ</label>
+                    <label><input type="checkbox" name="throwers">Lanceurs</label>
+                    <label><input type="checkbox" name="manager">Gérant</label>
+                    <label><input type="checkbox" name="assistance">Assistance</label>
+                    <label><input type="checkbox" name="salaryMass">Masse salariale</label>
+                </fieldset>
+                <br>
+                <fieldset>
+                    Défensive
+                    <label><input type="checkbox" name="fieldPlayers">Joueurs de champ</label>
+                    <label><input type="checkbox" name="throwers">Lanceurs</label>
+                    <label><input type="checkbox" name="manager">Gérant</label>
+                    <label><input type="checkbox" name="assistance">Assistance</label>
+                    <label><input type="checkbox" name="salaryMass">Masse salariale</label>
+                    
+                </fieldset>
+                <br>
+                <button type="submit">Filtrer</button>
+                <br>
+            </form>
+            <table id="players">
                 <tr>
-                    <th>Équipe</th>
                     <th>Nom</th>
                     <th>Prénom</th>
                     <th>Numéro</th>
@@ -109,7 +142,6 @@
                     <td>Bonjour</td>
                     <td></td>
                     <td>Ok</td>
-                    <td>Test</td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -121,7 +153,6 @@
                     <td>Bonjour</td>
                     <td></td>
                     <td>Ok</td>
-                    <td>Test</td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -133,7 +164,6 @@
                     <td>Bonjour</td>
                     <td></td>
                     <td>Ok</td>
-                    <td>Test</td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -145,7 +175,6 @@
                     <td>Bonjour</td>
                     <td></td>
                     <td>Ok</td>
-                    <td>Test</td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -157,7 +186,6 @@
                     <td>Bonjour</td>
                     <td></td>
                     <td>Ok</td>
-                    <td>Test</td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -169,7 +197,6 @@
                     <td>Bonjour</td>
                     <td></td>
                     <td>Ok</td>
-                    <td>Test</td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -181,7 +208,6 @@
                     <td>Bonjour</td>
                     <td></td>
                     <td>Ok</td>
-                    <td>Test</td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -193,7 +219,6 @@
                     <td>Bonjour</td>
                     <td></td>
                     <td>Ok</td>
-                    <td>Test</td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -205,7 +230,6 @@
                     <td>Bonjour</td>
                     <td></td>
                     <td>Ok</td>
-                    <td>Test</td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -217,7 +241,6 @@
                     <td>Bonjour</td>
                     <td></td>
                     <td>Ok</td>
-                    <td>Test</td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -229,7 +252,6 @@
                     <td>Bonjour</td>
                     <td></td>
                     <td>Ok</td>
-                    <td>Test</td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -241,7 +263,6 @@
                     <td>Bonjour</td>
                     <td></td>
                     <td>Ok</td>
-                    <td>Test</td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -253,7 +274,6 @@
                     <td>Bonjour</td>
                     <td></td>
                     <td>Ok</td>
-                    <td>Test</td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -265,7 +285,6 @@
                     <td>Bonjour</td>
                     <td></td>
                     <td>Ok</td>
-                    <td>Test</td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -277,7 +296,6 @@
                     <td>Bonjour</td>
                     <td></td>
                     <td>Ok</td>
-                    <td>Test</td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -289,7 +307,6 @@
                     <td>Bonjour</td>
                     <td></td>
                     <td>Ok</td>
-                    <td>Test</td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -301,7 +318,6 @@
                     <td>Bonjour</td>
                     <td></td>
                     <td>Ok</td>
-                    <td>Test</td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -313,7 +329,6 @@
                     <td>Bonjour</td>
                     <td></td>
                     <td>Ok</td>
-                    <td>Test</td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -325,7 +340,6 @@
                     <td>Bonjour</td>
                     <td></td>
                     <td>Ok</td>
-                    <td>Test</td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -337,7 +351,6 @@
                     <td>Bonjour</td>
                     <td></td>
                     <td>Ok</td>
-                    <td>Test</td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -349,7 +362,251 @@
                     <td>Bonjour</td>
                     <td></td>
                     <td>Ok</td>
-                    <td>Test</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+            <h2>Lanceurs</h2>
+            <table id="throwers">
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Numéro</th>
+                    <th>Victoires</th>
+                    <th>Défaites</th>
+                    <th>Coups de circuit</th>
+                    <th>Autre</th>
+                    <th>Chose</th>
+                    <th>Ok</th>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Ayoye</td>
+                    <td></td>
+                    <td></td>
+                    <td>Bonjour</td>
+                    <td></td>
+                    <td>Ok</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Ayoye</td>
+                    <td></td>
+                    <td></td>
+                    <td>Bonjour</td>
+                    <td></td>
+                    <td>Ok</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Ayoye</td>
+                    <td></td>
+                    <td></td>
+                    <td>Bonjour</td>
+                    <td></td>
+                    <td>Ok</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Ayoye</td>
+                    <td></td>
+                    <td></td>
+                    <td>Bonjour</td>
+                    <td></td>
+                    <td>Ok</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Ayoye</td>
+                    <td></td>
+                    <td></td>
+                    <td>Bonjour</td>
+                    <td></td>
+                    <td>Ok</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Ayoye</td>
+                    <td></td>
+                    <td></td>
+                    <td>Bonjour</td>
+                    <td></td>
+                    <td>Ok</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Ayoye</td>
+                    <td></td>
+                    <td></td>
+                    <td>Bonjour</td>
+                    <td></td>
+                    <td>Ok</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Ayoye</td>
+                    <td></td>
+                    <td></td>
+                    <td>Bonjour</td>
+                    <td></td>
+                    <td>Ok</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Ayoye</td>
+                    <td></td>
+                    <td></td>
+                    <td>Bonjour</td>
+                    <td></td>
+                    <td>Ok</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Ayoye</td>
+                    <td></td>
+                    <td></td>
+                    <td>Bonjour</td>
+                    <td></td>
+                    <td>Ok</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Ayoye</td>
+                    <td></td>
+                    <td></td>
+                    <td>Bonjour</td>
+                    <td></td>
+                    <td>Ok</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Ayoye</td>
+                    <td></td>
+                    <td></td>
+                    <td>Bonjour</td>
+                    <td></td>
+                    <td>Ok</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Ayoye</td>
+                    <td></td>
+                    <td></td>
+                    <td>Bonjour</td>
+                    <td></td>
+                    <td>Ok</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Ayoye</td>
+                    <td></td>
+                    <td></td>
+                    <td>Bonjour</td>
+                    <td></td>
+                    <td>Ok</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Ayoye</td>
+                    <td></td>
+                    <td></td>
+                    <td>Bonjour</td>
+                    <td></td>
+                    <td>Ok</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Ayoye</td>
+                    <td></td>
+                    <td></td>
+                    <td>Bonjour</td>
+                    <td></td>
+                    <td>Ok</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Ayoye</td>
+                    <td></td>
+                    <td></td>
+                    <td>Bonjour</td>
+                    <td></td>
+                    <td>Ok</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Ayoye</td>
+                    <td></td>
+                    <td></td>
+                    <td>Bonjour</td>
+                    <td></td>
+                    <td>Ok</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Ayoye</td>
+                    <td></td>
+                    <td></td>
+                    <td>Bonjour</td>
+                    <td></td>
+                    <td>Ok</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Ayoye</td>
+                    <td></td>
+                    <td></td>
+                    <td>Bonjour</td>
+                    <td></td>
+                    <td>Ok</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Ayoye</td>
+                    <td></td>
+                    <td></td>
+                    <td>Bonjour</td>
+                    <td></td>
+                    <td>Ok</td>
                     <td></td>
                     <td></td>
                 </tr>

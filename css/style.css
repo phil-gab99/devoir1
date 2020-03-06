@@ -8,7 +8,7 @@ body{
     font-family: sans-serif;
 }
 
-h1{
+h1, h2{
     text-align: center;
 }
 
@@ -78,6 +78,7 @@ main, footer{
 
 fieldset{
     padding: 30px;
+    text-align: center;
 }
 
 fieldset *{
