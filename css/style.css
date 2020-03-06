@@ -83,20 +83,28 @@ fieldset{
 
 fieldset *{
     padding-right: 10px;
+   
 }
 
 fieldset span{
     display: inline-grid;
     margin-right: 10px;
+    vertical-align: middle;
 }
 
 fieldset input[type=submit]{
-    padding: 10px;
     float: right;
+    padding: 10px;
 }
 
-fieldset input[type=submit]: hover{
+#managerLbl, #assistanceLbl, #salaryMassLbl{
+    padding: 7px;
+}
 
+#managerLbl span, #assistanceLbl span, #salaryMassLbl span{
+    display: inline;
+    float: right;
+    margin-left: 40px;
 }
 
 .navbar-item{

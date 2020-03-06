@@ -81,23 +81,33 @@
                             <option value="2004">2004</option>
                         </select>
                     </label>
-                    <label><input type="checkbox" name="fieldPlayers">Joueurs de champ</label>
-                    <label><input type="checkbox" name="throwers">Lanceurs</label>
-                    <label><input type="checkbox" name="manager">Gérant</label>
-                    <label><input type="checkbox" name="assistance">Assistance</label>
-                    <label><input type="checkbox" name="salaryMass">Masse salariale</label>
+                    <span>
+                        <label><input type="checkbox" name="fieldPlayers">Joueurs de champ</label>
+                        <label><input type="checkbox" name="throwers">Lanceurs</label>
+                    </span>
+                    <span>
+                        <label><input type="checkbox" name="manager">Gérant</label>                        
+                    </span>
+                    <span>
+                        <label><input type="checkbox" name="assistance">Assistance</label>
+                    </span>
+                    <span>
+                        <label><input type="checkbox" name="salaryMass">Masse salariale</label>
+                    </span>
+                    
+                    <input type="submit" value="Filtrer">
+                   
                 </fieldset>
-                <br>
-                <button type="submit">Filtrer</button>
-                <br>
             </form>
             <br>
-             <fieldset>
-                <label id="managerLbl"><b>Gérant:</b> Anne</label>
-                <label id="assistanceLbl"><b>Assistance:</b> Rick</label>
-                <label id="salaryMassLbl"><b>Masse salariale:</b> 2 000 000</label>
+            <fieldset>
+                <span>
+                    <label id="managerLbl"><b>Gérant: </b><span>Anne</span></label>
+                    <label id="assistanceLbl"><b>Assistance: </b><span>Rick</span></label>
+                    <label id="salaryMassLbl"><b>Masse salariale: </b><span>2 000 000</span></label>          
+                </span>
             </fieldset>
-            <h2>Joueurs</h2>
+            <h2>Joueurs de champ</h2>
             <h3>Statistiques</h3>
             <form action="/rec_formul.php" method="get">
                 <fieldset>
