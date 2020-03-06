@@ -78,15 +78,25 @@ main, footer{
 
 fieldset{
     padding: 30px;
-    text-align: center;
+    background-color: #f5f5f0;
 }
 
 fieldset *{
-    padding: 10px;
+    padding-right: 10px;
 }
 
-select *{
+fieldset span{
+    display: inline-grid;
+    margin-right: 10px;
+}
+
+fieldset input[type=submit]{
+    padding: 10px;
     float: right;
+}
+
+fieldset input[type=submit]: hover{
+
 }
 
 .navbar-item{
