@@ -78,12 +78,12 @@ main, footer{
 
 fieldset{
     padding: 30px;
-    text-align: center;
 }
 
 fieldset *{
     padding: 10px;
 }
+
 .navbar-item{
     margin-left: 30px;
     height: 100%;
