@@ -8,8 +8,9 @@ body{
     font-family: sans-serif;
 }
 
-h1, h2{
+h1, h2, hr{
     text-align: center;
+    margin-top: 50px;
 }
 
 i{
@@ -83,7 +84,7 @@ fieldset{
 
 fieldset *{
     padding-right: 10px;
-   
+
 }
 
 fieldset span{
