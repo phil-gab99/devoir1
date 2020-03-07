@@ -111,11 +111,11 @@ aside{
     float: left;
 }
 
-#managerLbl, #assistanceLbl, #salaryMassLbl{
+#manager-lbl, #assistance-lbl, #salary-mass-lbl, #owner-lbl{
     padding: 7px;
 }
 
-#managerLbl span, #assistanceLbl span, #salaryMassLbl span{
+#manager-lbl span, #assistance-lbl span, #salary-mass-lbl span, #owner-lbl span{
     display: inline;
     float: right;
     margin-left: 40px;
