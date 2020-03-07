@@ -33,13 +33,9 @@ table th h1{
     text-align: center;
 }
 
-th{
-    width: 10%;
-}
-
 th, td{
     text-align: left;
-    padding: 8px;
+    padding: 1px;
     border: solid black 1px;
 }
 
@@ -92,9 +88,21 @@ fieldset span{
     vertical-align: middle;
 }
 
-fieldset input[type=submit]{
+button{
     float: right;
     padding: 10px;
+}
+
+.stats-choice{
+    display: inline-block;
+    width: 75%;
+    float: left;
+}
+
+aside{
+    border-style: outset;
+    width: 15%;
+    float: left;
 }
 
 #managerLbl, #assistanceLbl, #salaryMassLbl{
