@@ -100,6 +100,11 @@ button{
     float: left;
 }
 
+.stats-choice span{
+    display: block;
+    max-width: 70%;
+}
+
 aside{
     border-style: outset;
     width: 15%;
