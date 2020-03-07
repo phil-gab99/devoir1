@@ -23,7 +23,7 @@ table{
     border-collapse: collapse;
 }
 
-article {
+article{
     text-align: justify;
     margin-top: 30px;
     margin-bottom: 30px;
@@ -40,11 +40,11 @@ th, td{
     border: solid black 1px;
 }
 
-tr:nth-child(even) {
+tr:nth-child(even){
     background-color: #D9D9D9;
 }
 
-tr:nth-child(1n+2):hover {
+tr:nth-child(1n+2):hover{
     background-color: #00FFFF;
     box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.5);
 }
@@ -94,31 +94,46 @@ button{
     padding: 10px;
 }
 
-.stats-choice{
-    display: inline-block;
-    width: 75%;
-    float: left;
-}
-
-.stats-choice span{
-    display: block;
-    max-width: 70%;
-}
-
 aside{
     border-style: outset;
-    width: 15%;
+    width: 20%;
+    font-size: 80%;
     float: left;
+    line-height: 1.6;
+    font-style: italic;
+}
+
+aside b{
+    display: block;
+    text-align: center;
+    text-decoration: underline;
+}
+
+aside span{
+    width: 30px;
 }
 
 #manager-lbl, #assistance-lbl, #salary-mass-lbl, #owner-lbl{
     padding: 7px;
 }
 
-#manager-lbl span, #assistance-lbl span, #salary-mass-lbl span, #owner-lbl span{
+#manager-lbl span, #assistance-lbl span, #salary-mass-lbl span,
+#owner-lbl span{
     display: inline;
     float: right;
     margin-left: 40px;
+}
+
+.stats-choice{
+    display: inline-block;
+    width: 75%;
+    float: right;
+    margin-top: 12px;
+}
+
+.stats-choice span{
+    display: block;
+    max-width: 70%;
 }
 
 .navbar-item{
