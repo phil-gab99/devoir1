@@ -35,6 +35,10 @@ aside b {
     text-decoration: underline;
 }
 
+aside hr {
+    margin: 0px;
+}
+
 aside span {
     width: 30px;
 }
