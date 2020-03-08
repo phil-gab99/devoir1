@@ -2,15 +2,9 @@
 
 /*Vincent Falardeau, Philippe Gabriel*/
 
-#manager-lbl, #assistance-lbl, #salary-mass-lbl, #owner-lbl {
-    padding: 7px;
-}
-
-#manager-lbl span, #assistance-lbl span, #salary-mass-lbl span,
-#owner-lbl span {
-    display: inline;
-    float: right;
-    margin-left: 40px;
+#manager-lbl, #owner-lbl, #assistance-lbl, #payroll-lbl {
+    line-height: 1.6;
+    margin-left: 20px;
 }
 
 article {
@@ -22,8 +16,8 @@ article {
 
 aside {
     border-style: outset;
-    width: 20%;
-    font-size: 80%;
+    width: 25%;
+    font-size: 90%;
     float: left;
     line-height: 1.6;
     font-style: italic;
@@ -59,13 +53,12 @@ dl {
 }
 
 fieldset {
-    padding: 30px;
+    padding: 20px;
     background-color: #f5f5f0;
 }
 
 fieldset * {
     padding-right: 10px;
-
 }
 
 fieldset h4 {
@@ -76,6 +69,11 @@ fieldset span {
     display: inline-grid;
     margin-right: 10px;
     vertical-align: middle;
+}
+
+fieldset span b {
+    width: 125px;
+    float: left;
 }
 
 h1, h2, hr {
@@ -191,14 +189,10 @@ tr:nth-child(1n+2):hover {
     width: 15%;
 }
 
+/*Fieldsets containing statistics option selection*/
 .stats-option {
     display: inline-block;
-    width: 75%;
+    width: 70%;
     float: right;
-    margin-top: 12px;
-}
-
-.stats-option span {
-    display: block;
-    max-width: 70%;
+    margin-top: 40px;
 }
