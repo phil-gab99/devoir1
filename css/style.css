@@ -34,7 +34,7 @@ aside hr {
 }
 
 aside span {
-    width: 30px;
+    width: 35px;
 }
 
 body {
@@ -72,7 +72,7 @@ fieldset span {
 }
 
 fieldset span b {
-    width: 125px;
+    width: 180px;
     float: left;
 }
 
@@ -136,6 +136,14 @@ tr:nth-child(1n+2):hover {
 
 .fieldset-main {
     margin-bottom: 40px;
+}
+
+.information-container{
+    width: 48%;
+}
+
+.fieldset-container{
+    border-style: outset;
 }
 
 .img-container {
