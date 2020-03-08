@@ -86,7 +86,7 @@
                         >Joueurs de champ
                     </label>
                     <label>
-                        <input type="checkbox" name="throwers">Lanceurs
+                        <input type="checkbox" name="pitchers">Lanceurs
                     </label>
                 </span>
                 <span>
@@ -102,10 +102,10 @@
                 <span>
                     <label>
                         <input type="checkbox"
-                        name="salaryMass">Masse salariale
+                        name="payroll">Masse salariale
                     </label>
                 </span>
-                <button id="composition-filter-btn">Filtrer</button>
+                <button id="comp-filter-btn">Filtrer</button>
             </fieldset>
             <br>
             <fieldset>
@@ -119,14 +119,15 @@
                     <label id="assistance-lbl">
                         <b>Assistance: </b><span>3</span>
                     </label>
-                    <label id="salary-mass-lbl">
+                    <label id="payroll-lbl">
                         <b>Masse salariale: </b><span>2 000 000</span>
                     </label>
                 </span>
             </fieldset>
             <hr>
             <h2>Joueurs de champ</h2>
-            <fieldset>
+            <fieldset class="fieldset-main">
+                <h4>Statistiques</h4>
                 <aside>
                     <b>Légende</b><br>
                     <span>BA%:</span> Moyenne au bâton<br>
@@ -150,7 +151,7 @@
                     <span>E:</span> Erreur<br>
                     <span>salaire:</span> Salaire<br>
                 </aside>
-                <fieldset class="stats-choice">
+                <fieldset class="stats-option">
                     <legend>Offensive:</legend>
                     <label><input type="checkbox" name="BA%">BA%</label>
                     <label><input type="checkbox" name="SL%">SL%</label>
@@ -168,20 +169,20 @@
                     <label><input type="checkbox" name="SB">SB</label>
                     <label><input type="checkbox" name="CS">CS</label>
                 </fieldset>
-                <fieldset class="stats-choice">
+                <fieldset class="stats-option">
                     <legend>Défensive:</legend>
                     <label><input type="checkbox" name="FP%">FP%</label>
                     <label><input type="checkbox" name="POS">POS</label>
                     <label><input type="checkbox" name="A">A</label>
                     <label><input type="checkbox" name="E">E</label>
                     <label>
-                        <input type="checkbox" name="salaire">salaire
+                        <input type="checkbox" name="salary">salaire
                     </label>
                 </fieldset>
-                 <fieldset class="stats-choice">
+                <fieldset class="stats-option">
                     <label>
-                        <input type="radio" name="players-stats-choice-method"
-                        value="manual-choice" checked>Au choix
+                        <input type="radio" name="players-stats-option-method"
+                        value="manual" checked>Au choix
                     </label>
                     <label>
                         <input type="radio" name="players-stats-choice-method"
@@ -197,32 +198,32 @@
                     </label>
                     <button id="players-stats-btn">Choisir</button>
                 </fieldset>
-                <fieldset class="stats-choice">
+                <fieldset class="stats-option">
                     <label>
-                        <input type="radio" name="players-stats-order"
+                        <input type="radio" name="players-stats-sort"
                         value="BA%">BA%
                     </label>
                     <label>
-                        <input type="radio" name="players-stats-order"
+                        <input type="radio" name="players-stats-sort"
                         value="SL%">SL%
                     </label>
                     <label>
-                        <input type="radio" name="players-stats-order"
+                        <input type="radio" name="players-stats-sort"
                         value="OB%">OB%
                     </label>
                     <label>
-                        <input type="radio" name="players-stats-order"
+                        <input type="radio" name="players-stats-sort"
                         value="FP%">FP%
                     </label>
                     <label>
-                        <input type="radio" name="players-stats-order"
+                        <input type="radio" name="players-stats-sort"
                         value="HR">HR
                     </label>
                     <label>
-                        <input type="radio" name="players-stats-order"
-                        value="salaire">salaire
+                        <input type="radio" name="players-stats-sort"
+                        value="salary">salaire
                     </label>
-                    <button id="players-stats-order-btn">Ordonner</button>
+                    <button id="players-stats-sort-btn">Ordonner</button>
                 </fieldset>
             </fieldset>
             <table id="players">
@@ -757,7 +758,8 @@
             </table>
             <hr>
             <h2>Lanceurs</h2>
-            <fieldset>
+            <fieldset class="fieldset-main">
+                <h4>Statistiques</h4>
                 <aside>
                     <b>Légende</b><br>
                     <span>ERA:</span> Moyenne de points mérités<br>
@@ -775,7 +777,7 @@
                     <span>BB:</span> But sur balles<br>
                     <span>salaire:</span> Salaire<br>
                 </aside>
-                <fieldset class="stats-choice">
+                <fieldset class="stats-option">
                     <label><input type="checkbox" name="ERA">ERA</label>
                     <label><input type="checkbox" name="BAOpp">BAOpp</label>
                     <label>
@@ -792,65 +794,65 @@
                     <label><input type="checkbox" name="H">H</label>
                     <label><input type="checkbox" name="BB">BB</label>
                     <label>
-                        <input type="checkbox" name="salaire">salaire
+                        <input type="checkbox" name="salary">salaire
                     </label>
                 </fieldset>
-                <fieldset class="stats-choice">
+                <fieldset class="stats-option">
                     <label>
-                        <input type="radio" name="throwers-stats-choice-method"
-                        value="manual-choice" checked>Au choix
+                        <input type="radio" name="pitchers-stats-option-method"
+                        value="manual" checked>Au choix
                     </label>
                     <label>
-                        <input type="radio" name="throwers-stats-choice-method"
+                        <input type="radio" name="pitchers-stats-option-method"
                         value="all">Tout
                     </label>
-                    <button id="throwers-stats-btn">Choisir</button>
+                    <button id="pitchers-stats-btn">Choisir</button>
                 </fieldset>
-                <fieldset class="stats-choice">
+                <fieldset class="stats-option">
                     <label>
-                        <input type="radio" name="throwers-stats-order"
-                        value="order">ERA
+                        <input type="radio" name="pitchers-stats-sort"
+                        value="ERA">ERA
                     </label>
                     <label>
-                        <input type="radio" name="throwers-stats-order"
+                        <input type="radio" name="pitchers-stats-sort"
                         value="BAOpp">BAOpp
                     </label>
                     <label>
-                        <input type="radio" name="throwers-stats-order"
+                        <input type="radio" name="pitchers-stats-sort"
                         value="G">G
                     </label>
                     <label>
-                        <input type="radio" name="throwers-stats-order"
+                        <input type="radio" name="pitchers-stats-sort"
                         value="GS">GS
                     </label>
                     <label>
-                        <input type="radio" name="throwers-stats-order"
+                        <input type="radio" name="pitchers-stats-sort"
                         value="CG">CG
                     </label>
                     <label>
-                        <input type="radio" name="throwers-stats-order"
+                        <input type="radio" name="pitchers-stats-sort"
                         value="W">W
                     </label>
                     <label>
-                        <input type="radio" name="throwers-stats-order"
+                        <input type="radio" name="pitchers-stats-sort"
                         value="SO">SO
                     </label>
                     <label>
-                        <input type="radio" name="throwers-stats-order"
+                        <input type="radio" name="pitchers-stats-sort"
                         value="H">H
                     </label>
                     <label>
-                        <input type="radio" name="throwers-stats-order"
+                        <input type="radio" name="pitchers-stats-sort"
                         value="BB">BB
                     </label>
                     <label>
-                        <input type="radio" name="throwers-stats-order"
-                        value="salaire">salaire
+                        <input type="radio" name="pitchers-stats-sort"
+                        value="salary">salaire
                     </label>
-                    <button id="throwers-stats-order-btn">Ordonner</button>
+                    <button id="pitchers-stats-sort-btn">Ordonner</button>
                 </fieldset>
             </fieldset>
-            <table id="throwers">
+            <table id="pitchers">
                 <tr>
                     <th>Nom</th>
                     <th>Prénom</th>
