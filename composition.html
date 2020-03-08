@@ -153,54 +153,61 @@
                     <span>E:</span> Erreur<br>
                     <span>salaire:</span> Salaire<br>
                 </aside>
-                <fieldset class="stats-option">
-                    <legend>Offensive:</legend>
-                    <label><input type="checkbox" name="BA%">BA%</label>
-                    <label><input type="checkbox" name="SL%">SL%</label>
-                    <label><input type="checkbox" name="OB%">OB%</label>
-                    <label><input type="checkbox" name="SO%">SO%</label>
-                    <label><input type="checkbox" name="SB%">SB%</label>
-                    <label><input type="checkbox" name="AB">AB</label>
-                    <label><input type="checkbox" name="H">H</label>
-                    <label><input type="checkbox" name="1B">1B</label>
-                    <label><input type="checkbox" name="2B">2B</label>
-                    <label><input type="checkbox" name="3B">3B</label>
-                    <label><input type="checkbox" name="HR">HR</label>
-                    <label><input type="checkbox" name="BB">BB</label>
-                    <label><input type="checkbox" name="R">R</label>
-                    <label><input type="checkbox" name="SB">SB</label>
-                    <label><input type="checkbox" name="CS">CS</label>
+                <fieldset class="stats-group">
+                    <legend>Attributs</legend>
+                    <fieldset class="stats-option">
+                        <legend>Offensive</legend>
+                        <label><input type="checkbox" name="BA%">BA%</label>
+                        <label><input type="checkbox" name="SL%">SL%</label>
+                        <label><input type="checkbox" name="OB%">OB%</label>
+                        <label><input type="checkbox" name="SO%">SO%</label>
+                        <label><input type="checkbox" name="SB%">SB%</label>
+                        <label><input type="checkbox" name="AB">AB</label>
+                        <label><input type="checkbox" name="H">H</label>
+                        <label><input type="checkbox" name="1B">1B</label>
+                        <label><input type="checkbox" name="2B">2B</label>
+                        <label><input type="checkbox" name="3B">3B</label>
+                        <label><input type="checkbox" name="HR">HR</label>
+                        <label><input type="checkbox" name="BB">BB</label>
+                        <label><input type="checkbox" name="R">R</label>
+                        <label><input type="checkbox" name="SB">SB</label>
+                        <label><input type="checkbox" name="CS">CS</label>
+                    </fieldset>
+                    <fieldset class="stats-option">
+                        <legend>Défensive</legend>
+                        <label><input type="checkbox" name="FP%">FP%</label>
+                        <label><input type="checkbox" name="POS">POS</label>
+                        <label><input type="checkbox" name="A">A</label>
+                        <label><input type="checkbox" name="E">E</label>
+                        <label>
+                            <input type="checkbox" name="salary">salaire
+                        </label>
+                    </fieldset>
+                    <fieldset class="stats-option">
+                        <label>
+                            <input type="radio"
+                            name="players-stats-option-method" value="manual"
+                            checked>Au choix
+                        </label>
+                        <label>
+                            <input type="radio"
+                            name="players-stats-option-method"
+                            value="offensive">Offensive
+                        </label>
+                        <label>
+                            <input type="radio"
+                            name="players-stats-option-method"
+                            value="defensive">Défensive
+                        </label>
+                        <label>
+                            <input type="radio"
+                            name="players-stats-option-method" value="all">Tout
+                        </label>
+                        <button id="players-stats-btn">Choisir</button>
+                    </fieldset>
                 </fieldset>
-                <fieldset class="stats-option">
-                    <legend>Défensive:</legend>
-                    <label><input type="checkbox" name="FP%">FP%</label>
-                    <label><input type="checkbox" name="POS">POS</label>
-                    <label><input type="checkbox" name="A">A</label>
-                    <label><input type="checkbox" name="E">E</label>
-                    <label>
-                        <input type="checkbox" name="salary">salaire
-                    </label>
-                </fieldset>
-                <fieldset class="stats-option">
-                    <label>
-                        <input type="radio" name="players-stats-option-method"
-                        value="manual" checked>Au choix
-                    </label>
-                    <label>
-                        <input type="radio" name="players-stats-option-method"
-                        value="offensive">Offensive
-                    </label>
-                    <label>
-                        <input type="radio" name="players-stats-option-method"
-                        value="defensive">Défensive
-                    </label>
-                    <label>
-                        <input type="radio" name="players-stats-option-method"
-                        value="all">Tout
-                    </label>
-                    <button id="players-stats-btn">Choisir</button>
-                </fieldset>
-                <fieldset class="stats-option">
+                <fieldset class="stats-group">
+                    <legend>Triage</legend>
                     <label>
                         <input type="radio" name="players-stats-sort"
                         value="BA%" checked>BA%
@@ -779,38 +786,42 @@
                     <span>BB:</span> But sur balles<br>
                     <span>salaire:</span> Salaire<br>
                 </aside>
-                <fieldset class="stats-option">
-                    <label><input type="checkbox" name="ERA">ERA</label>
-                    <label><input type="checkbox" name="BAOpp">BAOpp</label>
-                    <label>
-                        <input type="checkbox" name="partant">partant
-                    </label>
-                    <label><input type="checkbox" name="G">G</label>
-                    <label><input type="checkbox" name="GS">GS</label>
-                    <label><input type="checkbox" name="CG">CG</label>
-                    <label><input type="checkbox" name="W">W</label>
-                    <label><input type="checkbox" name="L">L</label>
-                    <label><input type="checkbox" name="SV">SV</label>
-                    <label><input type="checkbox" name="IPouts">IPouts</label>
-                    <label><input type="checkbox" name="SO">SO</label>
-                    <label><input type="checkbox" name="H">H</label>
-                    <label><input type="checkbox" name="BB">BB</label>
-                    <label>
-                        <input type="checkbox" name="salary">salaire
-                    </label>
+                <fieldset class="stats-group">
+                    <legend>Attributs</legend>
+                    <fieldset class="stats-option">
+                        <label><input type="checkbox" name="ERA">ERA</label>
+                        <label><input type="checkbox" name="BAOpp">BAOpp</label>
+                        <label>
+                            <input type="checkbox" name="partant">partant
+                        </label>
+                        <label><input type="checkbox" name="G">G</label>
+                        <label><input type="checkbox" name="GS">GS</label>
+                        <label><input type="checkbox" name="CG">CG</label>
+                        <label><input type="checkbox" name="W">W</label>
+                        <label><input type="checkbox" name="L">L</label>
+                        <label><input type="checkbox" name="SV">SV</label>
+                        <label><input type="checkbox" name="IPouts">IPouts</label>
+                        <label><input type="checkbox" name="SO">SO</label>
+                        <label><input type="checkbox" name="H">H</label>
+                        <label><input type="checkbox" name="BB">BB</label>
+                        <label>
+                            <input type="checkbox" name="salary">salaire
+                        </label>
+                    </fieldset>
+                    <fieldset class="stats-option">
+                        <label>
+                            <input type="radio" name="pitchers-stats-option-method"
+                            value="manual" checked>Au choix
+                        </label>
+                        <label>
+                            <input type="radio" name="pitchers-stats-option-method"
+                            value="all">Tout
+                        </label>
+                        <button id="pitchers-stats-btn">Choisir</button>
+                    </fieldset>
                 </fieldset>
-                <fieldset class="stats-option">
-                    <label>
-                        <input type="radio" name="pitchers-stats-option-method"
-                        value="manual" checked>Au choix
-                    </label>
-                    <label>
-                        <input type="radio" name="pitchers-stats-option-method"
-                        value="all">Tout
-                    </label>
-                    <button id="pitchers-stats-btn">Choisir</button>
-                </fieldset>
-                <fieldset class="stats-option">
+                <fieldset class="stats-group">
+                    <legend>Triage</legend>
                     <label>
                         <input type="radio" name="pitchers-stats-sort"
                         value="ERA" checked>ERA

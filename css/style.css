@@ -196,10 +196,17 @@ tr:nth-child(1n+2):hover {
     margin-bottom: 40px;
 }
 
+/*Fieldset semantically grouping stats elements*/
+.stats-group {
+    display: inline-block;
+    margin-top: 15px;
+    width: 70%;
+    float: right;
+}
+
 /*Fieldsets containing stats option selection*/
 .stats-option {
     display: inline-block;
-    width: 70%;
-    float: right;
-    margin-top: 40px;
+    width: 95%;
+    margin-top: 20px;
 }
