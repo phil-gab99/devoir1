@@ -34,6 +34,7 @@ aside hr {
 }
 
 aside span {
+    margin-left: 15px;
     width: 35px;
 }
 
@@ -134,16 +135,9 @@ tr:nth-child(1n+2):hover {
     box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.5);
 }
 
-.fieldset-main {
-    margin-bottom: 40px;
-}
-
-.information-container{
-    width: 48%;
-}
-
-.fieldset-container{
-    border-style: outset;
+/*Fieldset containing team comp details*/
+.detail-comp {
+    width: 45%;
 }
 
 .img-container {
@@ -197,7 +191,12 @@ tr:nth-child(1n+2):hover {
     width: 15%;
 }
 
-/*Fieldsets containing statistics option selection*/
+/*Fieldset containing team comp stats selection*/
+.stats-comp {
+    margin-bottom: 40px;
+}
+
+/*Fieldsets containing stats option selection*/
 .stats-option {
     display: inline-block;
     width: 70%;
