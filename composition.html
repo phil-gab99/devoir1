@@ -151,27 +151,37 @@
                     <span>POS:</span> Position joué<br>
                     <span>A:</span> Assistance<br>
                     <span>E:</span> Erreur<br>
-                    <span>salaire:</span> Salaire<br>
+                    <span>salaire:</span> Salaire annuel<br>
                 </aside>
                 <fieldset class="stats-group">
                     <legend>Attributs</legend>
                     <fieldset class="stats-option">
                         <legend>Offensive</legend>
+                        <span>
                         <label><input type="checkbox" name="BA%">BA%</label>
                         <label><input type="checkbox" name="SL%">SL%</label>
                         <label><input type="checkbox" name="OB%">OB%</label>
+                    </span>
+                    <span>
                         <label><input type="checkbox" name="SO%">SO%</label>
                         <label><input type="checkbox" name="SB%">SB%</label>
                         <label><input type="checkbox" name="AB">AB</label>
+                    </span>
+                    <span>
                         <label><input type="checkbox" name="H">H</label>
                         <label><input type="checkbox" name="1B">1B</label>
                         <label><input type="checkbox" name="2B">2B</label>
+                    </span>
+                        <span>
                         <label><input type="checkbox" name="3B">3B</label>
                         <label><input type="checkbox" name="HR">HR</label>
                         <label><input type="checkbox" name="BB">BB</label>
+                    </span>
+                    <span>
                         <label><input type="checkbox" name="R">R</label>
                         <label><input type="checkbox" name="SB">SB</label>
                         <label><input type="checkbox" name="CS">CS</label>
+                    </span>
                     </fieldset>
                     <fieldset class="stats-option">
                         <legend>Défensive</legend>
@@ -206,7 +216,7 @@
                         <button id="players-stats-btn">Choisir</button>
                     </fieldset>
                 </fieldset>
-                <fieldset class="stats-group">
+                <fieldset class="stats-filter">
                     <legend>Triage</legend>
                     <label>
                         <input type="radio" name="players-stats-sort"
@@ -784,29 +794,39 @@
                     <span>SO:</span> Retrait au bâton<br>
                     <span>H:</span> Coup sûr<br>
                     <span>BB:</span> But sur balles<br>
-                    <span>salaire:</span> Salaire<br>
+                    <span>salaire:</span> Salaire annuel<br>
                 </aside>
                 <fieldset class="stats-group">
                     <legend>Attributs</legend>
                     <fieldset class="stats-option">
+                        <span>
                         <label><input type="checkbox" name="ERA">ERA</label>
                         <label><input type="checkbox" name="BAOpp">BAOpp</label>
                         <label>
                             <input type="checkbox" name="partant">partant
                         </label>
+                    </span>
+                    <span>
                         <label><input type="checkbox" name="G">G</label>
                         <label><input type="checkbox" name="GS">GS</label>
                         <label><input type="checkbox" name="CG">CG</label>
+                    </span>
+                    <span>
                         <label><input type="checkbox" name="W">W</label>
                         <label><input type="checkbox" name="L">L</label>
                         <label><input type="checkbox" name="SV">SV</label>
+                    </span>
+                    <span>
                         <label><input type="checkbox" name="IPouts">IPouts</label>
                         <label><input type="checkbox" name="SO">SO</label>
                         <label><input type="checkbox" name="H">H</label>
+                    </span>
+                    <span>
                         <label><input type="checkbox" name="BB">BB</label>
                         <label>
                             <input type="checkbox" name="salary">salaire
                         </label>
+                    </span>
                     </fieldset>
                     <fieldset class="stats-option">
                         <label>
@@ -820,7 +840,7 @@
                         <button id="pitchers-stats-btn">Choisir</button>
                     </fieldset>
                 </fieldset>
-                <fieldset class="stats-group">
+                <fieldset class="stats-filter">
                     <legend>Triage</legend>
                     <label>
                         <input type="radio" name="pitchers-stats-sort"
