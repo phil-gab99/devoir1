@@ -6,11 +6,24 @@ var initClassement = function(){
 }
 
 var queryFrom = function(year, league, division){
-    return "t.teamID as equipe, t.name as nom, t.yearID as annee, t.park as parc, t.teamID=WSC.teamIDWinner AS WS, t.teamID=LC.teamIDWinner AS NLCS, t.W as V,t.L as D \
-            FROM Teams t, (SELECT teamIDWinner FROM SeriesPost WHERE yearID="+year+" AND round='"+league+"CS') AS LC,(SELECT teamIDWinner \
-            FROM SeriesPost WHERE yearID="+year+" AND round='WS') AS WSC\
-            WHERE t.yearID="+year+"  AND t.lgID='"+league+"' AND t.divID='"+division+"'\
-            order by V desc"
+    return "\
+        t.teamID as equipe, \
+        t.name as nom, \
+        t.yearID as annee, \
+        t.park as parc, \
+        t.teamID=WSC.teamIDWinner AS WS, \
+        t.teamID=LC.teamIDWinner AS NLCS, \
+        t.W as V, \
+        t.L as D \
+        FROM Teams t, \
+        (SELECT teamIDWinner FROM SeriesPost \
+            WHERE yearID="+year+" AND round='"+league+"CS') AS LC,\
+        (SELECT teamIDWinner FROM SeriesPost \
+            WHERE yearID="+year+" AND round='WS') AS WSC\
+        WHERE t.yearID="+year+"  \
+        AND t.lgID='"+league+"' \
+        AND t.divID='"+division+"'\
+        order by V desc"
 }
 
 var updateClassement = function(){
@@ -56,10 +69,13 @@ var executeQuery = function(query, league, division){
     postData["db"] = "dift6800_baseball"
     postData["query"] = query
 
-    $.post("http://www-ens.iro.umontreal.ca/~dift6800/baseball/db.php",postData,function(response,status){
-
-        buildTable(JSON.parse(response).data, league, division)
-    })
+    $.post(
+        "http://www-ens.iro.umontreal.ca/~dift6800/baseball/db.php",
+        postData,
+        function(response,status){
+            buildTable(JSON.parse(response).data, league, division)
+        }
+    )
 }
 
 var buildTable = function(data, league, division){
@@ -90,7 +106,9 @@ var buildTable = function(data, league, division){
                 <td>'+entry.D+'</td>\
             </tr>')
 
-        if(((league == 'al' && $("#al-champ-cbx").is(':checked'))|| (league == 'nl' && $("#nl-champ-cbx").is(':checked'))) && entry.NLCS == 1){
+        if(((league == 'al' && $("#al-champ-cbx").is(':checked')) || 
+            (league == 'nl' && $("#nl-champ-cbx").is(':checked'))) && 
+            entry.NLCS == 1){
             $("#"+entry.equipe).css("background-color", "#b08d57")
         }
 
