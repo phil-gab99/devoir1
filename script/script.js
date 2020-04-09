@@ -6,23 +6,11 @@ var initClassement = function(){
 }
 
 var queryFrom = function(year, league, division){
-    return "\
-        teamID as equipe, \
-        name as nom, \
-        yearID as annee, \
-        park as parc, \
-        W as V, \
-        L as D, \
-        (select max(W) from Teams where \
-            yearID = "+year+" \
-            and lgID = '"+league+"' \
-            and divID = '"+division+"') - W as diff \
-        from Teams \
-        where \
-            yearID = "+year+" \
-            and lgID = '"+league+"' \
-            and divID = '"+division+"' \
-        order by V desc"
+    return "t.teamID as equipe, t.name as nom, t.yearID as annee, t.park as parc, t.teamID=WSC.teamIDWinner AS WS, t.teamID=LC.teamIDWinner AS NLCS, t.W as V,t.L as D \
+            FROM Teams t, (SELECT teamIDWinner FROM SeriesPost WHERE yearID="+year+" AND round='"+league+"CS') AS LC,(SELECT teamIDWinner \
+            FROM SeriesPost WHERE yearID="+year+" AND round='WS') AS WSC\
+            WHERE t.yearID="+year+"  AND t.lgID='"+league+"' AND t.divID='"+division+"'\
+            order by V desc"
 }
 
 var updateClassement = function(){
@@ -31,9 +19,14 @@ var updateClassement = function(){
 
     let nlCondition = ""
 
+    let alContainer = $("#al-container")
+    alContainer.html('')
+
+    let nlContainer = $("#nl-container")
+    nlContainer.html('')
+
     if($("#nl-cbx").is(':checked')){
-        let container = $("#nl-container")
-        container.html('\
+        nlContainer.html('\
             <h2>Ligne nationale</h2>\
             <br>\
             <div id="nl-EST-table-container">\
@@ -45,8 +38,7 @@ var updateClassement = function(){
     }
 
     if($("#al-cbx").is(':checked')){
-        let container = $("#al-container")
-        container.html('\
+        alContainer.html('\
             <h2>Ligne américaine</h2>\
             <br>\
             <div id="al-EST-table-container">\
@@ -55,9 +47,7 @@ var updateClassement = function(){
             </div>')
         executeQuery(queryFrom(year, 'AL', 'E'), 'al', 'EST')
         executeQuery(queryFrom(year, 'AL', 'W'), 'al', 'OUEST')
-    }
-
-    
+    }    
 }
 
 var executeQuery = function(query, league, division){
@@ -73,6 +63,9 @@ var executeQuery = function(query, league, division){
 }
 
 var buildTable = function(data, league, division){
+
+    console.log(data)
+
     $("#"+league+"-"+division+"-table-container").html('\
         <h3>Division '+division+'</h3>\
         <table id="'+league+'-'+division+'-table">\
@@ -88,7 +81,7 @@ var buildTable = function(data, league, division){
 
     data.forEach(function(entry){
         $("#"+league+"-"+division+"-table").append('\
-            <tr>\
+            <tr id="'+entry.equipe+'">\
                 <td>'+entry.equipe+'</td>\
                 <td>'+entry.nom+'</td>\
                 <td>'+entry.annee+'</td>\
@@ -96,5 +89,13 @@ var buildTable = function(data, league, division){
                 <td>'+entry.V+'</td>\
                 <td>'+entry.D+'</td>\
             </tr>')
+
+        if(((league == 'al' && $("#al-champ-cbx").is(':checked'))|| (league == 'nl' && $("#nl-champ-cbx").is(':checked'))) && entry.NLCS == 1){
+            $("#"+entry.equipe).css("background-color", "#b08d57")
+        }
+
+        if($("#wrld-champ-cbx").is(':checked') && entry.WS == 1){
+            $("#"+entry.equipe).css("background-color", "gold")
+        }  
     })
 }
