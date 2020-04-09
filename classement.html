@@ -10,9 +10,10 @@
         <script
         src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
         </script>
+        <script type="text/javascript" src="script/script.js"></script>
         <title>Classement des équipes</title>
     </head>
-    <body>
+    <body onload="initClassement()">
         <nav>
             <a href="accueil.html">
                 <div class="navbar-item-logo">
@@ -45,7 +46,7 @@
                 <span>
                     <label>
                         Année:
-                        <select id="year">
+                        <select name="year" id="year-classement">
                             <option value="1969">1969</option>
                             <option value="1970">1970</option>
                             <option value="1971">1971</option>
@@ -87,325 +88,22 @@
                 </span>
                 <span>
                     <label>
-                        <input type="checkbox" checked disabled>Ligue nationale
+                        <input type="checkbox" checked disabled id="nl-cbx">Ligue nationale
                     </label>
-                    <label><input type="checkbox">Champion</label>
+                    <label><input type="checkbox" id="nl-champ-cbx">Champion</label>
                 </span>
                 <span>
-                    <label><input type="checkbox">Ligue américaine</label>
-                    <label><input type="checkbox">Champion</label>
+                    <label><input type="checkbox" id="al-cbx">Ligue américaine</label>
+                    <label><input type="checkbox" id="al-champ-cbx">Champion</label>
                 </span>
                 <span>
-                    <label><input type="checkbox">Champion Mondial</label>
+                    <label><input type="checkbox" id="wrld-champ-cbx">Champion Mondial</label>
                 </span>
                 <button id="rank-filter-btn">Filtrer</button>
             </fieldset>
             <br>
-            <h2>Ligne nationale</h2>
-            <br>
-            <h3>Division EST</h3>
-            <table>
-                <tr>
-                    <th>Équipe</th>
-                    <th>Nom</th>
-                    <th>Année</th>
-                    <th>Ville</th>
-                    <th>Victoires</th>
-                    <th>Défaites</th>
-                </tr>
-                <tr>
-                    <td>Test</td>
-                    <td>Information</td>
-                    <td>Bonjour</td>
-                    <td>Ok</td>
-                    <td>Bye</td>
-                    <td>Wowowow</td>
-                </tr>
-                <tr>
-                    <td>Test</td>
-                    <td>Information</td>
-                    <td>Bonjour</td>
-                    <td>Ok</td>
-                    <td>Bye</td>
-                    <td>Wowowow</td>
-                </tr>
-                <tr>
-                    <td>Test</td>
-                    <td>Information</td>
-                    <td>Bonjour</td>
-                    <td>Ok</td>
-                    <td>Bye</td>
-                    <td>Wowowow</td>
-                </tr>
-                <tr>
-                    <td>Test</td>
-                    <td>Information</td>
-                    <td>Bonjour</td>
-                    <td>Ok</td>
-                    <td>Bye</td>
-                    <td>Wowowow</td>
-                </tr>
-                <tr>
-                    <td>Test</td>
-                    <td>Information</td>
-                    <td>Bonjour</td>
-                    <td>Ok</td>
-                    <td>Bye</td>
-                    <td>Wowowow</td>
-                </tr>
-                <tr>
-                    <td>Test</td>
-                    <td>Information</td>
-                    <td>Bonjour</td>
-                    <td>Ok</td>
-                    <td>Bye</td>
-                    <td>Wowowow</td>
-                </tr>
-                <tr>
-                    <td>Test</td>
-                    <td>Information</td>
-                    <td>Bonjour</td>
-                    <td>Ok</td>
-                    <td>Bye</td>
-                    <td>Wowowow</td>
-                </tr>
-                <tr>
-                    <td>Test</td>
-                    <td>Information</td>
-                    <td>Bonjour</td>
-                    <td>Ok</td>
-                    <td>Bye</td>
-                    <td>Wowowow</td>
-                </tr>
-            </table>
-            <h3>Division OUEST</h3>
-            <table>
-                <tr>
-                    <th>Équipe</th>
-                    <th>Nom</th>
-                    <th>Année</th>
-                    <th>Ville</th>
-                    <th>Victoires</th>
-                    <th>Défaites</th>
-                </tr>
-                <tr>
-                    <td>Test</td>
-                    <td>Information</td>
-                    <td>Bonjour</td>
-                    <td>Ok</td>
-                    <td>Bye</td>
-                    <td>Wowowow</td>
-                </tr>
-                <tr>
-                    <td>Test</td>
-                    <td>Information</td>
-                    <td>Bonjour</td>
-                    <td>Ok</td>
-                    <td>Bye</td>
-                    <td>Wowowow</td>
-                </tr>
-                <tr>
-                    <td>Test</td>
-                    <td>Information</td>
-                    <td>Bonjour</td>
-                    <td>Ok</td>
-                    <td>Bye</td>
-                    <td>Wowowow</td>
-                </tr>
-                <tr>
-                    <td>Test</td>
-                    <td>Information</td>
-                    <td>Bonjour</td>
-                    <td>Ok</td>
-                    <td>Bye</td>
-                    <td>Wowowow</td>
-                </tr>
-                <tr>
-                    <td>Test</td>
-                    <td>Information</td>
-                    <td>Bonjour</td>
-                    <td>Ok</td>
-                    <td>Bye</td>
-                    <td>Wowowow</td>
-                </tr>
-                <tr>
-                    <td>Test</td>
-                    <td>Information</td>
-                    <td>Bonjour</td>
-                    <td>Ok</td>
-                    <td>Bye</td>
-                    <td>Wowowow</td>
-                </tr>
-                <tr>
-                    <td>Test</td>
-                    <td>Information</td>
-                    <td>Bonjour</td>
-                    <td>Ok</td>
-                    <td>Bye</td>
-                    <td>Wowowow</td>
-                </tr>
-                <tr>
-                    <td>Test</td>
-                    <td>Information</td>
-                    <td>Bonjour</td>
-                    <td>Ok</td>
-                    <td>Bye</td>
-                    <td>Wowowow</td>
-                </tr>
-            </table>
-            <br>
-            <h2>Ligne américaine</h2>
-            <br>
-            <h3>Division EST</h3>
-            <table>
-                <tr>
-                    <th>Équipe</th>
-                    <th>Nom</th>
-                    <th>Année</th>
-                    <th>Ville</th>
-                    <th>Victoires</th>
-                    <th>Défaites</th>
-                </tr>
-                <tr>
-                    <td>Test</td>
-                    <td>Information</td>
-                    <td>Bonjour</td>
-                    <td>Ok</td>
-                    <td>Bye</td>
-                    <td>Wowowow</td>
-                </tr>
-                <tr>
-                    <td>Test</td>
-                    <td>Information</td>
-                    <td>Bonjour</td>
-                    <td>Ok</td>
-                    <td>Bye</td>
-                    <td>Wowowow</td>
-                </tr>
-                <tr>
-                    <td>Test</td>
-                    <td>Information</td>
-                    <td>Bonjour</td>
-                    <td>Ok</td>
-                    <td>Bye</td>
-                    <td>Wowowow</td>
-                </tr>
-                <tr>
-                    <td>Test</td>
-                    <td>Information</td>
-                    <td>Bonjour</td>
-                    <td>Ok</td>
-                    <td>Bye</td>
-                    <td>Wowowow</td>
-                </tr>
-                <tr>
-                    <td>Test</td>
-                    <td>Information</td>
-                    <td>Bonjour</td>
-                    <td>Ok</td>
-                    <td>Bye</td>
-                    <td>Wowowow</td>
-                </tr>
-                <tr>
-                    <td>Test</td>
-                    <td>Information</td>
-                    <td>Bonjour</td>
-                    <td>Ok</td>
-                    <td>Bye</td>
-                    <td>Wowowow</td>
-                </tr>
-                <tr>
-                    <td>Test</td>
-                    <td>Information</td>
-                    <td>Bonjour</td>
-                    <td>Ok</td>
-                    <td>Bye</td>
-                    <td>Wowowow</td>
-                </tr>
-                <tr>
-                    <td>Test</td>
-                    <td>Information</td>
-                    <td>Bonjour</td>
-                    <td>Ok</td>
-                    <td>Bye</td>
-                    <td>Wowowow</td>
-                </tr>
-            </table>
-            <h3>Division OUEST</h3>
-            <table>
-                <tr>
-                    <th>Équipe</th>
-                    <th>Nom</th>
-                    <th>Année</th>
-                    <th>Ville</th>
-                    <th>Victoires</th>
-                    <th>Défaites</th>
-                </tr>
-                <tr>
-                    <td>Test</td>
-                    <td>Information</td>
-                    <td>Bonjour</td>
-                    <td>Ok</td>
-                    <td>Bye</td>
-                    <td>Wowowow</td>
-                </tr>
-                <tr>
-                    <td>Test</td>
-                    <td>Information</td>
-                    <td>Bonjour</td>
-                    <td>Ok</td>
-                    <td>Bye</td>
-                    <td>Wowowow</td>
-                </tr>
-                <tr>
-                    <td>Test</td>
-                    <td>Information</td>
-                    <td>Bonjour</td>
-                    <td>Ok</td>
-                    <td>Bye</td>
-                    <td>Wowowow</td>
-                </tr>
-                <tr>
-                    <td>Test</td>
-                    <td>Information</td>
-                    <td>Bonjour</td>
-                    <td>Ok</td>
-                    <td>Bye</td>
-                    <td>Wowowow</td>
-                </tr>
-                <tr>
-                    <td>Test</td>
-                    <td>Information</td>
-                    <td>Bonjour</td>
-                    <td>Ok</td>
-                    <td>Bye</td>
-                    <td>Wowowow</td>
-                </tr>
-                <tr>
-                    <td>Test</td>
-                    <td>Information</td>
-                    <td>Bonjour</td>
-                    <td>Ok</td>
-                    <td>Bye</td>
-                    <td>Wowowow</td>
-                </tr>
-                <tr>
-                    <td>Test</td>
-                    <td>Information</td>
-                    <td>Bonjour</td>
-                    <td>Ok</td>
-                    <td>Bye</td>
-                    <td>Wowowow</td>
-                </tr>
-                <tr>
-                    <td>Test</td>
-                    <td>Information</td>
-                    <td>Bonjour</td>
-                    <td>Ok</td>
-                    <td>Bye</td>
-                    <td>Wowowow</td>
-                </tr>
-            </table>
+            <div id="nl-container"></div>
+            <div id="al-container"></div>
         </main>
     </body>
 </html>
