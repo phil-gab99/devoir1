@@ -38,7 +38,7 @@ var loadTable = function(data, lg, div) {
 
     content.html('' +
         '<h3>Division ' + div + '</h3>' +
-        '<table id=' + lg + div +'>' +
+        '<table id=' + lg + div +' class="placement">' +
             '<tr>' +
                 '<th>Équipe</th>' +
                 '<th>Moyenne</th>' +
@@ -191,6 +191,7 @@ var init = function() {
     if (nlCheck) {
 
         nlData.html('' +
+            '<br>' +
             '<h2>Ligne nationale</h2>' +
             '<div id="nl-est-data"></div>' +
             '<div id="nl-ouest-data"></div>'
@@ -204,6 +205,7 @@ var init = function() {
     if (alCheck) {
 
         alData.html('' +
+            '<br>' +
             '<h2>Ligne américaine</h2>' +
             '<div id="al-est-data"></div>' +
             '<div id="al-ouest-data"></div>'
