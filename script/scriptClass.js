@@ -1,7 +1,7 @@
 /*
 * @Vincent Falardeau
 * @Philippe Gabriel
-* @Version 1.2.5 2020-04-17
+* @Version 1.2.6 2020-04-17
 **/
 
 /*
@@ -14,7 +14,7 @@
 * @param div String indiquant la division pour laquelle un tableau sera généré
 **/
 
-var loadTable = function(data, lg, div){
+var loadTable = function(data, lg, div) {
 
     //La valeur de ces booléens dépend des choix de l'usager dans l'interface
     var nlChamp = $("#nlc").is(':checked'); //Champion de la ligue nationale
@@ -81,7 +81,7 @@ var loadTable = function(data, lg, div){
 * @return query String représentant la requête à être acheminée en format SQL
 **/
 
-var querySql = function(year, lg, div){
+var querySql = function(year, lg, div) {
 
     var query = "" +
         "ta.teamID AS equipe, " +
