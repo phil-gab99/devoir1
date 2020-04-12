@@ -1,7 +1,7 @@
 /*
 * @Vincent Falardeau
 * @Philippe Gabriel
-* @Version 1.2.5 2020
+* @Version 1.2.5 2020-04-17
 **/
 
 /*
