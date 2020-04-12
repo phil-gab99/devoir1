@@ -136,6 +136,16 @@ tr:nth-child(1n+2):hover {
     box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.5);
 }
 
+.champlg {
+    font-weight: bold;
+    background: #ff9999;
+}
+
+.champws {
+    font-weight: bold;
+    background: #ff9933;
+}
+
 /*Fieldset containing team comp details*/
 .detail-comp {
     width: 45%;

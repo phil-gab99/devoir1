@@ -10,10 +10,10 @@
         <script
         src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
         </script>
-        <script type="text/javascript" src="script/script.js"></script>
+        <script type="text/javascript" src="script/scriptClass.js"></script>
         <title>Classement des équipes</title>
     </head>
-    <body onload="initClassement()">
+    <body onload="loadUI()">
         <nav>
             <a href="accueil.html">
                 <div class="navbar-item-logo">
@@ -46,77 +46,48 @@
                 <span>
                     <label>
                         Année:
-                        <select name="year" id="year-classement">
-                            <option value="1969">1969</option>
-                            <option value="1970">1970</option>
-                            <option value="1971">1971</option>
-                            <option value="1972">1972</option>
-                            <option value="1973">1973</option>
-                            <option value="1974">1974</option>
-                            <option value="1975">1975</option>
-                            <option value="1976">1976</option>
-                            <option value="1977">1977</option>
-                            <option value="1978">1978</option>
-                            <option value="1979">1979</option>
-                            <option value="1980">1980</option>
-                            <option value="1981">1981</option>
-                            <option value="1982">1982</option>
-                            <option value="1983">1983</option>
-                            <option value="1984">1984</option>
-                            <option value="1985">1985</option>
-                            <option value="1986">1986</option>
-                            <option value="1987">1987</option>
-                            <option value="1988">1988</option>
-                            <option value="1989">1989</option>
-                            <option value="1990">1990</option>
-                            <option value="1991">1991</option>
-                            <option value="1992">1992</option>
-                            <option value="1993">1993</option>
-                            <option value="1994">1994</option>
-                            <option value="1995">1995</option>
-                            <option value="1996">1996</option>
-                            <option value="1997">1997</option>
-                            <option value="1998">1998</option>
-                            <option value="1999">1999</option>
-                            <option value="2000">2000</option>
-                            <option value="2001">2001</option>
-                            <option value="2002">2002</option>
-                            <option value="2003">2003</option>
-                            <option value="2004">2004</option>
+                        <select id="year">
                         </select>
                     </label>
                 </span>
                 <span>
                     <label>
-                        <input type="checkbox" checked disabled id="nl-cbx">
+                        <input type="checkbox" checked disabled id="nl">
                         Ligue nationale
                     </label>
                     <label>
-                        <input type="checkbox" id="nl-champ-cbx">Champion
+                        <input type="checkbox" id="nlc">Champion*
                     </label>
                 </span>
                 <span>
                     <label>
-                        <input type="checkbox" id="al-cbx">Ligue américaine
+                        <input type="checkbox" id="al">Ligue américaine
                     </label>
-                    <label><input type="checkbox" id="al-champ-cbx">
-                    Champion</label>
+                    <label>
+                        <input type="checkbox" id="alc">Champion*
+                    </label>
                 </span>
                 <span>
                     <label>
-                        <input type="checkbox" id="wrld-champ-cbx">
-                        Champion Mondial
+                        <input type="checkbox" id="wc">Champion Mondial**
                     </label>
                 </span>
-                <button id="rank-filter-btn">Filtrer</button>
+                <button onclick="init()">Filtrer</button>
             </fieldset>
-            * <i>Champion: correspond à l'équipe championne de 
-            sa ligue pour la saison</i><br>
-            * <i>Champion mondial: correspond à l'équipe championne de la série 
-            mondiale, de tout les ligues</i>
+            *
+            <i>
+                <span class="champlg">Champion</span>: correspond à l'équipe
+                championne de sa ligue pour la saison
+            </i>
             <br>
-            <div id="nl-container"></div>
-            <div id="al-container"></div>
+            **
+            <i>
+                <span class="champws">Champion mondial</span>: correspond à
+                l'équipe championne de la série mondiale, de toutes les ligues
+            </i>
+            <br>
+            <div id="nl-data"></div>
+            <div id="al-data"></div>
         </main>
     </body>
 </html>
