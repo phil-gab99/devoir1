@@ -13,7 +13,7 @@
         <script type="text/javascript" src="script/scriptComp.js"></script>
         <title>Composition des équipes</title>
     </head>
-    <body>
+    <body onload="loadUI()">
         <nav>
             <a href="accueil.html">
                 <div class="navbar-item-logo">
@@ -44,52 +44,16 @@
             <br>
             <fieldset>
                 <label>Année:
-                    <select id="year">
-                        <option value="1969">1969</option>
-                        <option value="1970">1970</option>
-                        <option value="1971">1971</option>
-                        <option value="1972">1972</option>
-                        <option value="1973">1973</option>
-                        <option value="1974">1974</option>
-                        <option value="1975">1975</option>
-                        <option value="1976">1976</option>
-                        <option value="1977">1977</option>
-                        <option value="1978">1978</option>
-                        <option value="1979">1979</option>
-                        <option value="1980">1980</option>
-                        <option value="1981">1981</option>
-                        <option value="1982">1982</option>
-                        <option value="1983">1983</option>
-                        <option value="1984">1984</option>
-                        <option value="1985">1985</option>
-                        <option value="1986">1986</option>
-                        <option value="1987">1987</option>
-                        <option value="1988">1988</option>
-                        <option value="1989">1989</option>
-                        <option value="1990">1990</option>
-                        <option value="1991">1991</option>
-                        <option value="1992">1992</option>
-                        <option value="1993">1993</option>
-                        <option value="1994">1994</option>
-                        <option value="1995">1995</option>
-                        <option value="1996">1996</option>
-                        <option value="1997">1997</option>
-                        <option value="1998">1998</option>
-                        <option value="1999">1999</option>
-                        <option value="2000">2000</option>
-                        <option value="2001">2001</option>
-                        <option value="2002">2002</option>
-                        <option value="2003">2003</option>
-                        <option value="2004">2004</option>
-                    </select>
+                    <select id="year"></select>
                 </label>
                 <span>
                     <label>
-                        <input type="checkbox" name="fieldPlayers"
-                        >Joueurs de champ
+                        <input type="checkbox" id="fielders"
+                        onclick="checkControl()">Joueurs de champ
                     </label>
                     <label>
-                        <input type="checkbox" name="pitchers">Lanceurs
+                        <input type="checkbox" id="pitchers"
+                        onclick="checkControl()">Lanceurs
                     </label>
                 </span>
                 <span>
@@ -108,1190 +72,1192 @@
                         name="payroll">Masse salariale
                     </label>
                 </span>
-                <button id="comp-filter-btn">Filtrer</button>
             </fieldset>
             <br>
             <fieldset>
                 <span class="detail-comp">
-                    <label id="manager-lbl">
-                        <b>Gérant: </b><span>Karim</span>
+                    <label id="mnger">
+                        <b>Gérant: </b><span></span>
                     </label>
-                    <label id="owner-lbl">
-                        <b>Proprio: </b><span>Unitaire</span>
+                    <label id="prop">
+                        <b>Proprio: </b><span></span>
                     </label>
                 </span>
                 <span class="detail-comp">
-                    <label id="assistance-lbl">
-                        <b>Assistance: </b><span>3</span>
+                    <label id="audience">
+                        <b>Assistance: </b><span></span>
                     </label>
-                    <label id="payroll-lbl">
-                        <b>Masse salariale: </b><span>2 000 000</span>
+                    <label id="payroll">
+                        <b>Masse salariale: </b><span></span>
                     </label>
                 </span>
             </fieldset>
-            <hr>
-            <h2>Joueurs de champ</h2>
-            <fieldset class="stats-comp">
-                <h4>Statistiques</h4>
-                <aside>
-                    <b>Légende</b><br>
-                    <span>BA%:</span> Moyenne au bâton<br>
-                    <span>SL%:</span> Moyenne de puissance<br>
-                    <span>OB%:</span> Moyenne de présence sur les buts<br>
-                    <span>SO%:</span> Moyenne de puissance et présence<br>
-                    <span>SB%:</span> Moyenne de buts volés<br>
-                    <span>AB:</span> Présence officielle au bâton<br>
-                    <span>H:</span> Coup sûr<br>
-                    <span>2B:</span> Double<br>
-                    <span>3B:</span> Triple<br>
-                    <span>HR:</span> Coup de circuit<br>
-                    <span>BB:</span> But sur balles<br>
-                    <span>R:</span> Point<br>
-                    <span>SB:</span> But volé<br>
-                    <span>CS:</span> Retrait sur tentative de vol<br>
-                    <hr>
-                    <span>FP%:</span> Moyenne défensive<br>
-                    <span>POS:</span> Position joué<br>
-                    <span>A:</span> Assistance<br>
-                    <span>E:</span> Erreur<br>
-                    <span>salaire:</span> Salaire annuel<br>
-                </aside>
-                <fieldset class="stats-group">
-                    <legend>Attributs</legend>
-                    <fieldset class="stats-option">
-                        <legend>Offensive</legend>
+            <div id="field-data">
+                <hr>
+                <h2>Joueurs de champ</h2>
+                <fieldset class="stats-comp">
+                    <h4>Statistiques</h4>
+                    <aside>
+                        <b>Légende</b><br>
+                        <span>BA%:</span> Moyenne au bâton<br>
+                        <span>SL%:</span> Moyenne de puissance<br>
+                        <span>OB%:</span> Moyenne de présence sur les buts<br>
+                        <span>SO%:</span> Moyenne de puissance et présence<br>
+                        <span>SB%:</span> Moyenne de buts volés<br>
+                        <span>AB:</span> Présence officielle au bâton<br>
+                        <span>H:</span> Coup sûr<br>
+                        <span>2B:</span> Double<br>
+                        <span>3B:</span> Triple<br>
+                        <span>HR:</span> Coup de circuit<br>
+                        <span>BB:</span> But sur balles<br>
+                        <span>R:</span> Point<br>
+                        <span>SB:</span> But volé<br>
+                        <span>CS:</span> Retrait sur tentative de vol<br>
+                        <hr>
+                        <span>FP%:</span> Moyenne défensive<br>
+                        <span>POS:</span> Position joué<br>
+                        <span>A:</span> Assistance<br>
+                        <span>E:</span> Erreur<br>
+                        <span>salaire:</span> Salaire annuel<br>
+                    </aside>
+                    <fieldset class="stats-group">
+                        <legend>Attributs</legend>
+                        <fieldset class="stats-option">
+                            <legend>Offensive</legend>
+                            <span>
+                            <label><input type="checkbox" name="BA%">BA%</label>
+                            <label><input type="checkbox" name="SL%">SL%</label>
+                            <label><input type="checkbox" name="OB%">OB%</label>
+                        </span>
                         <span>
-                        <label><input type="checkbox" name="BA%">BA%</label>
-                        <label><input type="checkbox" name="SL%">SL%</label>
-                        <label><input type="checkbox" name="OB%">OB%</label>
-                    </span>
-                    <span>
-                        <label><input type="checkbox" name="SO%">SO%</label>
-                        <label><input type="checkbox" name="SB%">SB%</label>
-                        <label><input type="checkbox" name="AB">AB</label>
-                    </span>
-                    <span>
-                        <label><input type="checkbox" name="H">H</label>
-                        <label><input type="checkbox" name="1B">1B</label>
-                        <label><input type="checkbox" name="2B">2B</label>
-                    </span>
+                            <label><input type="checkbox" name="SO%">SO%</label>
+                            <label><input type="checkbox" name="SB%">SB%</label>
+                            <label><input type="checkbox" name="AB">AB</label>
+                        </span>
                         <span>
-                        <label><input type="checkbox" name="3B">3B</label>
-                        <label><input type="checkbox" name="HR">HR</label>
-                        <label><input type="checkbox" name="BB">BB</label>
-                    </span>
-                    <span>
-                        <label><input type="checkbox" name="R">R</label>
-                        <label><input type="checkbox" name="SB">SB</label>
-                        <label><input type="checkbox" name="CS">CS</label>
-                    </span>
-                    </fieldset>
-                    <fieldset class="stats-option">
-                        <legend>Défensive</legend>
-                        <label><input type="checkbox" name="FP%">FP%</label>
-                        <label><input type="checkbox" name="POS">POS</label>
-                        <label><input type="checkbox" name="A">A</label>
-                        <label><input type="checkbox" name="E">E</label>
-                        <label>
-                            <input type="checkbox" name="salary">salaire
-                        </label>
-                    </fieldset>
-                    <fieldset class="stats-option">
-                        <label>
-                            <input type="radio"
-                            name="players-stats-option-method" value="manual"
-                            checked>Au choix
-                        </label>
-                        <label>
-                            <input type="radio"
-                            name="players-stats-option-method"
-                            value="offensive">Offensive
-                        </label>
-                        <label>
-                            <input type="radio"
-                            name="players-stats-option-method"
-                            value="defensive">Défensive
-                        </label>
-                        <label>
-                            <input type="radio"
-                            name="players-stats-option-method" value="all">Tout
-                        </label>
-                        <button id="players-stats-btn">Choisir</button>
-                    </fieldset>
-                </fieldset>
-                <fieldset class="stats-filter">
-                    <legend>Triage</legend>
-                    <label>
-                        <input type="radio" name="players-stats-sort"
-                        value="BA%" checked>BA%
-                    </label>
-                    <label>
-                        <input type="radio" name="players-stats-sort"
-                        value="SL%">SL%
-                    </label>
-                    <label>
-                        <input type="radio" name="players-stats-sort"
-                        value="OB%">OB%
-                    </label>
-                    <label>
-                        <input type="radio" name="players-stats-sort"
-                        value="FP%">FP%
-                    </label>
-                    <label>
-                        <input type="radio" name="players-stats-sort"
-                        value="HR">HR
-                    </label>
-                    <label>
-                        <input type="radio" name="players-stats-sort"
-                        value="salary">salaire
-                    </label>
-                    <button id="players-stats-sort-btn">Trier</button>
-                </fieldset>
-            </fieldset>
-            <table id="players">
-                <tr>
-                    <th>Nom</th>
-                    <th>Prénom</th>
-                    <th>BA%</th>
-                    <th>SL%</th>
-                    <th>OB%</th>
-                    <th>SO%</th>
-                    <th>SB%</th>
-                    <th>AB</th>
-                    <th>H</th>
-                    <th>1B</th>
-                    <th>2B</th>
-                    <th>3B</th>
-                    <th>HR</th>
-                    <th>BB</th>
-                    <th>R</th>
-                    <th>SB</th>
-                    <th>CS</th>
-                    <th>FP%</th>
-                    <th>POS</th>
-                    <th>A</th>
-                    <th>E</th>
-                    <th>salaire</th>
-                </tr>
-                <tr>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                </tr>
-                <tr>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                </tr>
-                <tr>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                </tr>
-                <tr>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                </tr>
-                <tr>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                </tr>
-                <tr>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                </tr>
-                <tr>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                </tr>
-                <tr>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                </tr>
-                <tr>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                </tr>
-                <tr>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                </tr>
-                <tr>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                </tr>
-                <tr>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                </tr>
-                <tr>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                </tr>
-                <tr>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                </tr>
-                <tr>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                </tr>
-                <tr>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                </tr>
-                <tr>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                </tr>
-                <tr>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                </tr>
-                <tr>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                </tr>
-                <tr>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                </tr>
-                <tr>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>54</td>
-                    <td>01</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>01</td>
-                    <td>3</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                    <td>01</td>
-                </tr>
-            </table>
-            <hr>
-            <h2>Lanceurs</h2>
-            <fieldset class="stats-comp">
-                <h4>Statistiques</h4>
-                <aside>
-                    <b>Légende</b><br>
-                    <span>ERA:</span> Moyenne de points mérités<br>
-                    <span>BAOpp:</span> Moyenne au bâton de l'adversaire<br>
-                    <span>partant:</span> Lanceur partant<br>
-                    <span>G:</span> Parties<br>
-                    <span>GS:</span> Parties commencées<br>
-                    <span>CG:</span> Parties complétées<br>
-                    <span>W:</span> Victoires<br>
-                    <span>L:</span> Pertes<br>
-                    <span>SV:</span> Sauvetage<br>
-                    <span>IPouts:</span> Retraits lancés<br>
-                    <span>SO:</span> Retrait au bâton<br>
-                    <span>H:</span> Coup sûr<br>
-                    <span>BB:</span> But sur balles<br>
-                    <span>salaire:</span> Salaire annuel<br>
-                </aside>
-                <fieldset class="stats-group">
-                    <legend>Attributs</legend>
-                    <fieldset class="stats-option">
+                            <label><input type="checkbox" name="H">H</label>
+                            <label><input type="checkbox" name="2B">2B</label>
+                            <label><input type="checkbox" name="3B">3B</label>
+                        </span>
                         <span>
-                        <label><input type="checkbox" name="ERA">ERA</label>
-                        <label>
-                            <input type="checkbox" name="BAOpp">BAOpp
-                        </label>
-                        <label>
-                            <input type="checkbox" name="partant">partant
-                        </label>
-                    </span>
-                    <span>
-                        <label><input type="checkbox" name="G">G</label>
-                        <label><input type="checkbox" name="GS">GS</label>
-                        <label><input type="checkbox" name="CG">CG</label>
-                    </span>
-                    <span>
-                        <label><input type="checkbox" name="W">W</label>
-                        <label><input type="checkbox" name="L">L</label>
-                        <label><input type="checkbox" name="SV">SV</label>
-                    </span>
-                    <span>
-                        <label>
-                            <input type="checkbox" name="IPouts">IPouts
-                        </label>
-                        <label><input type="checkbox" name="SO">SO</label>
-                        <label><input type="checkbox" name="H">H</label>
-                    </span>
-                    <span>
-                        <label><input type="checkbox" name="BB">BB</label>
-                        <label>
-                            <input type="checkbox" name="salary">salaire
-                        </label>
-                    </span>
+                            <label><input type="checkbox" name="HR">HR</label>
+                            <label><input type="checkbox" name="BB">BB</label>
+                            <label><input type="checkbox" name="R">R</label>
+                        </span>
+                        <span>
+                            <label><input type="checkbox" name="SB">SB</label>
+                            <label><input type="checkbox" name="CS">CS</label>
+                        </span>
+                        </fieldset>
+                        <fieldset class="stats-option">
+                            <legend>Défensive</legend>
+                            <label><input type="checkbox" name="FP%">FP%</label>
+                            <label><input type="checkbox" name="POS">POS</label>
+                            <label><input type="checkbox" name="A">A</label>
+                            <label><input type="checkbox" name="E">E</label>
+                            <label>
+                                <input type="checkbox" name="salary">salaire
+                            </label>
+                        </fieldset>
+                        <fieldset class="stats-option">
+                            <label>
+                                <input type="radio"
+                                name="players-stats-option-method" value="manual"
+                                checked>Au choix
+                            </label>
+                            <label>
+                                <input type="radio"
+                                name="players-stats-option-method"
+                                value="offensive">Offensive
+                            </label>
+                            <label>
+                                <input type="radio"
+                                name="players-stats-option-method"
+                                value="defensive">Défensive
+                            </label>
+                            <label>
+                                <input type="radio"
+                                name="players-stats-option-method" value="all">Tout
+                            </label>
+                            <button id="players-stats-btn">Choisir</button>
+                        </fieldset>
                     </fieldset>
-                    <fieldset class="stats-option">
+                    <fieldset class="stats-filter">
+                        <legend>Triage</legend>
                         <label>
-                            <input type="radio"
-                            name="pitchers-stats-option-method" value="manual"
-                            checked>Au choix
+                            <input type="radio" name="players-stats-sort"
+                            value="BA%" checked>BA%
                         </label>
                         <label>
-                            <input type="radio"
-                            name="pitchers-stats-option-method"
-                            value="all">Tout
+                            <input type="radio" name="players-stats-sort"
+                            value="SL%">SL%
                         </label>
-                        <button id="pitchers-stats-btn">Choisir</button>
+                        <label>
+                            <input type="radio" name="players-stats-sort"
+                            value="OB%">OB%
+                        </label>
+                        <label>
+                            <input type="radio" name="players-stats-sort"
+                            value="FP%">FP%
+                        </label>
+                        <label>
+                            <input type="radio" name="players-stats-sort"
+                            value="HR">HR
+                        </label>
+                        <label>
+                            <input type="radio" name="players-stats-sort"
+                            value="salary">salaire
+                        </label>
+                        <button id="players-stats-sort-btn">Trier</button>
                     </fieldset>
                 </fieldset>
-                <fieldset class="stats-filter">
-                    <legend>Triage</legend>
-                    <label>
-                        <input type="radio" name="pitchers-stats-sort"
-                        value="ERA" checked>ERA
-                    </label>
-                    <label>
-                        <input type="radio" name="pitchers-stats-sort"
-                        value="BAOpp">BAOpp
-                    </label>
-                    <label>
-                        <input type="radio" name="pitchers-stats-sort"
-                        value="G">G
-                    </label>
-                    <label>
-                        <input type="radio" name="pitchers-stats-sort"
-                        value="GS">GS
-                    </label>
-                    <label>
-                        <input type="radio" name="pitchers-stats-sort"
-                        value="CG">CG
-                    </label>
-                    <label>
-                        <input type="radio" name="pitchers-stats-sort"
-                        value="W">W
-                    </label>
-                    <label>
-                        <input type="radio" name="pitchers-stats-sort"
-                        value="SO">SO
-                    </label>
-                    <label>
-                        <input type="radio" name="pitchers-stats-sort"
-                        value="H">H
-                    </label>
-                    <label>
-                        <input type="radio" name="pitchers-stats-sort"
-                        value="BB">BB
-                    </label>
-                    <label>
-                        <input type="radio" name="pitchers-stats-sort"
-                        value="salary">salaire
-                    </label>
-                    <button id="pitchers-stats-sort-btn">Trier</button>
+                <table id="players">
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>BA%</th>
+                        <th>SL%</th>
+                        <th>OB%</th>
+                        <th>SO%</th>
+                        <th>SB%</th>
+                        <th>AB</th>
+                        <th>H</th>
+                        <th>1B</th>
+                        <th>2B</th>
+                        <th>3B</th>
+                        <th>HR</th>
+                        <th>BB</th>
+                        <th>R</th>
+                        <th>SB</th>
+                        <th>CS</th>
+                        <th>FP%</th>
+                        <th>POS</th>
+                        <th>A</th>
+                        <th>E</th>
+                        <th>salaire</th>
+                    </tr>
+                    <tr>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                    </tr>
+                    <tr>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                    </tr>
+                    <tr>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                    </tr>
+                    <tr>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                    </tr>
+                    <tr>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                    </tr>
+                    <tr>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                    </tr>
+                    <tr>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                    </tr>
+                    <tr>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                    </tr>
+                    <tr>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                    </tr>
+                    <tr>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                    </tr>
+                    <tr>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                    </tr>
+                    <tr>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                    </tr>
+                    <tr>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                    </tr>
+                    <tr>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                    </tr>
+                    <tr>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                    </tr>
+                    <tr>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                    </tr>
+                    <tr>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                    </tr>
+                    <tr>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                    </tr>
+                    <tr>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                    </tr>
+                    <tr>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                    </tr>
+                    <tr>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>54</td>
+                        <td>01</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>01</td>
+                        <td>3</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                        <td>01</td>
+                    </tr>
+                </table>
+            </div>
+            <div id="pitch-data">
+                <hr>
+                <h2>Lanceurs</h2>
+                <fieldset class="stats-comp">
+                    <h4>Statistiques</h4>
+                    <aside>
+                        <b>Légende</b><br>
+                        <span>ERA:</span> Moyenne de points mérités<br>
+                        <span>BAOpp:</span> Moyenne au bâton de l'adversaire<br>
+                        <span>partant:</span> Lanceur partant<br>
+                        <span>G:</span> Parties<br>
+                        <span>GS:</span> Parties commencées<br>
+                        <span>CG:</span> Parties complétées<br>
+                        <span>W:</span> Victoires<br>
+                        <span>L:</span> Pertes<br>
+                        <span>SV:</span> Sauvetage<br>
+                        <span>IPouts:</span> Retraits lancés<br>
+                        <span>SO:</span> Retrait au bâton<br>
+                        <span>H:</span> Coup sûr<br>
+                        <span>BB:</span> But sur balles<br>
+                        <span>salaire:</span> Salaire annuel<br>
+                    </aside>
+                    <fieldset class="stats-group">
+                        <legend>Attributs</legend>
+                        <fieldset class="stats-option">
+                            <span>
+                            <label><input type="checkbox" name="ERA">ERA</label>
+                            <label>
+                                <input type="checkbox" name="BAOpp">BAOpp
+                            </label>
+                            <label>
+                                <input type="checkbox" name="partant">partant
+                            </label>
+                        </span>
+                        <span>
+                            <label><input type="checkbox" name="G">G</label>
+                            <label><input type="checkbox" name="GS">GS</label>
+                            <label><input type="checkbox" name="CG">CG</label>
+                        </span>
+                        <span>
+                            <label><input type="checkbox" name="W">W</label>
+                            <label><input type="checkbox" name="L">L</label>
+                            <label><input type="checkbox" name="SV">SV</label>
+                        </span>
+                        <span>
+                            <label>
+                                <input type="checkbox" name="IPouts">IPouts
+                            </label>
+                            <label><input type="checkbox" name="SO">SO</label>
+                            <label><input type="checkbox" name="H">H</label>
+                        </span>
+                        <span>
+                            <label><input type="checkbox" name="BB">BB</label>
+                            <label>
+                                <input type="checkbox" name="salary">salaire
+                            </label>
+                        </span>
+                        </fieldset>
+                        <fieldset class="stats-option">
+                            <label>
+                                <input type="radio"
+                                name="pitchers-stats-option-method" value="manual"
+                                checked>Au choix
+                            </label>
+                            <label>
+                                <input type="radio"
+                                name="pitchers-stats-option-method"
+                                value="all">Tout
+                            </label>
+                            <button id="pitchers-stats-btn">Choisir</button>
+                        </fieldset>
+                    </fieldset>
+                    <fieldset class="stats-filter">
+                        <legend>Triage</legend>
+                        <label>
+                            <input type="radio" name="pitchers-stats-sort"
+                            value="ERA" checked>ERA
+                        </label>
+                        <label>
+                            <input type="radio" name="pitchers-stats-sort"
+                            value="BAOpp">BAOpp
+                        </label>
+                        <label>
+                            <input type="radio" name="pitchers-stats-sort"
+                            value="G">G
+                        </label>
+                        <label>
+                            <input type="radio" name="pitchers-stats-sort"
+                            value="GS">GS
+                        </label>
+                        <label>
+                            <input type="radio" name="pitchers-stats-sort"
+                            value="CG">CG
+                        </label>
+                        <label>
+                            <input type="radio" name="pitchers-stats-sort"
+                            value="W">W
+                        </label>
+                        <label>
+                            <input type="radio" name="pitchers-stats-sort"
+                            value="SO">SO
+                        </label>
+                        <label>
+                            <input type="radio" name="pitchers-stats-sort"
+                            value="H">H
+                        </label>
+                        <label>
+                            <input type="radio" name="pitchers-stats-sort"
+                            value="BB">BB
+                        </label>
+                        <label>
+                            <input type="radio" name="pitchers-stats-sort"
+                            value="salary">salaire
+                        </label>
+                        <button id="pitchers-stats-sort-btn">Trier</button>
+                    </fieldset>
                 </fieldset>
-            </fieldset>
-            <table id="pitchers">
-                <tr>
-                    <th>Nom</th>
-                    <th>Prénom</th>
-                    <th>ERA</th>
-                    <th>BAOpp</th>
-                    <th>partant</th>
-                    <th>G</th>
-                    <th>GS</th>
-                    <th>CG</th>
-                    <th>W</th>
-                    <th>L</th>
-                    <th>SV</th>
-                    <th>IPouts</th>
-                    <th>SO</th>
-                    <th>H</th>
-                    <th>BB</th>
-                    <th>salaire</th>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                    <td>3</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                    <td>3</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                    <td>3</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                    <td>3</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                    <td>3</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                    <td>3</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                    <td>3</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                    <td>3</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                    <td>3</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                    <td>3</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                    <td>3</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                    <td>3</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                    <td>3</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                    <td>3</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                    <td>3</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                    <td>3</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                    <td>3</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                    <td>3</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                    <td>3</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                    <td>3</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                    <td>3</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>54</td>
-                    <td>10</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>10</td>
-                </tr>
-            </table>
+                <table id="pitchers">
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>ERA</th>
+                        <th>BAOpp</th>
+                        <th>partant</th>
+                        <th>G</th>
+                        <th>GS</th>
+                        <th>CG</th>
+                        <th>W</th>
+                        <th>L</th>
+                        <th>SV</th>
+                        <th>IPouts</th>
+                        <th>SO</th>
+                        <th>H</th>
+                        <th>BB</th>
+                        <th>salaire</th>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                        <td>3</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                        <td>3</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                        <td>3</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                        <td>3</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                        <td>3</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                        <td>3</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                        <td>3</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                        <td>3</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                        <td>3</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                        <td>3</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                        <td>3</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                        <td>3</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                        <td>3</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                        <td>3</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                        <td>3</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                        <td>3</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                        <td>3</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                        <td>3</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                        <td>3</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                        <td>3</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                        <td>3</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>54</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>10</td>
+                    </tr>
+                </table>
+            </div>
         </main>
     </body>
 </html>

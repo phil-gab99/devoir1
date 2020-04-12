@@ -182,6 +182,10 @@ var init = function() {
     var nlData = $("#nl-data"); //Div alloqué à la ligue nationale
     var alData = $("#al-data"); //Div alloqué à la ligue américaine
 
+    //Le contenu est réinitialisé pour une nouvelle requête
+    nlData.html('');
+    alData.html('');
+
     //La valeur de ces booléens dépend des choix de l'usager dans l'interface
     var nlCheck = $("#nl").is(':checked'); //Case à cocher ligue nationale
     var alCheck = $("#al").is(':checked'); //Case à cocher ligue américaine
@@ -218,8 +222,7 @@ var init = function() {
 };
 
 /*
-* La prcédure loadUI s'occupe de configurer un élément de sélection par
-* l'usager et initie une première requête
+* La prcédure loadUI s'occupe de configurer un élément de sélection
 **/
 
 var loadUI = function() {
@@ -228,5 +231,4 @@ var loadUI = function() {
         $("#year").append('<option>' + i + '</option>');
     }
 
-    init();
 };
