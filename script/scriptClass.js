@@ -1,8 +1,20 @@
 /*
 * @Vincent Falardeau
 * @Philippe Gabriel
-* @Version 1.2.6 2020-04-17
+* @Version 1.2.8 2020-04-17
 **/
+
+/*
+* La procédure checkControl s'occupe de contrôler l'état de la case à cocher
+* pour le champion de la ligue américaine en s'assurant que l'usager ne
+* puisse sélectionner la case s'il n'a pas en premier lieu sélectionné sa ligue
+* correspondante
+**/
+
+var checkControl = function() {
+    $('#alc').attr('disabled', !$('#alc').attr('disabled')); //Effet bascule
+    $('#alc').prop('checked', false); //Décocher la case si cochée
+};
 
 /*
 * La procédure loadTable génère les tables selons la requête initié par

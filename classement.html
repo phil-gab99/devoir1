@@ -61,10 +61,11 @@
                 </span>
                 <span>
                     <label>
-                        <input type="checkbox" id="al">Ligue américaine
+                        <input type="checkbox" id="al"
+                        onchange="checkControl()">Ligue américaine
                     </label>
                     <label>
-                        <input type="checkbox" id="alc">Champion*
+                        <input type="checkbox" id="alc" disabled>Champion*
                     </label>
                 </span>
                 <span>
@@ -74,17 +75,17 @@
                 </span>
                 <button onclick="init()">Filtrer</button>
             </fieldset>
-            *
             <i>
                 <span class="champlg">Champion</span>: correspond à l'équipe
                 championne de sa ligue pour la saison
             </i>
+            *
             <br>
-            **
             <i>
                 <span class="champws">Champion mondial</span>: correspond à
                 l'équipe championne de la série mondiale, de toutes les ligues
             </i>
+            **
             <br>
             <div id="nl-data"></div>
             <div id="al-data"></div>
