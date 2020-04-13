@@ -7,14 +7,17 @@ var initClassement = function(){
 
 var queryFrom = function(year, league, division){
     return "\
-        t.teamID as equipe, \
-        t.name as nom, \
-        t.yearID as annee, \
-        t.park as parc, \
-        t.teamID=WSC.teamIDWinner AS WS, \
-        t.teamID=LC.teamIDWinner AS NLCS, \
+        t.teamID as id, \
+        t.name as equipe, \
+        t.W / (t.W + t.L) as moyenne, \
         t.W as V, \
-        t.L as D \
+        t.L as D, \
+        (select max(W) from Teams \
+            where yearID = "+year+" \
+            and lgID = '"+league+"' \
+            and divID = '"+division+"') - t.W as diff, \
+        t.teamID=WSC.teamIDWinner AS WS, \
+        t.teamID=LC.teamIDWinner AS NLCS \
         FROM Teams t, \
         (SELECT teamIDWinner FROM SeriesPost \
             WHERE yearID="+year+" AND round='"+league+"CS') AS LC,\
@@ -64,7 +67,7 @@ var updateClassement = function(){
 }
 
 var executeQuery = function(query, league, division){
-    let postData = {};
+    let postData = {}
 
     postData["db"] = "dift6800_baseball"
     postData["query"] = query
@@ -80,40 +83,36 @@ var executeQuery = function(query, league, division){
 
 var buildTable = function(data, league, division){
 
-    console.log(data)
-
     $("#"+league+"-"+division+"-table-container").html('\
         <h3>Division '+division+'</h3>\
         <table id="'+league+'-'+division+'-table">\
             <tr>\
                 <th>Équipe</th>\
-                <th>Nom</th>\
-                <th>Année</th>\
-                <th>Ville</th>\
+                <th>Moyenne</th>\
                 <th>Victoires</th>\
                 <th>Défaites</th>\
+                <th>Diff</th>\
             </tr>\
         </table>')
 
     data.forEach(function(entry){
         $("#"+league+"-"+division+"-table").append('\
-            <tr id="'+entry.equipe+'">\
+            <tr id="'+entry.id+'">\
                 <td>'+entry.equipe+'</td>\
-                <td>'+entry.nom+'</td>\
-                <td>'+entry.annee+'</td>\
-                <td>'+entry.parc+'</td>\
+                <td>'+entry.moyenne+'</td>\
                 <td>'+entry.V+'</td>\
                 <td>'+entry.D+'</td>\
+                <td>'+entry.diff+'</td>\
             </tr>')
 
         if(((league == 'al' && $("#al-champ-cbx").is(':checked')) || 
             (league == 'nl' && $("#nl-champ-cbx").is(':checked'))) && 
             entry.NLCS == 1){
-            $("#"+entry.equipe).css("background-color", "#b08d57")
+            $("#"+entry.id).css("background-color", "#b08d57")
         }
 
         if($("#wrld-champ-cbx").is(':checked') && entry.WS == 1){
-            $("#"+entry.equipe).css("background-color", "gold")
+            $("#"+entry.id).css("background-color", "gold")
         }  
     })
 }
