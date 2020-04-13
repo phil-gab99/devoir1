@@ -68,13 +68,13 @@ var loadTable = function(data, lg, div) {
             if (((lg == 'nl' && nlChamp) || (lg == 'al' && alChamp))
             && entry.LSC == 1) {
 
-                $("#" + entry.equipe).css("background-color", "#ff9999")
+                $("#" + entry.equipe).css("background-color", "#ff9999");
             }
 
-            //Condition pour indiquer champion mondiale
+            //Condition pour indiquer champion mondial
             if (wChamp && entry.WSC == 1) {
 
-                $("#" + entry.equipe).css("background-color", "#ff9933")
+                $("#" + entry.equipe).css("background-color", "#ff9933");
             }
         }
     );
@@ -96,39 +96,40 @@ var loadTable = function(data, lg, div) {
 var querySql = function(year, lg, div) {
 
     var query = "" +
-        "ta.teamID AS equipe, " +
-        "ta.name AS nom, " +
-        "ta.W / (ta.W + ta.L) AS moyenne, " +
-        "ta.W AS V, " +
-        "ta.L AS D, " +
-        "tb.W - ta.W AS diff, " +
-        "ta.teamID = ls.teamIDWinner AS LSC, " +
-        "ta.teamID = ws.teamIDWinner AS WSC " +
-    "FROM Teams AS ta " +
-        "INNER JOIN " +
-            "(SELECT W, lgID, divID, yearID " +
-                "FROM Teams " +
-                "WHERE Rank = 1 " +
-            ") AS tb " +
-            "ON ta.lgID = tb.lgID " +
-                "AND ta.divID = tb.divID " +
-                "AND ta.yearID = tb.yearID " +
-        "INNER JOIN " +
-            "(SELECT teamIDWinner, yearID " +
-                "FROM SeriesPost " +
-                "WHERE round = '" + lg + "CS' " +
-            ") AS ls " +
-            "ON ta.yearID = ls.yearID " +
-        "INNER JOIN " +
-            "(SELECT teamIDWinner, yearID " +
-                "FROM SeriesPost " +
-                "WHERE round = 'WS' " +
-            ") AS ws " +
-            "ON ta.yearID = ws.yearID " +
-    "WHERE ta.lgID = '" + lg + "' " +
-        "AND ta.divID = '" + div + "' " +
-        "AND ta.yearID = " + year + " " +
-    "ORDER by V DESC;";
+            "ta.teamID AS equipe, " +
+            "ta.name AS nom, " +
+            "ta.W / (ta.W + ta.L) AS moyenne, " +
+            "ta.W AS V, " +
+            "ta.L AS D, " +
+            "tb.W - ta.W AS diff, " +
+            "ta.teamID = ls.teamIDWinner AS LSC, " +
+            "ta.teamID = ws.teamIDWinner AS WSC " +
+        "FROM Teams AS ta " +
+            "INNER JOIN " +
+                "(SELECT W, lgID, divID, yearID " +
+                    "FROM Teams " +
+                    "WHERE Rank = 1 " +
+                ") AS tb " +
+                "ON ta.lgID = tb.lgID " +
+                    "AND ta.divID = tb.divID " +
+                    "AND ta.yearID = tb.yearID " +
+            "INNER JOIN " +
+                "(SELECT teamIDWinner, yearID " +
+                    "FROM SeriesPost " +
+                    "WHERE round = '" + lg + "CS' " +
+                ") AS ls " +
+                "ON ta.yearID = ls.yearID " +
+            "INNER JOIN " +
+                "(SELECT teamIDWinner, yearID " +
+                    "FROM SeriesPost " +
+                    "WHERE round = 'WS' " +
+                ") AS ws " +
+                "ON ta.yearID = ws.yearID " +
+        "WHERE ta.lgID = '" + lg + "' " +
+            "AND ta.divID = '" + div + "' " +
+            "AND ta.yearID = " + year + " " +
+        "ORDER by V DESC;"
+    ;
 
     return query;
 }
@@ -151,14 +152,12 @@ var queryData = function(query, lg, div) {
 
     //Objet constitué du nom de la base de données et des données de la requête
     var postData = {
-        db:    "dift6800_baseball",
+        db: "dift6800_baseball",
         query: query
     };
 
     //Les données désirées sont récupérés par une requête HTTP POST
-    $.post(
-        url,
-        postData,
+    $.post(url,postData,
         function(data,status) {
 
             var obj = JSON.parse(data);
@@ -190,7 +189,7 @@ var init = function() {
     var nlCheck = $("#nl").is(':checked'); //Case à cocher ligue nationale
     var alCheck = $("#al").is(':checked'); //Case à cocher ligue américaine
 
-    var year = $("#year option:selected").text(); //Année sélectionnée
+    var yearSelect = $("#year option:selected").text(); //Année sélectionnée
 
     if (nlCheck) {
 
@@ -202,8 +201,8 @@ var init = function() {
         );
 
         //Une requête pour chaque division est envoyée
-        queryData(querySql(year, 'NL', 'E'), 'nl', 'est')
-        queryData(querySql(year, 'NL', 'W'), 'nl', 'ouest')
+        queryData(querySql(yearSelect, 'NL', 'E'), 'nl', 'est')
+        queryData(querySql(yearSelect, 'NL', 'W'), 'nl', 'ouest')
     }
 
     if (alCheck) {
@@ -216,8 +215,8 @@ var init = function() {
         );
 
         //Une requête pour chaque division est envoyée
-        queryData(querySql(year, 'AL', 'E'), 'al', 'est');
-        queryData(querySql(year, 'AL', 'W'), 'al', 'ouest');
+        queryData(querySql(yearSelect, 'AL', 'E'), 'al', 'est');
+        queryData(querySql(yearSelect, 'AL', 'W'), 'al', 'ouest');
     }
 };
 
@@ -230,5 +229,4 @@ var loadUI = function() {
     for(var i = 1969; i <= 2004; i++) {
         $("#year").append('<option>' + i + '</option>');
     }
-
 };
