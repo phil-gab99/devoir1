@@ -33,6 +33,19 @@
 }(jQuery));
 
 /*
+* La fonction numFormat s'occupe de bien afficher les valeurs numériques d'une
+* façon lisible pour l'usager
+*
+* @param num Integer à modifier
+* @param unit String représentant les unités si disponible
+* @return format String conenant le nombre formaté
+**/
+
+var numFormat = function(num, unit) {
+    
+};
+
+/*
 * La procédure loadDetails génère les éléments obtenus des requêtes sur
 * les informations n'appartenant pas aux tables, notamment sur le gérant,
 * l'assistance et la masse salariale
@@ -42,11 +55,41 @@
 
 var loadDetails = function(data) {
 
-    var property = "";
-    var value = 0;
-    for (var i in data[0]) property = i; value = data[0][i];
-    var labelData = $("#" + property + "-data span");
-    labelData.html(value != null ? value : "N/A");
+    var property = ""; //Type de donnée à afficher
+    var value;         //Valeur de la donnée
+
+    for (var i = 0; i < data.length; i++) {
+
+        //Lorsqu'il n'y a qu'un gérant par année, une entrée vide s'ajoute
+        for (var j in data[i]) {
+
+            if (j == "manager" && data.length == 1) {
+
+                data.push({manager: null});
+            }
+        }
+    }
+
+    data.forEach(
+
+        function(entry, pos) {
+
+            //Pour une entrée la propriété et valeur sont extraites
+            for (var i in entry) {
+                property = i;
+                value = entry[i];
+            }
+
+            //Lorsqu'il y a plus qu'un gérant par année
+            if (pos == 1) {
+                property = "prop"; //Indiquée à une différente propriété
+            }
+
+            //Les données sont affichées au bon emplacement
+            var labelData = $("#" + property + "-data span");
+            labelData.html(value != null ? value : "N/A");
+        }
+    );
 };
 
 /*
@@ -152,6 +195,7 @@ var loadTable = function(data, field) {
 * Source: https://stackoverflow.com/questions/1456106/how-to-select-an-empty-result-set
 *
 * @param queryObj String indiquant ce que désire voir l'usager
+* @param queryName String indiquant un nom de l'attribut
 * @param table String indiquant la table de la base de donnée où se trouve
 * l'information en question
 * @param year Integer indiquant l'année choisie par l'usager
@@ -159,14 +203,14 @@ var loadTable = function(data, field) {
 * php
 **/
 
-var queryDetailCompSql = function(queryObj, table, year) {
+var queryDetailCompSql = function(queryObj, queryName, table, year) {
 
-    var query = "SUM(" + queryObj + ") AS '" + queryObj + "' " +
+    var query = queryObj + " AS " + queryName + " " +
             "FROM " + table + " " +
             "WHERE yearID = " + year + " " +
                 "AND teamID = 'MON';"
     ;
-
+console.log(query);
     return query;
 };
 
@@ -417,9 +461,10 @@ var querySql = function(field, year) {
 * @param query String composé de la requête formée par l'usager en format SQL
 * @param type Booléen indiquant le type de données à recueillir selon le type
 * de joueurs sélectionnés
+* @param detail Booléen décrivant si la requête appartien aux détails d'entête
 **/
 
-var queryData = function(query, type) {
+var queryData = function(query, type, detail) {
 
     //L'url de la base de donnée à laquelle la requête sera acheminée
     var url = "http://www-ens.iro.umontreal.ca/~dift6800/baseball/db.php";
@@ -437,7 +482,7 @@ var queryData = function(query, type) {
             var obj = JSON.parse(data);
 
             if (obj.error == "") {
-                if (obj.data.length <= 1) {
+                if (detail) {
                     loadDetails(obj.data)
                 } else {
                     loadTable(obj.data, type);
@@ -481,7 +526,14 @@ var checkControl = function() {
     //Informations relatives au gérant
     if (mngerSelect) {
         $('.detail-comp #manager-data, #prop-data').visible();
-        //Need to know what proprio means
+        queryData(
+            queryDetailCompSql(
+                "CONCAT(m.nameFirst, ' ', m.nameLast)",
+                "'manager'",
+                "Managers AS mn INNER JOIN Master AS m ON m.playerID = mn.playerID",
+                yearSelect
+            ), false, true
+        );
     } else {
         $('.detail-comp #manager-data, #prop-data').invisible();
     }
@@ -489,7 +541,11 @@ var checkControl = function() {
     //Informations relatives à l'assistance
     if (attdSelect) {
         $('.detail-comp #attendance-data').visible();
-        queryData(queryDetailCompSql("attendance", "Teams", yearSelect));
+        queryData(
+            queryDetailCompSql(
+                "attendance", "'attendance'", "Teams", yearSelect
+            ), false, true
+        );
     } else {
         $('.detail-comp #attendance-data').invisible();
     }
@@ -497,7 +553,11 @@ var checkControl = function() {
     //Informations relatives à la masse salariale
     if (paySelect) {
         $('.detail-comp #salary-data').visible();
-        queryData(queryDetailCompSql("salary", "Salaries", yearSelect));
+        queryData(
+            queryDetailCompSql(
+                "SUM(salary)", "'salary'", "Salaries", yearSelect
+            ), false, true
+        );
     } else {
         $('.detail-comp #salary-data').invisible();
     }
@@ -539,7 +599,7 @@ var init = function(field) {
     }
 
     //Une requête selon le type de joueurs sélectionné est lancé
-    queryData(querySql(field,yearSelect), field);
+    queryData(querySql(field,yearSelect), field, false);
 };
 
 /*
