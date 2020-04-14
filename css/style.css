@@ -225,24 +225,16 @@ tr:nth-child(1n+2):hover {
     font-weight: 550;
 }
 
-/*Fieldset containing team comp stats selection*/
-.stats-comp {
-    margin-bottom: 40px;
-}
-
-.stats-filter {
+.stats {
     display: inline-block;
     float: right;
     margin-top: 20px;
     width: 65%;
 }
 
-/*Fieldset semantically grouping stats elements*/
-.stats-group {
-    display: inline-block;
-    margin-top: 20px;
-    max-width: 65%;
-    float: right;
+/*Fieldset containing team comp stats selection*/
+.stats-comp {
+    margin-bottom: 40px;
 }
 
 /*Fieldsets containing stats option selection*/

@@ -128,7 +128,7 @@
                             <span>salaire:</span> Salaire annuel<br>
                         </div>
                     </aside>
-                    <fieldset class="stats-group">
+                    <fieldset class="stats">
                         <legend>Attributs</legend>
                         <fieldset class="stats-option" id="field-attroff">
                             <legend>Offensive</legend>
@@ -139,14 +139,16 @@
                                 <label>
                                     <input type="checkbox" id="fSL-moy">SL%
                                 </label>
-                                <label>
-                                    <input type="checkbox" id="fOB-moy">OB%
-                                </label>
                             </span>
                             <span>
                                 <label>
+                                    <input type="checkbox" id="fOB-moy">OB%
+                                </label>
+                                <label>
                                     <input type="checkbox" id="fSO-moy">SO%
                                 </label>
+                            </span>
+                            <span>
                                 <label>
                                     <input type="checkbox" id="fSB-moy">SB%
                                 </label>
@@ -161,14 +163,16 @@
                                 <label>
                                     <input type="checkbox" id="f2B">2B
                                 </label>
-                                <label>
-                                    <input type="checkbox" id="f3B">3B
-                                </label>
                             </span>
                             <span>
                                 <label>
+                                    <input type="checkbox" id="f3B">3B
+                                </label>
+                                <label>
                                     <input type="checkbox" id="fHR">HR
                                 </label>
+                            </span>
+                            <span>
                                 <label>
                                     <input type="checkbox" id="fBB">BB
                                 </label>
@@ -221,7 +225,7 @@
                             </label>
                         </fieldset>
                     </fieldset>
-                    <fieldset class="stats-filter">
+                    <fieldset class="stats">
                         <legend>Triage</legend>
                         <label>
                             <input type="radio" name="field-sort"
@@ -249,7 +253,7 @@
                             value="salary">salaire
                         </label>
                     </fieldset>
-                    <button class="stats-filter"
+                    <button class="stats"
                     onclick="init(true)">Lancer la requête</button>
                 </fieldset>
                 <table id="field-table"></table>
@@ -277,7 +281,7 @@
                         <span>BB:</span> But sur balles<br>
                         <span>salaire:</span> Salaire annuel<br>
                     </aside>
-                    <fieldset class="stats-group">
+                    <fieldset class="stats">
                         <legend>Attributs</legend>
                         <fieldset class="stats-option" id="pitch-attr">
                             <span>
@@ -287,13 +291,15 @@
                                 <label>
                                     <input type="checkbox" id="pBAOpp">BAOpp
                                 </label>
+                            </span>
+                            <span>
                                 <label>
                                     <input type="checkbox"
                                     id="ppartant">partant
                                 </label>
+                                <label><input type="checkbox" id="pG">G</label>
                             </span>
                             <span>
-                                <label><input type="checkbox" id="pG">G</label>
                                 <label>
                                     <input type="checkbox" id="pGS">GS
                                 </label>
@@ -304,14 +310,16 @@
                             <span>
                                 <label><input type="checkbox" id="pW">W</label>
                                 <label><input type="checkbox" id="pL">L</label>
-                                <label>
-                                    <input type="checkbox" id="pSV">SV
-                                </label>
                             </span>
                             <span>
                                 <label>
+                                    <input type="checkbox" id="pSV">SV
+                                </label>
+                                <label>
                                     <input type="checkbox" id="pIPouts">IPouts
                                 </label>
+                            </span>
+                            <span>
                                 <label>
                                     <input type="checkbox" id="pSO">SO
                                 </label>
@@ -338,7 +346,7 @@
                             </label>
                         </fieldset>
                     </fieldset>
-                    <fieldset class="stats-filter">
+                    <fieldset class="stats">
                         <legend>Triage</legend>
                         <label>
                             <input type="radio" name="pitch-sort" value="ERA"
@@ -374,7 +382,7 @@
                             value="salary">salaire
                         </label>
                     </fieldset>
-                    <button class="stats-filter" onclick="init(false)">Lancer
+                    <button class="stats" onclick="init(false)">Lancer
                         la requête
                     </button>
                 </fieldset>
