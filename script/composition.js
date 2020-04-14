@@ -83,14 +83,13 @@ updateTable = function(section, columns, onUpdate){
         columns = checkedFrom(section+'-attributes-stats-fieldset', columns)
     }
 
+    //Add the name and first name columns at the beggining of the table
     columns.unshift(["nameFirst", "prenom"])
     columns.unshift(["nameLast", "nom"])
 
-    console.log(contains(columns, ['salary', 'salaire']))
-
-    //Si on n'a pas l'information salariale
+    //If salary is unavailable
     if(year < 1985 && columns[columns.length - 1][0] == "salary"){
-        columns.pop();//Enlever le salaire
+        columns.pop();//Remove it (always the last column)
     }
 
     //Add a new table with the selected columns to the container
@@ -127,9 +126,10 @@ var updatePitching = function(){
 var fillPitchingTable = function(columns){
     let year = $("#year-composition option:selected").text()
     let order = $("input[name='name_pitching-sort-fieldset']:checked").val()
-
-    if(columns.indexOf(order) > 0){
-
+    
+    //Cannot order by salary if not available
+    if(order == "salaire" && year < 1985){
+        order = columns[0][0]
     }
 
     //Remove nameFirst and nameLast
@@ -138,19 +138,18 @@ var fillPitchingTable = function(columns){
 
     let query = "nameFirst as prenom, nameLast as nom"
 
-    //console.log(columns)
-
+    //Add the selected attributes to the query
     columns.forEach(function(c){
-        if(c[0] != "partant" && (c[0] != "salary" || year >= 1985)){
+        if(c[0] != "partant"){
             query += ", " + c[0] + " as " + c[1]
         }
-        else if(c[0] == "partant"){
+        //Exeception for the partant attribute
+        else{
             query += ", GS as partant"
         }
     })
 
-    //Attention: partant
-
+    //Different queries depending on the year (availability of salary)
     if(year >= 1985){
         query += " \
         from Pitching p \
@@ -173,10 +172,6 @@ var fillPitchingTable = function(columns){
         order by " + order + " desc"
     }
 
-    //console.log(query)
-
-    //Check if partant if GS > 0
-
     let postData = {}
     postData["db"] = "dift6800_baseball"
     postData["query"] = query
@@ -186,48 +181,43 @@ var fillPitchingTable = function(columns){
         function(response,status){
             
             let data = JSON.parse(response).data
-            //console.log(data)
 
+            //Retreive the table
             let table = $('#pitching-table')
 
+            //Add the prenom and nom back
             columns.unshift(["nameFirst", "prenom"])
             columns.unshift(["nameLast", "nom"])
 
+            //For every obtained entry
             data.forEach(function(e, i){
 
-                console.log(e)
-
+                //Add the table row
                 table.append('<tr id="pitching-table_'+i+'"">')
                 let row = $("#pitching-table_" + i)
                 
+                //Calculate the partant attribute
                 let partant = e["partant"] > 0
 
+                //Fill the row
                 columns.forEach(function(c){
+                    //To format the salary
                     if(c[1] == "salaire"){
                         row.append('<td>' + moneyFrom("" + e[c[1]]) + '</td>')
                     }
+                    //Otherwise append normally
                     else if(c[1] != "partant" && e[c[1]] != undefined){
                         row.append('<td>' + e[c[1]] + '</td>')
                     }
-                    else{
+                    //Exception for partant
+                    else if(partant != undefined){
                         row.append('<td>' + partant + '</td>')
                     }
                 })
-
                 table.append('</tr>')
-            })
-
-            
-
-            //let manager = JSON.parse(response).data
-
-            //let name = manager[0].prenom + " " + manager[0].nom
-
-            //fieldset.append(buildLabeledInformation("manager-lbl", "Gérant", name))                    
+            })                    
         }
     )
-
-    //console.log(order);
 }
 
 //Updates specifically the fielding section
@@ -302,7 +292,7 @@ var displayPitching = function(){
         ['G', 'G'], 
         ['GS', 'GS'], 
         ['CG', 'CG'], 
-        ['W', 'W'], 
+        ['W', 'V'], 
         ['SO', 'SO'], 
         ['H', 'H'], 
         ['BB', 'BB'], 
