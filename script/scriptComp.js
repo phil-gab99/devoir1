@@ -1,8 +1,16 @@
 /*
 * @Vincent Falardeau
 * @Philippe Gabriel
-* @Version 2.8.0 2020-04-17
+* @Version 2.12.5 2020-04-17
 **/
+
+// TODO: Find what proprio means to finish last queries
+    //Will have to modify the following functions and procedures:
+        //loadDetails(data);
+        //queryDetailCompSql(queryObj, table, year);
+        //checkControl();
+        //queryData(query,type) (possibly)
+// IDEA: Find areas to optimize and test website with varying data
 
 /*
 * Ces procédures permettent de d'appliquer la propriété de visibilité à un
@@ -30,7 +38,7 @@
 *
 * @param data La donnée d'intérêt
 **/
-// TODO: Find what proprio means
+
 var loadDetails = function(data) {
 
     var property = "";
@@ -93,7 +101,7 @@ var loadTable = function(data, field) {
 * @return query String contenant la requête prête à être acheminées au script
 * php
 **/
-// NOTE: Might need rework for proprio
+
 var queryDetailCompSql = function(queryObj, table, year) {
 
     var query = "SUM(" + queryObj + ") AS '" + queryObj + "' " +
@@ -386,7 +394,7 @@ var queryData = function(query, type) {
 * et entreprends certaines requêtes pour les attributs simples de la page
 * Source: https://www.w3schools.com/jquery/eff_hide.asp
 **/
-// NOTE: Might be adjusted for more efficient method
+
 var checkControl = function() {
 
     var yearSelect = $("#year option:selected").text(); //Année sélectionnée
@@ -412,7 +420,7 @@ var checkControl = function() {
     //Informations relatives au gérant
     if (mngerSelect) {
         $('.detail-comp #manager-data, #prop-data').visible();
-        //Execute query for year selected to put in span
+        //Need to know what proprio means
     } else {
         $('.detail-comp #manager-data, #prop-data').invisible();
     }
