@@ -117,7 +117,7 @@
                         <span>CS:</span> Retrait sur tentative de vol<br>
                         <hr>
                         <span>FP%:</span> Moyenne défensive<br>
-                        <span>POS:</span> Position joué<br>
+                        <span>POS*:</span> Position la plus jouée<br>
                         <span>A:</span> Assistance<br>
                         <span>E:</span> Erreur<br>
                         <span>salaire:</span> Salaire annuel<br>
@@ -154,7 +154,7 @@
                         <fieldset class="stats-option" id="field-attrdef">
                             <legend>Défensive</legend>
                             <label><input type="checkbox" id="fFP-moy">FP%</label>
-                            <label><input type="checkbox" id="fPOS">POS</label>
+                            <label><input type="checkbox" id="fPOS">POS*</label>
                             <label><input type="checkbox" id="fA">A</label>
                             <label><input type="checkbox" id="fE">E</label>
                             <label>
@@ -321,7 +321,8 @@
                             value="salary">salaire
                         </label>
                     </fieldset>
-                    <button class="stats-filter" onclick="init(false)">Choisir
+                    <button class="stats-filter" onclick="init(false)">Lancer
+                        la requête
                     </button>
                 </fieldset>
                 <table id="pitch-table"></table>
