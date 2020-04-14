@@ -42,7 +42,31 @@
 **/
 
 var numFormat = function(num, unit) {
-    
+
+    var preFormat = "" + num; //Le nombre est converti en String
+
+    //Array pour les sections de 3 du nombre avec son index
+    var section = Array(Math.ceil(preFormat.length / 3)).fill("");
+    var count = 0;
+
+    //Les sections de 3 charactères ou moins sont déterminés
+    switch (preFormat.length % 3) {
+        case 2:
+            section[count] += preFormat.slice(0,1);
+            preFormat = preFormat.slice(1);
+        case 1:
+            section[count++] += preFormat.slice(0,1);
+            preFormat = preFormat.slice(1);
+        default:
+            for (count; count < section.length; count++) {
+                section[count] = preFormat.slice(0,3);
+                preFormat = preFormat.slice(3);
+            }
+    }
+
+    var format = section.join(" ") + unit;
+
+    return format;
 };
 
 /*
@@ -60,12 +84,24 @@ var loadDetails = function(data) {
 
     for (var i = 0; i < data.length; i++) {
 
-        //Lorsqu'il n'y a qu'un gérant par année, une entrée vide s'ajoute
+
         for (var j in data[i]) {
 
+            //Lorsqu'il n'y a qu'un gérant par année, une entrée vide s'ajoute
             if (j == "manager" && data.length == 1) {
 
                 data.push({manager: null});
+
+            //Le salaire est formaté s'il y a lieu
+            } else if (j == "salary" && data[i].salary != null) {
+
+                data[i].salary = numFormat(data[i].salary, " $");
+
+            //L' assistance est formatée s'il y a lieu
+            } else if (j == "attendance") {
+
+                data[i].attendance = numFormat(data[i].attendance, "");
+
             }
         }
     }
@@ -141,6 +177,8 @@ var loadTable = function(data, field) {
         }
 
         if (i != "partant") { //Éviter l'ajout de la colonne des partants
+
+            //L'attribut offensif ou défensif est appliqué selon le cas
             head += '' +
                 '<th' + (selector == "" ? '>' : ' class="' + selector + '">') +
                     i +
@@ -160,6 +198,11 @@ var loadTable = function(data, field) {
             var content = "";
 
             for (var i in entry) {
+
+                //Le salaire est formaté s'il y a lieu
+                if (i == "salaire" && entry.salaire != null) {
+                    entry.salaire = numFormat(entry.salaire, "");
+                }
 
                 //Éviter l'ajout de la colonne des partants
                 if (i != "partant") {
