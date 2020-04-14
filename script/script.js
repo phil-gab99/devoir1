@@ -98,7 +98,7 @@ Note that
     the name is of the following format: name_groupID
 */
 var buildInput = function(id, label, groupID, type){
-    return '<label><input type="'+type+'" id="'+groupID+'_'+id+'" name="name_'+groupID+'" value="'+id+'">'+label+'</label>'
+    return '<label><input type="'+type+'" id="'+groupID+'_'+depercent(id)+'" name="name_'+groupID+'" value="'+depercent(id)+'">'+label+'</label>'
 }
 
 /*
@@ -188,7 +188,21 @@ var moneyFrom = function(num){
 }
 
 /*
-* The contient function determines if a given value is found within a given
+*/
+
+//Replaces the % symbol to a code valid to most usages.
+var depercent = function(str){
+    return str.split("%").join("_prst_")
+}
+
+//Replaces the percentage code to the % symbol.
+var percent = function(str){
+    return str.split("_prst_").join("%")
+}
+
+
+/*
+* The contains function determines if a given value is found within a given
 * array
 *
 * @param tab Array which will be analyzed
