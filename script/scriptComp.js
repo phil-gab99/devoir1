@@ -45,9 +45,9 @@ var numFormat = function(num, unit) {
 
     var preFormat = "" + num; //Le nombre est converti en String
 
-    //Array pour les sections de 3 du nombre avec son index
+    //Array pour les sections de 3 charactères du nombre avec son index
     var section = Array(Math.ceil(preFormat.length / 3)).fill("");
-    var count = 0;
+    var count   = 0;
 
     //Les sections de 3 charactères ou moins sont déterminés
     switch (preFormat.length % 3) {
@@ -430,10 +430,10 @@ var querySql = function(field, year) {
         var pso      = $('#pSO').is(':checked');
         var ph       = $('#pH').is(':checked');
         var pbb      = $('#pBB').is(':checked');
-        var psalary = $('#psalary').is(':checked');
+        var psalary  = $('#psalary').is(':checked');
 
         //Triage
-        var sort    = $('input[name="pitch-sort"]:checked').val();
+        var sort     = $('input[name="pitch-sort"]:checked').val();
 
         if (year >= 1985) { //Années pour lesquelles un salaire est disponible
 
