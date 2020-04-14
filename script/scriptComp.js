@@ -1,7 +1,7 @@
 /*
 * @Vincent Falardeau
 * @Philippe Gabriel
-* @Version 2.21.4 2020-04-17
+* @Version 2.23.4 2020-04-17
 **/
 
 // TODO: Find what proprio means to finish last queries
@@ -253,7 +253,7 @@ var queryDetailCompSql = function(queryObj, queryName, table, year) {
             "WHERE yearID = " + year + " " +
                 "AND teamID = 'MON';"
     ;
-console.log(query);
+
     return query;
 };
 
