@@ -1,6 +1,6 @@
 var initClassement = function(){
 
-    buildYearSelector("year-classement", 1969, 2004)
+    buildNumberPicker("year-classement", 1969, 2004)
 
     $("#rank-filter-btn").click(updateClassement)
 
