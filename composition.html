@@ -181,7 +181,6 @@
                                 <input type="radio"
                                 name="players-stats-option-method" value="all">Tout
                             </label>
-                            <button onclick="init(true)">Choisir</button>
                         </fieldset>
                     </fieldset>
                     <fieldset class="stats-filter">
@@ -210,8 +209,9 @@
                             <input type="radio" name="field-sort"
                             value="salary">salaire
                         </label>
-                        <button onclick="init(true)">Trier</button>
                     </fieldset>
+                    <button class="stats-filter"
+                    onclick="init(true)">Lancer la requête</button>
                 </fieldset>
                 <table id="field-table"></table>
             </div>
@@ -284,7 +284,6 @@
                                 name="pitchers-stats-option-method"
                                 value="all">Tout
                             </label>
-                            <button onclick="init(false)">Choisir</button>
                         </fieldset>
                     </fieldset>
                     <fieldset class="stats-filter">
@@ -329,8 +328,9 @@
                             <input type="radio" name="pitch-sort"
                             value="salary">salaire
                         </label>
-                        <button onclick="init(false)">Trier</button>
                     </fieldset>
+                    <button class="stats-filter"
+                    onclick="init(false)">Choisir</button>
                 </fieldset>
                 <table id="pitch-table"></table>
             </div>

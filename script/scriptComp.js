@@ -268,7 +268,7 @@ var querySql = function(year, field) {
             "WHERE p.yearID = " + year + " " +
                 "AND p.yearID = s.yearID " +
                 "AND p.teamID = 'MON' " +
-                "AND p.GS" + (partant ? " > " : " = ") + "0 " +
+                "AND p.GS " + (partant ? ">" : "=") + " 0 " +
             "ORDER BY " + sort + " DESC;"
         ;
     }
