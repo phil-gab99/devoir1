@@ -1,7 +1,7 @@
 /*
 * @Vincent Falardeau
 * @Philippe Gabriel
-* @Version 2.15.7 2020-04-17
+* @Version 2.21.4 2020-04-17
 **/
 
 // TODO: Find what proprio means to finish last queries
@@ -359,7 +359,7 @@ var querySql = function(field, year) {
 
         } else { //Années où les salaires ne sont pas disponibles
 
-            if (sort == "salary") sort = "nom";
+            if (sort == "salary") sort = "salaire";
 
             query = "" +
                     "m.nameLast AS nom, " +
@@ -466,7 +466,7 @@ var querySql = function(field, year) {
 
         } else { //Années où les salaires ne sont pas disponibles
 
-            if (sort == "salary") sort = "nom";
+            if (sort == "salary") sort = "salaire";
 
             query = "" +
                     "m.nameLast AS nom, " +
