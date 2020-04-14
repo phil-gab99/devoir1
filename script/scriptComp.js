@@ -24,7 +24,7 @@
 }(jQuery));
 
 /*
-* La fonction loadDetails génère les éléments obtenus des requêtes sur
+* La procédure loadDetails génère les éléments obtenus des requêtes sur
 * les informations n'appartenant pas aux tables, notamment sur le gérant,
 * l'assistance et la masse salariale
 *
@@ -32,6 +32,50 @@
 **/
 // TODO: Find way to identify information
 var loadDetails = function(data) {
+
+};
+
+/*
+* La procédure loadTable génère les tables selons la requête initié par
+* l'usager
+*
+* @param data Un tableau d'objets contenant les divers informations de la
+* requête SQL que l'usager a choisi
+* @param
+*
+*
+*
+*
+**/
+
+var loadTable = function(data, field) {
+
+    if (field) {
+
+        var table = $("#field-table");
+        var head  = "";
+
+        for (var i in data[0]) {
+            head += '<th>' + i + '</th>';
+        }
+
+        table.append('<tr>' + head + '</tr>');
+
+        data.forEach(
+            function(entry) {
+
+                var content = "";
+
+                for (var i in entry) {
+                    content += '<td>' + entry[i] + '</td>';
+                }
+
+                table.append('<tr>' + content + '</tr>');
+            }
+        )
+    } else {
+        console.log("haha");
+    }
 
 };
 
@@ -100,64 +144,142 @@ var queryDetailCompSql = function(mnger, attd, pay, year) {
 * l'information désirée
 *
 * @param year Integer représentant l'année sélectionnée par l'usager
-* @param lg String indiquant la ligue pour laquelle l'information sera
-* recherchée
-* @param div String indiquant la division pour laquelle l'information sera
-* recherchée
+* @param field Booléen indiquant si la requête désirée était pour les joueurs
+* de champ ou non
 * @return query String représentant la requête à être acheminée en format SQL
 **/
 // TODO: Correspond with ids in composition to finish query details
-var querySql = function(year) {
-    var query = "" +
-            "m.nameLast AS nom, " +
-            "m.nameFirst AS prénom, " +
-            "b.H/b.AB AS 'BA%'," +
-            "(b.H-b.2B-b.3B-b.HR+2*b.2B+3*b.3B+4*b.HR)/b.AB AS 'SL%', " +
-            "(b.H + b.BB + b.HBP)/(b.AB + b.BB + b.HBP + b.SF) AS 'OB%', " +
-            "b.SO/b.AB AS 'SO%', " +
-            "b.SB/(b.CS+b.SB) AS 'SB%', " +
-            "b.AB, " +
-            "b.H, " +
-            "b.2B, " +
-            "b.3B, " +
-            "b.HR, " +
-            "b.BB, " +
-            "b.R, " +
-            "b.SB, " +
-            "b.CS, " +
-            "SUM(f.A)/(SUM(f.A) + SUM(f.E)) AS 'FP%', " +
-            "f2.POS AS 'POS*', " +
-            "SUM(f.A) AS A, " +
-            "SUM(f.E) AS E, " +
-            "s.salary AS salaire " +
-        "FROM Master AS m " +
-            "INNER JOIN Fielding AS f ON m.playerID = f.playerID " +
-            "INNER JOIN Salaries AS s ON m.playerID = s.playerID " +
-            "INNER JOIN Batting AS b ON m.playerID = b.playerID " +
-            "INNER JOIN (SELECT playerID, yearID, teamID, POS, GS " +
-                        "FROM Fielding " +
-                        ") AS f2 ON m.playerID = f2.playerID " +
-        "WHERE f.yearID = 1996 " +
-            "AND f.yearID = s.yearID " +
-            "AND f.yearID = b.yearID " +
-            "AND f.yearID = f2.yearID " +
-            "AND f.teamID = 'MON' " +
-            "AND f.teamID = b.teamID " +
-            "AND f.teamID = f2.teamID " +
-            "AND f.POS <> 'OF' " +
-            "AND f2.POS <> 'P' " +
-            "AND f2.POS <> 'OF' " +
-            "AND f2.GS = (SELECT MAX(GS) " +
-                        "FROM Fielding " +
-                        "WHERE f.playerID = playerID " +
-                            "AND f.yearID = yearID " +
-                            "AND f.teamID = teamID " +
-                            "AND POS <> 'P' " +
-                            "AND POS <> 'OF' " +
-                        ") " +
-            "AND b.AB > 10 " +
-        "GROUP BY m.playerID;"
-    ;
+var querySql = function(year, field) {
+
+    var query = "";
+
+    if (field) { //Requête pour les joueurs de champs
+
+        //Attributs offensifs
+        var baMoy   = $('#fBA-moy').is(':checked');
+        var slMoy   = $('#fSL-moy').is(':checked');
+        var obMoy   = $('#fOB-moy').is(':checked');
+        var soMoy   = $('#fSO-moy').is(':checked');
+        var sbMoy   = $('#fSB-moy').is(':checked');
+        var ab      = $('#fAB').is(':checked');
+        var h       = $('#fH').is(':checked');
+        var x2b     = $('#f2B').is(':checked');
+        var x3b     = $('#f3B').is(':checked');
+        var hr      = $('#fHR').is(':checked');
+        var bb      = $('#fBB').is(':checked');
+        var r       = $('#fR').is(':checked');
+        var sb      = $('#fSB').is(':checked');
+        var cs      = $('#fCS').is(':checked');
+
+        //Attributs défensifs
+        var fpMoy   = $('#fFP-moy').is(':checked');
+        var fPOS    = $('#fPOS').is(':checked');
+        var fA      = $('#fA').is(':checked');
+        var fE      = $('#fE').is(':checked');
+        var fsalary = $('#fsalary').is(':checked');
+
+        var sort    = $('input[name="field-sort"]:checked').val();
+
+        query = "" +
+                "m.nameLast AS nom, " +
+                "m.nameFirst AS prenom" +
+                (baMoy ? ", b.H/b.AB AS 'BA%'" : "") +
+                (slMoy ? ", (b.H-b.2B-b.3B-b.HR+2*b.2B+3*b.3B+4*b.HR)/b.AB AS 'SL%'" : "") +
+                (obMoy ? ", (b.H+b.BB+b.HBP)/(b.AB+b.BB+b.HBP+b.SF) AS 'OB%'" : "") +
+                (soMoy ? ", b.SO/b.AB AS 'SO%'" : "") +
+                (sbMoy ? ", b.SB/(b.CS+b.SB) AS 'SB%'" : "") +
+                (ab ? ", b.AB" : "") +
+                (h ? ", b.H" : "") +
+                (x2b ? ", b.2B" : "") +
+                (x3b ? ", b.3B" : "") +
+                (hr ? ", b.HR" : "") +
+                (bb ? ", b.BB" : "") +
+                (r ? ", b.R" : "") +
+                (sb ? ", b.SB" : "") +
+                (cs ? ", b.CS" : "") +
+                (fpMoy ? ", SUM(f.A)/(SUM(f.A) + SUM(f.E)) AS 'FP%'" : "") +
+                (fPOS ? ", f2.POS AS 'POS*'" : "") +
+                (fA ? ", SUM(f.A) AS A" : "") +
+                (fE ? ", SUM(f.E) AS E" : "") +
+                (fsalary ? ", s.salary AS salaire" : "") +
+            " FROM Master AS m " +
+                "INNER JOIN Fielding AS f ON m.playerID = f.playerID " +
+                "INNER JOIN Salaries AS s ON m.playerID = s.playerID " +
+                "INNER JOIN Batting AS b ON m.playerID = b.playerID " +
+                "INNER JOIN (SELECT playerID, yearID, teamID, POS, GS " +
+                            "FROM Fielding " +
+                            ") AS f2 ON m.playerID = f2.playerID " +
+            "WHERE f.yearID = " + year + " " +
+                "AND f.yearID = s.yearID " +
+                "AND f.yearID = b.yearID " +
+                "AND f.yearID = f2.yearID " +
+                "AND f.teamID = 'MON' " +
+                "AND f.teamID = b.teamID " +
+                "AND f.teamID = f2.teamID " +
+                "AND f.POS <> 'OF' " +
+                "AND f2.POS <> 'P' " +
+                "AND f2.POS <> 'OF' " +
+                "AND f2.GS = (SELECT MAX(GS) " +
+                            "FROM Fielding " +
+                            "WHERE f.playerID = playerID " +
+                                "AND f.yearID = yearID " +
+                                "AND f.teamID = teamID " +
+                                "AND POS <> 'P' " +
+                                "AND POS <> 'OF' " +
+                            ") " +
+                "AND b.AB > 10 " +
+            "GROUP BY m.playerID " +
+            "ORDER BY " + sort + " DESC;"
+        ;
+    } else { //Requête pour les lanceurs
+
+        //Attributs
+        var era     = $('#pERA').is(':checked');
+        var baopp   = $('#pBAOpp').is(':checked');
+        var partant = $('#ppartant').is(':checked');
+        var g       = $('#pG').is(':checked');
+        var gs      = $('#pGS').is(':checked');
+        var cg      = $('#pCG').is(':checked');
+        var w       = $('#pW').is(':checked');
+        var l       = $('#pL').is(':checked');
+        var sv      = $('#pSV').is(':checked');
+        var ipouts  = $('#pIPouts').is(':checked');
+        var so      = $('#pSO').is(':checked');
+        var h       = $('#pH').is(':checked');
+        var bb      = $('#pBB').is(':checked');
+        var salaire = $('#psalary').is(':checked');
+
+        //Triage
+        var sort    = $('input[name="pitch-sort"]:checked').val();
+
+        query = "" +
+                "m.nameLast AS nom, " +
+                "m.nameFirst AS prenom, " +
+                "p.ERA, " +
+                "p.BAOpp, " +
+                "p.G, " +
+                "p.GS, " +
+                "p.CG, " +
+                "p.W, " +
+                "p.L, " +
+                "p.SV, " +
+                "p.IPouts, " +
+                "p.SO, " +
+                "p.H, " +
+                "p.BB, " +
+                "s.salary AS salaire " +
+            "FROM Master AS m " +
+                "INNER JOIN Pitching AS p ON m.playerID = p.playerID " +
+                "INNER JOIN Salaries AS s ON m.playerID = s.playerID " +
+            "WHERE p.yearID = 1996 " +
+                "AND p.yearID = s.yearID " +
+                "AND p.teamID = 'MON' " +
+                "AND p.GS > 0 " +
+            "ORDER BY '" + sort + "' DESC;"
+        ;
+    }
+
+    return query;
 };
 
 /*
@@ -165,44 +287,34 @@ var querySql = function(year) {
 * au script php pour ensuite récupérer l'information provenant de la requête
 *
 * @param query String composé de la requête formée par l'usager en format SQL
-* @param lg String indiquant la ligue pour laquelle l'information a été
-* recherchée
-* @param div String indiquant la division pour laquelle l'information a été
-* recherchée
+* @param type Booléen indiquant le type de données à recueillir selon le type
+* de joueurs sélectionnés
 **/
-// NOTE: Loop might not be necessary with reworked idea
-var queryData = function(queries) {
+
+var queryData = function(query, type) {
 
     //L'url de la base de donnée à laquelle la requête sera acheminée
     var url = "http://www-ens.iro.umontreal.ca/~dift6800/baseball/db.php";
 
-    for (var i in queries) {
+    //Objet constitué du nom de la base de données et des données de la requête
+    var postData = {
+        db: "dift6800_baseball",
+        query: query
+    };
 
-        //Objet constitué du nom de la base de données et des données de la requête
-        var postData = {
-            db: "dift6800_baseball",
-            query: i
-        };
+    //Les données désirées sont récupérés par une requête HTTP POST
+    $.post(url,postData,
+        function(data,status) {
 
-        //Les données désirées sont récupérés par une requête HTTP POST
-        $.post(url,postData,
-            function(data,status) {
+            var obj = JSON.parse(data);
 
-                var obj = JSON.parse(data);
-
-                if (obj.error == "") {
-
-                    // if (obj.data.length) <= 1) {
-                    //     loadDetails(obj.data);
-                    // } else {
-                    //     loadTables(obj.data);
-                    // }
-                } else { //En cas d'erreur
-                    alert("Erreur: " + obj.error);
-                }
+            if (obj.error == "") {
+                loadTable(obj.data, type);
+            } else { //En cas d'erreur
+                alert(obj.error);
             }
-        );
-    }
+        }
+    );
 };
 
 /*
@@ -263,37 +375,30 @@ var checkControl = function() {
 
 /*
 * La procédure init prépare la requête sur les joueurs selon les spécifications
-* apportées par l'usager
+* apportées par l'usager et selon le tableau que l'usager désire voir
+*
+* @param field Booléen indiquant si les informations sur les joueurs de champs
+* a été demandé ou non
 **/
 
-var init = function() {
-
-    var fieldTable = $("#field-table"); //Tableau alloqué aux joueurs de champ
-    var pitchTable = $("#pitch-table"); //Tableau alloqué aux lanceurs
-
-    //Le contenu est réinitialisé pour une nouvelle requête
-    fieldTable.html('');
-    pitchTable.html('');
-
-    //La valeur de ces booléens dépend des choix de l'usager dans l'interface
-    var fieldCheck = $("#fielders").is(':checked'); //Case à cocher joueurs
-    var pitchCheck = $("#pitchers").is(':checked'); //Case à cocher lanceurs
+var init = function(field) {
 
     var yearSelect = $("#year option:selected").text(); //Année sélectionnée
 
-    if (fieldCheck) {
+    if (field) {
 
-        //Une requête pour les joueurs de champs est lancée
-        queryData(querySql(yearSelect));
-        queryData(querySql(yearSelect));
+        //Tableau alloqué aux joueurs réinitialisé pour la nouvelle requête
+        var fieldTable = $("#field-table");
+        fieldTable.html('');
+    } else {
+
+        //Tableau alloqué aux lanceurs réinitialisé pour la nouvelle requête
+        var pitchTable = $("#pitch-table");
+        pitchTable.html('');
     }
 
-    if (pitchCheck) {
-
-        //Une requête pour chaque division est envoyée
-        queryData(querySql(yearSelect));
-        queryData(querySql(yearSelect));
-    }
+    //Une requête selon le type de joueurs sélectionné est lancé
+    queryData(querySql(yearSelect,field), field);
 };
 
 /*

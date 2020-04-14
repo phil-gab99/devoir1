@@ -165,7 +165,7 @@ var queryData = function(query, lg, div) {
             if (obj.error == "") {
                 loadTable(obj.data, lg, div);
             } else { //En cas d'erreur
-                alert("Erreur: " + obj.error);
+                alert(obj.error);
             }
         }
     );
