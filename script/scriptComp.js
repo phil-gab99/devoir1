@@ -501,6 +501,13 @@ var checkControl = function() {
     } else {
         $('.detail-comp #salary-data').invisible();
     }
+
+    if (mngerSelect || attdSelect || paySelect) {
+        $('#detail-data').visible();
+    } else {
+        $('#detail-data').invisible();
+    }
+
 };
 
 /*
