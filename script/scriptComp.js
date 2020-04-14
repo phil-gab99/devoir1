@@ -65,7 +65,7 @@ var loadTable = function(data, field) {
             var content = "";
 
             for (var i in entry) {
-                content += '<td>' + entry[i] + '</td>';
+                content += '<td>' + (entry[i] != null ? entry[i] : "N/A") + '</td>';
             }
 
             table.append('<tr>' + content + '</tr>');
