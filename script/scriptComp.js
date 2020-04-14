@@ -1,7 +1,7 @@
 /*
 * @Vincent Falardeau
 * @Philippe Gabriel
-* @Version 2.12.5 2020-04-17
+* @Version 2.15.7 2020-04-17
 **/
 
 // TODO: Find what proprio means to finish last queries
@@ -11,6 +11,7 @@
         //checkControl();
         //queryData(query,type) (possibly)
 // IDEA: Find areas to optimize and test website with varying data
+// TODO: Ask question about offensive/defensive stats for pitchers
 
 /*
 * Ces procédures permettent de d'appliquer la propriété de visibilité à un
@@ -44,9 +45,7 @@ var loadDetails = function(data) {
     var property = "";
     var value = 0;
     for (var i in data[0]) property = i; value = data[0][i];
-    console.log(value);
     var labelData = $("#" + property + "-data span");
-    console.log(labelData);
     labelData.html(value != null ? value : "N/A");
 };
 
@@ -66,9 +65,42 @@ var loadTable = function(data, field) {
 
     var head  = ""; //String contenant la rangée de titres des colonnes
 
+    //Tableaux des attributs offensifs et défensifs respectivement
+    var offStats = $("#offense span").text().split(":");
+    var defStats = $("#defence span").text().split(":");
+
+    var selector = ""; //Classe qui identifiera un titre de colonne
+
     //Première entrée du tableau utilisée pour peupler le titre de colonnes
     for (var i in data[0]) {
-        head += '<th>' + i + '</th>';
+
+        //Type d'attributs seulement applicable pour les joueurs de champs
+        if (field) {
+
+            //Vérification si attribut offensif
+            for (var j = 0; j < offStats.length; j++) {
+                if (i == offStats[j]) {
+                    selector = "attroff";
+                    break;
+                }
+            }
+
+            //Vérification si attribut défensif
+            for (var k = 0; k < defStats.length; k++) {
+                if (i == defStats[k]) {
+                    selector = "attrdef";
+                    break;
+                }
+            }
+        }
+
+        head += '' +
+            '<th' + (selector == "" ? '>' : ' class="' + selector + '">') +
+                i +
+            '</th>'
+        ;
+
+        selector = ""; //Sélecteur réinitialisé pour prochain attribut
     }
 
     table.append('<tr>' + head + '</tr>');
@@ -80,7 +112,11 @@ var loadTable = function(data, field) {
             var content = "";
 
             for (var i in entry) {
-                content += '<td>' + (entry[i] != null ? entry[i] : "N/A") + '</td>';
+                content += ''  +
+                    '<td>' +
+                        (entry[i] != null ? entry[i] : "N/A") +
+                    '</td>'
+                ;
             }
 
             table.append('<tr>' + content + '</tr>');
