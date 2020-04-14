@@ -63,6 +63,9 @@ var loadTable = function(data, field) {
     //Détermine le type de table à populer
     var table = (field ? $("#field-table") : $("#pitch-table"));
 
+    //Booléen indiquant si l'usager à cocher la case partant pour les lanceurs
+    var starting = (field ? false : $("#ppartant"));
+
     var head  = ""; //String contenant la rangée de titres des colonnes
 
     //Tableaux des attributs offensifs et défensifs respectivement
@@ -94,11 +97,13 @@ var loadTable = function(data, field) {
             }
         }
 
-        head += '' +
-            '<th' + (selector == "" ? '>' : ' class="' + selector + '">') +
-                i +
-            '</th>'
-        ;
+        if (i != "partant") { //Éviter l'ajout de la colonne des partants
+            head += '' +
+                '<th' + (selector == "" ? '>' : ' class="' + selector + '">') +
+                    i +
+                '</th>'
+            ;
+        }
 
         selector = ""; //Sélecteur réinitialisé pour prochain attribut
     }
@@ -112,14 +117,30 @@ var loadTable = function(data, field) {
             var content = "";
 
             for (var i in entry) {
-                content += ''  +
-                    '<td>' +
-                        (entry[i] != null ? entry[i] : "N/A") +
-                    '</td>'
-                ;
+
+                //Éviter l'ajout de la colonne des partants
+                if (i != "partant") {
+                    content += ''  +
+                        '<td>' +
+                            (entry[i] != null ? entry[i] : "N/A") +
+                        '</td>'
+                    ;
+                }
             }
 
-            table.append('<tr>' + content + '</tr>');
+            if (!starting) { //Si l'usager a sélectionné l'option partant
+                table.append('<tr>' + content + '</tr>');
+            } else {
+                if (entry.partant == 1) { //Si le lanceur est partant
+                    table.append( '' +
+                        '<tr class="start-pitch">' +
+                            content +
+                        '</tr>'
+                    );
+                } else {
+                    table.append('<tr>' + content + '</tr>');
+                }
+            }
         }
     )
 };
@@ -167,20 +188,20 @@ var querySql = function(field, year) {
     if (field) { //Requête pour les joueurs de champs
 
         //Attributs offensifs
-        var baMoy   = $('#fBA-moy').is(':checked');
-        var slMoy   = $('#fSL-moy').is(':checked');
-        var obMoy   = $('#fOB-moy').is(':checked');
-        var soMoy   = $('#fSO-moy').is(':checked');
-        var sbMoy   = $('#fSB-moy').is(':checked');
-        var ab      = $('#fAB').is(':checked');
-        var h       = $('#fH').is(':checked');
-        var x2b     = $('#f2B').is(':checked');
-        var x3b     = $('#f3B').is(':checked');
-        var hr      = $('#fHR').is(':checked');
-        var bb      = $('#fBB').is(':checked');
-        var r       = $('#fR').is(':checked');
-        var sb      = $('#fSB').is(':checked');
-        var cs      = $('#fCS').is(':checked');
+        var fbaMoy   = $('#fBA-moy').is(':checked');
+        var fslMoy   = $('#fSL-moy').is(':checked');
+        var fobMoy   = $('#fOB-moy').is(':checked');
+        var fsoMoy   = $('#fSO-moy').is(':checked');
+        var fsbMoy   = $('#fSB-moy').is(':checked');
+        var fab      = $('#fAB').is(':checked');
+        var fh       = $('#fH').is(':checked');
+        var fx2b     = $('#f2B').is(':checked');
+        var fx3b     = $('#f3B').is(':checked');
+        var fhr      = $('#fHR').is(':checked');
+        var fbb      = $('#fBB').is(':checked');
+        var fr       = $('#fR').is(':checked');
+        var fsb      = $('#fSB').is(':checked');
+        var fcs      = $('#fCS').is(':checked');
 
         //Attributs défensifs
         var fpMoy   = $('#fFP-moy').is(':checked');
@@ -197,21 +218,23 @@ var querySql = function(field, year) {
             query = "" +
                     "m.nameLast AS nom, " +
                     "m.nameFirst AS prenom" +
-                    (baMoy ? ", b.H/b.AB AS 'BA%'" : "") +
-                    (slMoy ? ", (b.H-b.2B-b.3B-b.HR+2*b.2B+3*b.3B+4*b.HR)/b.AB AS 'SL%'" : "") +
-                    (obMoy ? ", (b.H+b.BB+b.HBP)/(b.AB+b.BB+b.HBP+b.SF) AS 'OB%'" : "") +
-                    (soMoy ? ", b.SO/b.AB AS 'SO%'" : "") +
-                    (sbMoy ? ", b.SB/(b.CS+b.SB) AS 'SB%'" : "") +
-                    (ab ? ", b.AB" : "") +
-                    (h ? ", b.H" : "") +
-                    (x2b ? ", b.2B" : "") +
-                    (x3b ? ", b.3B" : "") +
-                    (hr ? ", b.HR" : "") +
-                    (bb ? ", b.BB" : "") +
-                    (r ? ", b.R" : "") +
-                    (sb ? ", b.SB" : "") +
-                    (cs ? ", b.CS" : "") +
-                    (fpMoy ? ", SUM(f.A)/(SUM(f.A) + SUM(f.E)) AS 'FP%'" : "") +
+                    (fbaMoy ? ", b.H/b.AB AS 'BA%'" : "") +
+                    (fslMoy ? ", (b.H-b.2B-b.3B-b.HR+2*b.2B+3*b.3B+4*b.HR)" +
+                        "/b.AB AS 'SL%'" : "") +
+                    (fobMoy ? ", (b.H+b.BB+b.HBP)/(b.AB+b.BB+b.HBP+b.SF) AS " +
+                        "'OB%'" : "") +
+                    (fsoMoy ? ", b.SO/b.AB AS 'SO%'" : "") +
+                    (fsbMoy ? ", b.SB/(b.CS+b.SB) AS 'SB%'" : "") +
+                    (fab ? ", b.AB" : "") +
+                    (fh ? ", b.H" : "") +
+                    (fx2b ? ", b.2B" : "") +
+                    (fx3b ? ", b.3B" : "") +
+                    (fhr ? ", b.HR" : "") +
+                    (fbb ? ", b.BB" : "") +
+                    (fr ? ", b.R" : "") +
+                    (fsb ? ", b.SB" : "") +
+                    (fcs ? ", b.CS" : "") +
+                    (fpMoy ? ", SUM(f.A)/(SUM(f.A) + SUM(f.E)) AS 'FP%'" : "")+
                     (fPOS ? ", f2.POS AS 'POS*'" : "") +
                     (fA ? ", SUM(f.A) AS A" : "") +
                     (fE ? ", SUM(f.E) AS E" : "") +
@@ -254,21 +277,23 @@ var querySql = function(field, year) {
             query = "" +
                     "m.nameLast AS nom, " +
                     "m.nameFirst AS prenom" +
-                    (baMoy ? ", b.H/b.AB AS 'BA%'" : "") +
-                    (slMoy ? ", (b.H-b.2B-b.3B-b.HR+2*b.2B+3*b.3B+4*b.HR)/b.AB AS 'SL%'" : "") +
-                    (obMoy ? ", (b.H+b.BB+b.HBP)/(b.AB+b.BB+b.HBP+b.SF) AS 'OB%'" : "") +
-                    (soMoy ? ", b.SO/b.AB AS 'SO%'" : "") +
-                    (sbMoy ? ", b.SB/(b.CS+b.SB) AS 'SB%'" : "") +
-                    (ab ? ", b.AB" : "") +
-                    (h ? ", b.H" : "") +
-                    (x2b ? ", b.2B" : "") +
-                    (x3b ? ", b.3B" : "") +
-                    (hr ? ", b.HR" : "") +
-                    (bb ? ", b.BB" : "") +
-                    (r ? ", b.R" : "") +
-                    (sb ? ", b.SB" : "") +
-                    (cs ? ", b.CS" : "") +
-                    (fpMoy ? ", SUM(f.A)/(SUM(f.A) + SUM(f.E)) AS 'FP%'" : "") +
+                    (fbaMoy ? ", b.H/b.AB AS 'BA%'" : "") +
+                    (fslMoy ? ", (b.H-b.2B-b.3B-b.HR+2*b.2B+3*b.3B+4*b.HR)" +
+                        "/b.AB AS 'SL%'" : "") +
+                    (fobMoy ? ", (b.H+b.BB+b.HBP)/(b.AB+b.BB+b.HBP+b.SF) AS " +
+                        "'OB%'" : "") +
+                    (fsoMoy ? ", b.SO/b.AB AS 'SO%'" : "") +
+                    (fsbMoy ? ", b.SB/(b.CS+b.SB) AS 'SB%'" : "") +
+                    (fab ? ", b.AB" : "") +
+                    (fh ? ", b.H" : "") +
+                    (fx2b ? ", b.2B" : "") +
+                    (fx3b ? ", b.3B" : "") +
+                    (fhr ? ", b.HR" : "") +
+                    (fbb ? ", b.BB" : "") +
+                    (fr ? ", b.R" : "") +
+                    (fsb ? ", b.SB" : "") +
+                    (fcs ? ", b.CS" : "") +
+                    (fpMoy ? ", SUM(f.A)/(SUM(f.A) + SUM(f.E)) AS 'FP%'" : "")+
                     (fPOS ? ", f2.POS AS 'POS*'" : "") +
                     (fA ? ", SUM(f.A) AS A" : "") +
                     (fE ? ", SUM(f.E) AS E" : "") +
@@ -305,20 +330,20 @@ var querySql = function(field, year) {
     } else { //Requête pour les lanceurs
 
         //Attributs
-        var era     = $('#pERA').is(':checked');
-        var baopp   = $('#pBAOpp').is(':checked');
-        var partant = $('#ppartant').is(':checked');
-        var g       = $('#pG').is(':checked');
-        var gs      = $('#pGS').is(':checked');
-        var cg      = $('#pCG').is(':checked');
-        var w       = $('#pW').is(':checked');
-        var l       = $('#pL').is(':checked');
-        var sv      = $('#pSV').is(':checked');
-        var ipouts  = $('#pIPouts').is(':checked');
-        var so      = $('#pSO').is(':checked');
-        var h       = $('#pH').is(':checked');
-        var bb      = $('#pBB').is(':checked');
-        var salaire = $('#psalary').is(':checked');
+        var pera     = $('#pERA').is(':checked');
+        var pbaopp   = $('#pBAOpp').is(':checked');
+        var ppartant = $('#ppartant').is(':checked');
+        var pg       = $('#pG').is(':checked');
+        var pgs      = $('#pGS').is(':checked');
+        var pcg      = $('#pCG').is(':checked');
+        var pw       = $('#pW').is(':checked');
+        var pl       = $('#pL').is(':checked');
+        var psv      = $('#pSV').is(':checked');
+        var pipouts  = $('#pIPouts').is(':checked');
+        var pso      = $('#pSO').is(':checked');
+        var ph       = $('#pH').is(':checked');
+        var pbb      = $('#pBB').is(':checked');
+        var psalary = $('#psalary').is(':checked');
 
         //Triage
         var sort    = $('input[name="pitch-sort"]:checked').val();
@@ -328,19 +353,20 @@ var querySql = function(field, year) {
             query = "" +
                     "m.nameLast AS nom, " +
                     "m.nameFirst AS prenom" +
-                    (era ? ", p.ERA" : "") +
-                    (baopp ? ", p.BAOpp" : "") +
-                    (g ? ", p.G" : "") +
-                    (gs ? ", p.GS" : "") +
-                    (cg ? ", p.CG" : "") +
-                    (w ? ", p.W" : "") +
-                    (l ? ", p.L" : "") +
-                    (sv ? ", p.SV" : "") +
-                    (ipouts ? ", p.IPouts" : "") +
-                    (so ? ", p.SO" : "") +
-                    (h ? ", p.H" : "") +
-                    (bb ? ", p.BB" : "") +
-                    (salaire ? ", s.salary" : "") +
+                    (pera ? ", p.ERA" : "") +
+                    (pbaopp ? ", p.BAOpp" : "") +
+                    (pg ? ", p.G" : "") +
+                    (pgs ? ", p.GS" : "") +
+                    (pcg ? ", p.CG" : "") +
+                    (pw ? ", p.W" : "") +
+                    (pl ? ", p.L" : "") +
+                    (psv ? ", p.SV" : "") +
+                    (pipouts ? ", p.IPouts" : "") +
+                    (pso ? ", p.SO" : "") +
+                    (ph ? ", p.H" : "") +
+                    (pbb ? ", p.BB" : "") +
+                    (psalary ? ", s.salary AS salaire" : "") +
+                    (ppartant ? ", p.GS > 0 AS partant" : "") +
                 " FROM Master AS m " +
                     "INNER JOIN Pitching AS p ON m.playerID = p.playerID " +
                     "INNER JOIN Salaries AS s ON m.playerID = s.playerID " +
@@ -348,7 +374,6 @@ var querySql = function(field, year) {
                     "AND p.yearID = s.yearID " +
                     "AND p.teamID = 'MON' " +
                     "AND p.teamID = s.teamID " +
-                    "AND p.GS " + (partant ? ">" : "=") + " 0 " +
                 "ORDER BY " + sort + " DESC;"
             ;
 
@@ -359,24 +384,24 @@ var querySql = function(field, year) {
             query = "" +
                     "m.nameLast AS nom, " +
                     "m.nameFirst AS prenom" +
-                    (era ? ", p.ERA" : "") +
-                    (baopp ? ", p.BAOpp" : "") +
-                    (g ? ", p.G" : "") +
-                    (gs ? ", p.GS" : "") +
-                    (cg ? ", p.CG" : "") +
-                    (w ? ", p.W" : "") +
-                    (l ? ", p.L" : "") +
-                    (sv ? ", p.SV" : "") +
-                    (ipouts ? ", p.IPouts" : "") +
-                    (so ? ", p.SO" : "") +
-                    (h ? ", p.H" : "") +
-                    (bb ? ", p.BB" : "") +
-                    (fsalary ? ", NULL AS salaire" : "") +
+                    (pera ? ", p.ERA" : "") +
+                    (pbaopp ? ", p.BAOpp" : "") +
+                    (pg ? ", p.G" : "") +
+                    (pgs ? ", p.GS" : "") +
+                    (pcg ? ", p.CG" : "") +
+                    (pw ? ", p.W" : "") +
+                    (pl ? ", p.L" : "") +
+                    (psv ? ", p.SV" : "") +
+                    (pipouts ? ", p.IPouts" : "") +
+                    (pso ? ", p.SO" : "") +
+                    (ph ? ", p.H" : "") +
+                    (pbb ? ", p.BB" : "") +
+                    (psalary ? ", NULL AS salaire" : "") +
+                    (ppartant ? ", p.GS > 0 AS partant" : "") +
                 " FROM Master AS m " +
                     "INNER JOIN Pitching AS p ON m.playerID = p.playerID " +
                 "WHERE p.yearID = " + year + " " +
                     "AND p.teamID = 'MON' " +
-                    "AND p.GS " + (partant ? ">" : "=") + " 0 " +
                 "ORDER BY " + sort + " DESC;"
             ;
         }
@@ -492,14 +517,18 @@ var init = function(field) {
 
     if (field) {
 
+        //L'année sélectionnée est mise-à-jour
+        $("#field").html(' en ' + yearSelect);
+
         //Tableau alloqué aux joueurs réinitialisé pour la nouvelle requête
-        var fieldTable = $("#field-table");
-        fieldTable.html('');
+        $("#field-table").html('');
     } else {
 
+        //L'année sélectionnée est mise-à-jour
+        $("#pitch").html(' en ' + yearSelect);
+
         //Tableau alloqué aux lanceurs réinitialisé pour la nouvelle requête
-        var pitchTable = $("#pitch-table");
-        pitchTable.html('');
+        $("#pitch-table").html('');
     }
 
     //Une requête selon le type de joueurs sélectionné est lancé

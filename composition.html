@@ -96,7 +96,7 @@
             </fieldset>
             <div id="field-data">
                 <hr>
-                <h2>Joueurs de champ</h2>
+                <h2>Joueurs de champ<span id="field"></span></h2>
                 <fieldset class="stats-comp">
                     <h4>Statistiques</h4>
                     <aside>
@@ -133,34 +133,66 @@
                         <fieldset class="stats-option" id="field-attroff">
                             <legend>Offensive</legend>
                             <span>
-                                <label><input type="checkbox" id="fBA-moy">BA%</label>
-                                <label><input type="checkbox" id="fSL-moy">SL%</label>
-                                <label><input type="checkbox" id="fOB-moy">OB%</label>
+                                <label>
+                                    <input type="checkbox" id="fBA-moy">BA%
+                                </label>
+                                <label>
+                                    <input type="checkbox" id="fSL-moy">SL%
+                                </label>
+                                <label>
+                                    <input type="checkbox" id="fOB-moy">OB%
+                                </label>
                             </span>
                             <span>
-                                <label><input type="checkbox" id="fSO-moy">SO%</label>
-                                <label><input type="checkbox" id="fSB-moy">SB%</label>
-                                <label><input type="checkbox" id="fAB">AB</label>
+                                <label>
+                                    <input type="checkbox" id="fSO-moy">SO%
+                                </label>
+                                <label>
+                                    <input type="checkbox" id="fSB-moy">SB%
+                                </label>
+                                <label>
+                                    <input type="checkbox" id="fAB">AB
+                                </label>
                             </span>
                             <span>
-                                <label><input type="checkbox" id="fH">H</label>
-                                <label><input type="checkbox" id="f2B">2B</label>
-                                <label><input type="checkbox" id="f3B">3B</label>
+                                <label>
+                                    <input type="checkbox" id="fH">H
+                                </label>
+                                <label>
+                                    <input type="checkbox" id="f2B">2B
+                                </label>
+                                <label>
+                                    <input type="checkbox" id="f3B">3B
+                                </label>
                             </span>
                             <span>
-                                <label><input type="checkbox" id="fHR">HR</label>
-                                <label><input type="checkbox" id="fBB">BB</label>
-                                <label><input type="checkbox" id="fR">R</label>
+                                <label>
+                                    <input type="checkbox" id="fHR">HR
+                                </label>
+                                <label>
+                                    <input type="checkbox" id="fBB">BB
+                                </label>
+                                <label>
+                                    <input type="checkbox" id="fR">R
+                                </label>
                             </span>
                             <span>
-                                <label><input type="checkbox" id="fSB">SB</label>
-                                <label><input type="checkbox" id="fCS">CS</label>
+                                <label>
+                                    <input type="checkbox" id="fSB">SB
+                                </label>
+                                <label>
+                                    <input type="checkbox" id="fCS">CS
+                                </label>
                             </span>
                         </fieldset>
                         <fieldset class="stats-option" id="field-attrdef">
                             <legend>Défensive</legend>
-                            <label><input type="checkbox" id="fFP-moy">FP%</label>
-                            <label><input type="checkbox" id="fPOS">POS*</label>
+                            <label>
+                                <input type="checkbox" id="fFP-moy">FP%
+                            </label>
+                            <label>
+                                <input type="checkbox" id="fPOS">POS*
+                            </label>
                             <label><input type="checkbox" id="fA">A</label>
                             <label><input type="checkbox" id="fE">E</label>
                             <label>
@@ -197,7 +229,8 @@
                         </label>
                         <label>
                             <input type="radio" name="field-sort"
-                            value="(b.H-b.2B-b.3B-b.HR+2*b.2B+3*b.3B+4*b.HR)/b.AB">SL%
+                            value="(b.H-b.2B-b.3B-b.HR+2*b.2B+3*b.3B+4*b.HR)
+                            /b.AB">SL%
                         </label>
                         <label>
                             <input type="radio" name="field-sort"
@@ -223,14 +256,15 @@
             </div>
             <div id="pitch-data">
                 <hr>
-                <h2>Lanceurs</h2>
+                <h2>Lanceurs <span id="pitch"></span></h2>
                 <fieldset class="stats-comp">
                     <h4>Statistiques</h4>
                     <aside>
                         <b>Légende</b><br>
                         <span>ERA:</span> Moyenne de points mérités<br>
-                        <span>BAOpp:</span> Moyenne au bâton de l'adversaire<br>
-                        <span>partant:</span> Lanceur partant<br>
+                        <span>BAOpp:</span> Moyenne au bâton de l'adversaire
+                        <br>
+                        <span>partant:</span> Lanceur partant (en orange)<br>
                         <span>G:</span> Parties<br>
                         <span>GS:</span> Parties commencées<br>
                         <span>CG:</span> Parties complétées<br>
@@ -247,33 +281,46 @@
                         <legend>Attributs</legend>
                         <fieldset class="stats-option" id="pitch-attr">
                             <span>
-                                <label><input type="checkbox" id="pERA">ERA</label>
+                                <label>
+                                    <input type="checkbox" id="pERA">ERA
+                                </label>
                                 <label>
                                     <input type="checkbox" id="pBAOpp">BAOpp
                                 </label>
                                 <label>
-                                    <input type="checkbox" id="ppartant">partant
+                                    <input type="checkbox"
+                                    id="ppartant">partant
                                 </label>
                             </span>
                             <span>
                                 <label><input type="checkbox" id="pG">G</label>
-                                <label><input type="checkbox" id="pGS">GS</label>
-                                <label><input type="checkbox" id="pCG">CG</label>
+                                <label>
+                                    <input type="checkbox" id="pGS">GS
+                                </label>
+                                <label>
+                                    <input type="checkbox" id="pCG">CG
+                                </label>
                             </span>
                             <span>
                                 <label><input type="checkbox" id="pW">W</label>
                                 <label><input type="checkbox" id="pL">L</label>
-                                <label><input type="checkbox" id="pSV">SV</label>
+                                <label>
+                                    <input type="checkbox" id="pSV">SV
+                                </label>
                             </span>
                             <span>
                                 <label>
                                     <input type="checkbox" id="pIPouts">IPouts
                                 </label>
-                                <label><input type="checkbox" id="pSO">SO</label>
+                                <label>
+                                    <input type="checkbox" id="pSO">SO
+                                </label>
                                 <label><input type="checkbox" id="pH">H</label>
                             </span>
                             <span>
-                                <label><input type="checkbox" id="pBB">BB</label>
+                                <label>
+                                    <input type="checkbox" id="pBB">BB
+                                </label>
                                 <label>
                                     <input type="checkbox" id="psalary">salaire
                                 </label>
@@ -286,7 +333,7 @@
                             </label>
                             <label>
                                 <input type="radio" name="pitch-select"
-                                onclick="attrSelect(true)"
+                                onclick="attrSelect(false)"
                                 value="manual" checked>Au choix
                             </label>
                         </fieldset>
