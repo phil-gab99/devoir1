@@ -1,7 +1,7 @@
 /*
 * @Vincent Falardeau
 * @Philippe Gabriel
-* @Version 0.7.0 2020-04-17
+* @Version 1.4.0 2020-04-17
 **/
 
 /*
@@ -41,42 +41,36 @@ var loadDetails = function(data) {
 *
 * @param data Un tableau d'objets contenant les divers informations de la
 * requête SQL que l'usager a choisi
-* @param
-*
-*
-*
-*
+* @param field Booléen indiquant le type de table à construire
 **/
 
 var loadTable = function(data, field) {
 
-    if (field) {
+    //Détermine le type de table à populer
+    var table = (field ? $("#field-table") : $("#pitch-table"));
 
-        var table = $("#field-table");
-        var head  = "";
+    var head  = ""; //String contenant la rangée de titres des colonnes
 
-        for (var i in data[0]) {
-            head += '<th>' + i + '</th>';
-        }
-
-        table.append('<tr>' + head + '</tr>');
-
-        data.forEach(
-            function(entry) {
-
-                var content = "";
-
-                for (var i in entry) {
-                    content += '<td>' + entry[i] + '</td>';
-                }
-
-                table.append('<tr>' + content + '</tr>');
-            }
-        )
-    } else {
-        console.log("haha");
+    //Première entrée du tableau utilisée pour peupler le titre de colonnes
+    for (var i in data[0]) {
+        head += '<th>' + i + '</th>';
     }
 
+    table.append('<tr>' + head + '</tr>');
+
+    //Le tableau est rempli des données d'intérêts
+    data.forEach(
+        function(entry) {
+
+            var content = "";
+
+            for (var i in entry) {
+                content += '<td>' + entry[i] + '</td>';
+            }
+
+            table.append('<tr>' + content + '</tr>');
+        }
+    )
 };
 
 /*
@@ -254,28 +248,28 @@ var querySql = function(year, field) {
 
         query = "" +
                 "m.nameLast AS nom, " +
-                "m.nameFirst AS prenom, " +
-                "p.ERA, " +
-                "p.BAOpp, " +
-                "p.G, " +
-                "p.GS, " +
-                "p.CG, " +
-                "p.W, " +
-                "p.L, " +
-                "p.SV, " +
-                "p.IPouts, " +
-                "p.SO, " +
-                "p.H, " +
-                "p.BB, " +
-                "s.salary AS salaire " +
-            "FROM Master AS m " +
+                "m.nameFirst AS prenom" +
+                (era ? ", p.ERA" : "") +
+                (baopp ? ", p.BAOpp" : "") +
+                (g ? ", p.G" : "") +
+                (gs ? ", p.GS" : "") +
+                (cg ? ", p.CG" : "") +
+                (w ? ", p.W" : "") +
+                (l ? ", p.L" : "") +
+                (sv ? ", p.SV" : "") +
+                (ipouts ? ", p.IPouts" : "") +
+                (so ? ", p.SO" : "") +
+                (h ? ", p.H" : "") +
+                (bb ? ", p.BB" : "") +
+                (salaire ? ", s.salary" : "") +
+            " FROM Master AS m " +
                 "INNER JOIN Pitching AS p ON m.playerID = p.playerID " +
                 "INNER JOIN Salaries AS s ON m.playerID = s.playerID " +
-            "WHERE p.yearID = 1996 " +
+            "WHERE p.yearID = " + year + " " +
                 "AND p.yearID = s.yearID " +
                 "AND p.teamID = 'MON' " +
-                "AND p.GS > 0 " +
-            "ORDER BY '" + sort + "' DESC;"
+                "AND p.GS" + (partant ? " > " : " = ") + "0 " +
+            "ORDER BY " + sort + " DESC;"
         ;
     }
 
