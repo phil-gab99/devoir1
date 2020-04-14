@@ -1,7 +1,7 @@
 /*
 * @Vincent Falardeau
 * @Philippe Gabriel
-* @Version 1.4.0 2020-04-17
+* @Version 2.8.0 2020-04-17
 **/
 
 /*
@@ -28,11 +28,18 @@
 * les informations n'appartenant pas aux tables, notamment sur le gérant,
 * l'assistance et la masse salariale
 *
-* @param data Les données de la requête
+* @param data La donnée d'intérêt
 **/
-// TODO: Find way to identify information
+// TODO: Find what proprio means
 var loadDetails = function(data) {
 
+    var property = "";
+    var value = 0;
+    for (var i in data[0]) property = i; value = data[0][i];
+    console.log(value);
+    var labelData = $("#" + property + "-data span");
+    console.log(labelData);
+    labelData.html(value != null ? value : "N/A");
 };
 
 /*
@@ -79,57 +86,23 @@ var loadTable = function(data, field) {
 * salariale selon les options fournies par l'usager
 * Source: https://stackoverflow.com/questions/1456106/how-to-select-an-empty-result-set
 *
-* @param mnger Booléen déterminant si les informations sur le gérant sont à
-* rechercher
-* @param attd Booléean déterminant si les informations sur l'assistance aux
-* matchs sont à générer
-* @param pay Booléen déterminant si les informations sur la masse salariale
-* sont à générer
+* @param queryObj String indiquant ce que désire voir l'usager
+* @param table String indiquant la table de la base de donnée où se trouve
+* l'information en question
 * @param year Integer indiquant l'année choisie par l'usager
-* @return queriesDetails Array contenant les requêtes prêtes à être acheminées
-* au script php
+* @return query String contenant la requête prête à être acheminées au script
+* php
 **/
-// NOTE: Might need rework, will work it out tomorrow
-var queryDetailCompSql = function(mnger, attd, pay, year) {
+// NOTE: Might need rework for proprio
+var queryDetailCompSql = function(queryObj, table, year) {
 
-    //Requête retournant un résultat vide
-    var mngerQuery = "1 FROM dual WHERE false;";
-    var attdQuery = "1 FROM dual WHERE false;";
-    var payQuery = "1 FROM dual WHERE false;";
+    var query = "SUM(" + queryObj + ") AS '" + queryObj + "' " +
+            "FROM " + table + " " +
+            "WHERE yearID = " + year + " " +
+                "AND teamID = 'MON';"
+    ;
 
-
-    if (mnger) { //Requête pour le géant
-        mngerQuery = "" +
-            ""
-        ;
-        //Manager need questions
-    }
-
-    if (attd) { //Requête pour l'assistance aux matchs
-        attdQuery = "" +
-                "attendance " +
-            "FROM Teams " +
-            "WHERE teamID = 'MON' "  +
-                "AND yearID = " + year + ";"
-        ;
-    }
-
-    if (pay) { //Requête pour la masse salariale
-        payQuery = "" +
-                "SUM(salary) AS payroll" +
-            "FROM Salaries " +
-            "WHERE teamID = 'MON' " +
-                "AND yearID = " + year + ";"
-        ;
-    }
-
-    var queriesDetails = {
-        manager:    mngerQuery,
-        attendance: attdQuery,
-        payroll:    payQuery
-    };
-
-    return queriesDetails;
+    return query;
 };
 
 /*
@@ -137,13 +110,13 @@ var queryDetailCompSql = function(mnger, attd, pay, year) {
 * spécifications de l'usager qui sera acheminée au script php pour fournir
 * l'information désirée
 *
-* @param year Integer représentant l'année sélectionnée par l'usager
 * @param field Booléen indiquant si la requête désirée était pour les joueurs
 * de champ ou non
+* @param year Integer représentant l'année sélectionnée par l'usager
 * @return query String représentant la requête à être acheminée en format SQL
 **/
-// TODO: Correspond with ids in composition to finish query details
-var querySql = function(year, field) {
+
+var querySql = function(field, year) {
 
     var query = "";
 
@@ -172,59 +145,119 @@ var querySql = function(year, field) {
         var fE      = $('#fE').is(':checked');
         var fsalary = $('#fsalary').is(':checked');
 
+        //Triage
         var sort    = $('input[name="field-sort"]:checked').val();
 
-        query = "" +
-                "m.nameLast AS nom, " +
-                "m.nameFirst AS prenom" +
-                (baMoy ? ", b.H/b.AB AS 'BA%'" : "") +
-                (slMoy ? ", (b.H-b.2B-b.3B-b.HR+2*b.2B+3*b.3B+4*b.HR)/b.AB AS 'SL%'" : "") +
-                (obMoy ? ", (b.H+b.BB+b.HBP)/(b.AB+b.BB+b.HBP+b.SF) AS 'OB%'" : "") +
-                (soMoy ? ", b.SO/b.AB AS 'SO%'" : "") +
-                (sbMoy ? ", b.SB/(b.CS+b.SB) AS 'SB%'" : "") +
-                (ab ? ", b.AB" : "") +
-                (h ? ", b.H" : "") +
-                (x2b ? ", b.2B" : "") +
-                (x3b ? ", b.3B" : "") +
-                (hr ? ", b.HR" : "") +
-                (bb ? ", b.BB" : "") +
-                (r ? ", b.R" : "") +
-                (sb ? ", b.SB" : "") +
-                (cs ? ", b.CS" : "") +
-                (fpMoy ? ", SUM(f.A)/(SUM(f.A) + SUM(f.E)) AS 'FP%'" : "") +
-                (fPOS ? ", f2.POS AS 'POS*'" : "") +
-                (fA ? ", SUM(f.A) AS A" : "") +
-                (fE ? ", SUM(f.E) AS E" : "") +
-                (fsalary ? ", s.salary AS salaire" : "") +
-            " FROM Master AS m " +
-                "INNER JOIN Fielding AS f ON m.playerID = f.playerID " +
-                "INNER JOIN Salaries AS s ON m.playerID = s.playerID " +
-                "INNER JOIN Batting AS b ON m.playerID = b.playerID " +
-                "INNER JOIN (SELECT playerID, yearID, teamID, POS, GS " +
-                            "FROM Fielding " +
-                            ") AS f2 ON m.playerID = f2.playerID " +
-            "WHERE f.yearID = " + year + " " +
-                "AND f.yearID = s.yearID " +
-                "AND f.yearID = b.yearID " +
-                "AND f.yearID = f2.yearID " +
-                "AND f.teamID = 'MON' " +
-                "AND f.teamID = b.teamID " +
-                "AND f.teamID = f2.teamID " +
-                "AND f.POS <> 'OF' " +
-                "AND f2.POS <> 'P' " +
-                "AND f2.POS <> 'OF' " +
-                "AND f2.GS = (SELECT MAX(GS) " +
-                            "FROM Fielding " +
-                            "WHERE f.playerID = playerID " +
-                                "AND f.yearID = yearID " +
-                                "AND f.teamID = teamID " +
-                                "AND POS <> 'P' " +
-                                "AND POS <> 'OF' " +
-                            ") " +
-                "AND b.AB > 10 " +
-            "GROUP BY m.playerID " +
-            "ORDER BY " + sort + " DESC;"
-        ;
+        if (year >= 1985) { //Années pour lesquelles un salaire est disponible
+
+            query = "" +
+                    "m.nameLast AS nom, " +
+                    "m.nameFirst AS prenom" +
+                    (baMoy ? ", b.H/b.AB AS 'BA%'" : "") +
+                    (slMoy ? ", (b.H-b.2B-b.3B-b.HR+2*b.2B+3*b.3B+4*b.HR)/b.AB AS 'SL%'" : "") +
+                    (obMoy ? ", (b.H+b.BB+b.HBP)/(b.AB+b.BB+b.HBP+b.SF) AS 'OB%'" : "") +
+                    (soMoy ? ", b.SO/b.AB AS 'SO%'" : "") +
+                    (sbMoy ? ", b.SB/(b.CS+b.SB) AS 'SB%'" : "") +
+                    (ab ? ", b.AB" : "") +
+                    (h ? ", b.H" : "") +
+                    (x2b ? ", b.2B" : "") +
+                    (x3b ? ", b.3B" : "") +
+                    (hr ? ", b.HR" : "") +
+                    (bb ? ", b.BB" : "") +
+                    (r ? ", b.R" : "") +
+                    (sb ? ", b.SB" : "") +
+                    (cs ? ", b.CS" : "") +
+                    (fpMoy ? ", SUM(f.A)/(SUM(f.A) + SUM(f.E)) AS 'FP%'" : "") +
+                    (fPOS ? ", f2.POS AS 'POS*'" : "") +
+                    (fA ? ", SUM(f.A) AS A" : "") +
+                    (fE ? ", SUM(f.E) AS E" : "") +
+                    (fsalary ? ", s.salary AS salaire" : "") +
+                " FROM Master AS m " +
+                    "INNER JOIN Fielding AS f ON m.playerID = f.playerID " +
+                    "INNER JOIN Salaries AS s ON m.playerID = s.playerID " +
+                    "INNER JOIN Batting AS b ON m.playerID = b.playerID " +
+                    "INNER JOIN (SELECT playerID, yearID, teamID, POS, GS " +
+                                "FROM Fielding " +
+                                ") AS f2 ON m.playerID = f2.playerID " +
+                "WHERE f.yearID = " + year + " " +
+                    "AND f.yearID = s.yearID " +
+                    "AND f.yearID = b.yearID " +
+                    "AND f.yearID = f2.yearID " +
+                    "AND f.teamID = 'MON' " +
+                    "AND f.teamID = s.teamID " +
+                    "AND f.teamID = b.teamID " +
+                    "AND f.teamID = f2.teamID " +
+                    "AND f.POS <> 'OF' " +
+                    "AND f2.POS <> 'P' " +
+                    "AND f2.POS <> 'OF' " +
+                    "AND f2.GS = (SELECT MAX(GS) " +
+                                "FROM Fielding " +
+                                "WHERE f.playerID = playerID " +
+                                    "AND f.yearID = yearID " +
+                                    "AND f.teamID = teamID " +
+                                    "AND POS <> 'P' " +
+                                    "AND POS <> 'OF' " +
+                                ") " +
+                    "AND b.AB > 10 " +
+                "GROUP BY m.playerID " +
+                "ORDER BY " + sort + " DESC;"
+            ;
+
+        } else { //Années où les salaires ne sont pas disponibles
+
+            if (sort == "salary") sort = "nom";
+
+            query = "" +
+                    "m.nameLast AS nom, " +
+                    "m.nameFirst AS prenom" +
+                    (baMoy ? ", b.H/b.AB AS 'BA%'" : "") +
+                    (slMoy ? ", (b.H-b.2B-b.3B-b.HR+2*b.2B+3*b.3B+4*b.HR)/b.AB AS 'SL%'" : "") +
+                    (obMoy ? ", (b.H+b.BB+b.HBP)/(b.AB+b.BB+b.HBP+b.SF) AS 'OB%'" : "") +
+                    (soMoy ? ", b.SO/b.AB AS 'SO%'" : "") +
+                    (sbMoy ? ", b.SB/(b.CS+b.SB) AS 'SB%'" : "") +
+                    (ab ? ", b.AB" : "") +
+                    (h ? ", b.H" : "") +
+                    (x2b ? ", b.2B" : "") +
+                    (x3b ? ", b.3B" : "") +
+                    (hr ? ", b.HR" : "") +
+                    (bb ? ", b.BB" : "") +
+                    (r ? ", b.R" : "") +
+                    (sb ? ", b.SB" : "") +
+                    (cs ? ", b.CS" : "") +
+                    (fpMoy ? ", SUM(f.A)/(SUM(f.A) + SUM(f.E)) AS 'FP%'" : "") +
+                    (fPOS ? ", f2.POS AS 'POS*'" : "") +
+                    (fA ? ", SUM(f.A) AS A" : "") +
+                    (fE ? ", SUM(f.E) AS E" : "") +
+                    (fsalary ? ", NULL AS salaire" : "") +
+                " FROM Master AS m " +
+                    "INNER JOIN Fielding AS f ON m.playerID = f.playerID " +
+                    "INNER JOIN Batting AS b ON m.playerID = b.playerID " +
+                    "INNER JOIN (SELECT playerID, yearID, teamID, POS, GS " +
+                                "FROM Fielding " +
+                                ") AS f2 ON m.playerID = f2.playerID " +
+                "WHERE f.yearID = " + year + " " +
+                    "AND f.yearID = b.yearID " +
+                    "AND f.yearID = f2.yearID " +
+                    "AND f.teamID = 'MON' " +
+                    "AND f.teamID = b.teamID " +
+                    "AND f.teamID = f2.teamID " +
+                    "AND f.POS <> 'OF' " +
+                    "AND f2.POS <> 'P' " +
+                    "AND f2.POS <> 'OF' " +
+                    "AND f2.GS = (SELECT MAX(GS) " +
+                                "FROM Fielding " +
+                                "WHERE f.playerID = playerID " +
+                                    "AND f.yearID = yearID " +
+                                    "AND f.teamID = teamID " +
+                                    "AND POS <> 'P' " +
+                                    "AND POS <> 'OF' " +
+                                ") " +
+                    "AND b.AB > 10 " +
+                "GROUP BY m.playerID " +
+                "ORDER BY " + sort + " DESC;"
+            ;
+        }
+
     } else { //Requête pour les lanceurs
 
         //Attributs
@@ -246,31 +279,63 @@ var querySql = function(year, field) {
         //Triage
         var sort    = $('input[name="pitch-sort"]:checked').val();
 
-        query = "" +
-                "m.nameLast AS nom, " +
-                "m.nameFirst AS prenom" +
-                (era ? ", p.ERA" : "") +
-                (baopp ? ", p.BAOpp" : "") +
-                (g ? ", p.G" : "") +
-                (gs ? ", p.GS" : "") +
-                (cg ? ", p.CG" : "") +
-                (w ? ", p.W" : "") +
-                (l ? ", p.L" : "") +
-                (sv ? ", p.SV" : "") +
-                (ipouts ? ", p.IPouts" : "") +
-                (so ? ", p.SO" : "") +
-                (h ? ", p.H" : "") +
-                (bb ? ", p.BB" : "") +
-                (salaire ? ", s.salary" : "") +
-            " FROM Master AS m " +
-                "INNER JOIN Pitching AS p ON m.playerID = p.playerID " +
-                "INNER JOIN Salaries AS s ON m.playerID = s.playerID " +
-            "WHERE p.yearID = " + year + " " +
-                "AND p.yearID = s.yearID " +
-                "AND p.teamID = 'MON' " +
-                "AND p.GS " + (partant ? ">" : "=") + " 0 " +
-            "ORDER BY " + sort + " DESC;"
-        ;
+        if (year >= 1985) { //Années pour lesquelles un salaire est disponible
+
+            query = "" +
+                    "m.nameLast AS nom, " +
+                    "m.nameFirst AS prenom" +
+                    (era ? ", p.ERA" : "") +
+                    (baopp ? ", p.BAOpp" : "") +
+                    (g ? ", p.G" : "") +
+                    (gs ? ", p.GS" : "") +
+                    (cg ? ", p.CG" : "") +
+                    (w ? ", p.W" : "") +
+                    (l ? ", p.L" : "") +
+                    (sv ? ", p.SV" : "") +
+                    (ipouts ? ", p.IPouts" : "") +
+                    (so ? ", p.SO" : "") +
+                    (h ? ", p.H" : "") +
+                    (bb ? ", p.BB" : "") +
+                    (salaire ? ", s.salary" : "") +
+                " FROM Master AS m " +
+                    "INNER JOIN Pitching AS p ON m.playerID = p.playerID " +
+                    "INNER JOIN Salaries AS s ON m.playerID = s.playerID " +
+                "WHERE p.yearID = " + year + " " +
+                    "AND p.yearID = s.yearID " +
+                    "AND p.teamID = 'MON' " +
+                    "AND p.teamID = s.teamID " +
+                    "AND p.GS " + (partant ? ">" : "=") + " 0 " +
+                "ORDER BY " + sort + " DESC;"
+            ;
+
+        } else { //Années où les salaires ne sont pas disponibles
+
+            if (sort == "salary") sort = "nom";
+
+            query = "" +
+                    "m.nameLast AS nom, " +
+                    "m.nameFirst AS prenom" +
+                    (era ? ", p.ERA" : "") +
+                    (baopp ? ", p.BAOpp" : "") +
+                    (g ? ", p.G" : "") +
+                    (gs ? ", p.GS" : "") +
+                    (cg ? ", p.CG" : "") +
+                    (w ? ", p.W" : "") +
+                    (l ? ", p.L" : "") +
+                    (sv ? ", p.SV" : "") +
+                    (ipouts ? ", p.IPouts" : "") +
+                    (so ? ", p.SO" : "") +
+                    (h ? ", p.H" : "") +
+                    (bb ? ", p.BB" : "") +
+                    (fsalary ? ", NULL AS salaire" : "") +
+                " FROM Master AS m " +
+                    "INNER JOIN Pitching AS p ON m.playerID = p.playerID " +
+                "WHERE p.yearID = " + year + " " +
+                    "AND p.teamID = 'MON' " +
+                    "AND p.GS " + (partant ? ">" : "=") + " 0 " +
+                "ORDER BY " + sort + " DESC;"
+            ;
+        }
     }
 
     return query;
@@ -303,7 +368,11 @@ var queryData = function(query, type) {
             var obj = JSON.parse(data);
 
             if (obj.error == "") {
-                loadTable(obj.data, type);
+                if (obj.data.length <= 1) {
+                    loadDetails(obj.data)
+                } else {
+                    loadTable(obj.data, type);
+                }
             } else { //En cas d'erreur
                 alert(obj.error);
             }
@@ -324,7 +393,7 @@ var checkControl = function() {
 
     var mngerSelect = $('#manager').is(':checked');
     var attdSelect  = $('#attendance').is(':checked');
-    var paySelect   = $('#payroll').is(':checked');
+    var paySelect   = $('#salary').is(':checked');
 
     //Informations relatives aux joueurs de champs
     if ($('#fielders').is(':checked')) {
@@ -351,20 +420,18 @@ var checkControl = function() {
     //Informations relatives à l'assistance
     if (attdSelect) {
         $('.detail-comp #attendance-data').visible();
-        //Execute query for year selected to put in span
+        queryData(queryDetailCompSql("attendance", "Teams", yearSelect));
     } else {
         $('.detail-comp #attendance-data').invisible();
     }
 
     //Informations relatives à la masse salariale
     if (paySelect) {
-        $('.detail-comp #payroll-data').visible();
-        //Execute query for year selected to put in span
+        $('.detail-comp #salary-data').visible();
+        queryData(queryDetailCompSql("salary", "Salaries", yearSelect));
     } else {
-        $('.detail-comp #payroll-data').invisible();
+        $('.detail-comp #salary-data').invisible();
     }
-
-    queryDetailCompSql(mngerSelect, attdSelect, paySelect, yearSelect);
 };
 
 /*
@@ -392,7 +459,72 @@ var init = function(field) {
     }
 
     //Une requête selon le type de joueurs sélectionné est lancé
-    queryData(querySql(yearSelect,field), field);
+    queryData(querySql(field,yearSelect), field);
+};
+
+/*
+* La procédure attrSelect gère l'état des options se rapportant à la sélection
+* d'attributs des joueurs de champ et lanceurs selon les spécifications de
+* l'usager
+*
+* @param field Booléen indiquant si l'option modifiée était pour les joueurs de
+* champ ou non
+**/
+
+var attrSelect = function(field) {
+
+    if (field) { //Les attributs des joueurs de champs sont modifiés
+
+        var select = $('input[name="field-select"]:checked').val();
+
+        if (select == "off") { //Attributs à l'offensive sont cochés
+
+            $('#field-attroff input:checkbox').prop('checked', true);
+            $('#field-attroff input:checkbox').attr('disabled', true);
+
+            $('#field-attrdef input:checkbox').prop('checked', false);
+            $('#field-attrdef input:checkbox').attr('disabled', false);
+
+        } else if (select == "def") { //Attributs à la défensive sont cochés
+
+            $('#field-attroff input:checkbox').prop('checked', false);
+            $('#field-attroff input:checkbox').attr('disabled', false);
+
+            $('#field-attrdef input:checkbox').prop('checked', true);
+            $('#field-attrdef input:checkbox').attr('disabled', true);
+
+        } else if (select == "all") { //Tous les attributs sont cochés
+
+            $('#field-attroff input:checkbox').prop('checked', true);
+            $('#field-attroff input:checkbox').attr('disabled', true);
+
+            $('#field-attrdef input:checkbox').prop('checked', true);
+            $('#field-attrdef input:checkbox').attr('disabled', true);
+
+        } else { //Aucun attribut n'est coché
+
+            $('#field-attroff input:checkbox').prop('checked', false);
+            $('#field-attroff input:checkbox').attr('disabled', false);
+
+            $('#field-attrdef input:checkbox').prop('checked', false);
+            $('#field-attrdef input:checkbox').attr('disabled', false);
+        }
+
+    } else { //Les attributs des lanceurs sont modifiés
+
+        var select = $('input[name="pitch-select"]:checked').val();
+
+        if (select == "all") { //Tous les attributs sont cochés
+
+            $('#pitch-attr input:checkbox').prop('checked', true);
+            $('#pitch-attr input:checkbox').attr('disabled', true);
+
+        } else { //Aucun attribut n'est coché
+
+            $('#pitch-attr input:checkbox').prop('checked', false);
+            $('#pitch-attr input:checkbox').attr('disabled', false);
+        }
+    }
 };
 
 /*

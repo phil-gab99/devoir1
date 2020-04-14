@@ -73,7 +73,7 @@ fieldset span {
 }
 
 fieldset span b {
-    width: 180px;
+    width: 130px;
     float: left;
 }
 
@@ -124,7 +124,7 @@ table th h1 {
 
 th, td {
     text-align: left;
-    padding: 1px;
+    padding: 5px;
     border: solid black 1px;
 }
 
