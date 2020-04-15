@@ -2,9 +2,23 @@
 
 /*Vincent Falardeau, Philippe Gabriel*/
 
+/*Champion de ligue*/
+#al-champ, #nl-champ {
+    background-color: #ff9999;
+}
+
 #manager-lbl, #owner-lbl, #assistance-lbl, #payroll-lbl {
     line-height: 1.6;
     margin-left: 20px;
+}
+
+#no-hover:hover {
+    background-color: #00FFFF;
+    box-shadow: none;
+}
+
+#world-champ {
+    background-color: #ff9933;
 }
 
 article {
@@ -121,7 +135,14 @@ table th h1 {
     text-align: center;
 }
 
-th, td {
+th {
+    text-align: left;
+    padding: 5px;
+    text-align: center;
+    border: outset;
+}
+
+td {
     text-align: left;
     padding: 5px;
     border: solid black 1px;
@@ -139,19 +160,24 @@ tr:nth-child(1n+2):hover {
 .attrdef {
     background-color: #4267d7;
     color: #d7b242;
-    text-shadow: 1.5px 1.5px #000000;
+    text-shadow: 1px 1px #000000;
 }
 
 .attrdetails {
-    text-align: center;
     font-size: 150%;
     font-weight: bold;
+}
+
+.attrid {
+    background-color: #00e64d;
+    color: #f731e8;
+    text-shadow: 1px 1px #000000;
 }
 
 .attroff {
     background-color: #d74242;
     color: #eeee2b;
-    text-shadow: 1.5px 1.5px #000000;
+    text-shadow: 1px 1px #000000;
 }
 
 .champlg {

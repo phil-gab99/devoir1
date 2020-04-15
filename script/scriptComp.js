@@ -1,17 +1,8 @@
 /*
 * @Vincent Falardeau
 * @Philippe Gabriel
-* @Version 2.23.4 2020-04-17
+* @Version 2.32.2 2020-04-17
 **/
-
-// TODO: Find what proprio means to finish last queries
-    //Will have to modify the following functions and procedures:
-        //loadDetails(data);
-        //queryDetailCompSql(queryObj, table, year);
-        //checkControl();
-        //queryData(query,type) (possibly)
-// IDEA: Find areas to optimize and test website with varying data
-// TODO: Ask question about offensive/defensive stats for pitchers
 
 /*
 * Ces procédures permettent de d'appliquer la propriété de visibilité à un
@@ -21,14 +12,18 @@
 
 (function($) {
     $.fn.visible = function() {
-        return this.each(function() {
-            $(this).css("visibility", "visible");
-        });
+        return this.each(
+            function() {
+                $(this).css("visibility", "visible");
+            }
+        );
     };
     $.fn.invisible = function() {
-        return this.each(function() {
-            $(this).css("visibility", "hidden");
-        });
+        return this.each(
+            function() {
+                $(this).css("visibility", "hidden");
+            }
+        );
     };
 }(jQuery));
 
@@ -157,7 +152,7 @@ var loadTable = function(data, field) {
     var offCount = 0;
     var defCount = 0;
 
-    var selector = ""; //Classe qui identifiera un titre de colonne
+    var selector = "attrid"; //Classe qui identifiera un titre de colonne
 
     //Première entrée du tableau utilisée pour peupler le titre de colonnes
     for (var i in data[0]) {
@@ -188,32 +183,32 @@ var loadTable = function(data, field) {
 
             //L'attribut offensif ou défensif est appliqué selon le cas
             head += '' +
-                '<th' + (selector == "" ? '>' : ' class="' + selector + '">') +
+                '<th class="' + selector + '">' +
                     i +
                 '</th>'
             ;
         }
 
-        selector = ""; //Sélecteur réinitialisé pour prochain attribut
+        selector = "attrid"; //Sélecteur réinitialisé pour prochain attribut
     }
 
     if (field) { //La longueur des en-têtes est ajustée
         var headDetails = '' +
         '<tr>' +
-            '<td colspan="' + idCount +
-            '" class="attrdetails">Identifiant</td>' +
+            '<th colspan="' + idCount +
+            '" class="attrdetails">Identifiant</th>' +
             (offCount != 0 ?
-                '<td colspan="' + offCount +
-                '" class="attrdetails">Offensive</td>' : ''
+                '<th colspan="' + offCount +
+                '" class="attrdetails">Offensive</th>' : ''
             ) +
             (defCount != 0 ?
-                '<td colspan="' + defCount +
-                '" class="attrdetails">Défensive</td>' : ''
+                '<th colspan="' + defCount +
+                '" class="attrdetails">Défensive</th>' : ''
             ) +
         '</tr>'
     }
 
-    table.append(headDetails + '<tr>' + head + '</tr>');
+    table.append(headDetails + '<tr id="no-hover">' + head + '</tr>');
 
     //Le tableau est rempli des données d'intérêts
     data.forEach(
@@ -327,8 +322,8 @@ var querySql = function(field, year) {
         if (year >= 1985) { //Années pour lesquelles un salaire est disponible
 
             query = "" +
-                    "m.nameLast AS nom, " +
-                    "m.nameFirst AS prenom" +
+                    "m.nameLast AS Nom, " +
+                    "m.nameFirst AS Prenom" +
                     (fbaMoy ? ", b.H/b.AB AS 'BA%'" : "") +
                     (fslMoy ? ", (b.H-b.2B-b.3B-b.HR+2*b.2B+3*b.3B+4*b.HR)" +
                         "/b.AB AS 'SL%'" : "") +
@@ -349,7 +344,7 @@ var querySql = function(field, year) {
                     (fPOS ? ", f2.POS AS 'POS*'" : "") +
                     (fA ? ", SUM(f.A) AS A" : "") +
                     (fE ? ", SUM(f.E) AS E" : "") +
-                    (fsalary ? ", s.salary AS salaire" : "") +
+                    (fsalary ? ", s.salary AS Salaire" : "") +
                 " FROM Master AS m " +
                     "INNER JOIN Fielding AS f ON m.playerID = f.playerID " +
                     "INNER JOIN Salaries AS s ON m.playerID = s.playerID " +
@@ -386,8 +381,8 @@ var querySql = function(field, year) {
             if (sort == "salary") sort = "salaire";
 
             query = "" +
-                    "m.nameLast AS nom, " +
-                    "m.nameFirst AS prenom" +
+                    "m.nameLast AS Nom, " +
+                    "m.nameFirst AS Prenom" +
                     (fbaMoy ? ", b.H/b.AB AS 'BA%'" : "") +
                     (fslMoy ? ", (b.H-b.2B-b.3B-b.HR+2*b.2B+3*b.3B+4*b.HR)" +
                         "/b.AB AS 'SL%'" : "") +
@@ -408,7 +403,7 @@ var querySql = function(field, year) {
                     (fPOS ? ", f2.POS AS 'POS*'" : "") +
                     (fA ? ", SUM(f.A) AS A" : "") +
                     (fE ? ", SUM(f.E) AS E" : "") +
-                    (fsalary ? ", NULL AS salaire" : "") +
+                    (fsalary ? ", NULL AS Salaire" : "") +
                 " FROM Master AS m " +
                     "INNER JOIN Fielding AS f ON m.playerID = f.playerID " +
                     "INNER JOIN Batting AS b ON m.playerID = b.playerID " +
@@ -462,8 +457,8 @@ var querySql = function(field, year) {
         if (year >= 1985) { //Années pour lesquelles un salaire est disponible
 
             query = "" +
-                    "m.nameLast AS nom, " +
-                    "m.nameFirst AS prenom" +
+                    "m.nameLast AS Nom, " +
+                    "m.nameFirst AS Prenom" +
                     (pera ? ", p.ERA" : "") +
                     (pbaopp ? ", p.BAOpp" : "") +
                     (pg ? ", p.G" : "") +
@@ -476,7 +471,7 @@ var querySql = function(field, year) {
                     (pso ? ", p.SO" : "") +
                     (ph ? ", p.H" : "") +
                     (pbb ? ", p.BB" : "") +
-                    (psalary ? ", s.salary AS salaire" : "") +
+                    (psalary ? ", s.salary AS Salaire" : "") +
                     (ppartant ? ", p.GS > 0 AS partant" : "") +
                 " FROM Master AS m " +
                     "INNER JOIN Pitching AS p ON m.playerID = p.playerID " +
@@ -493,8 +488,8 @@ var querySql = function(field, year) {
             if (sort == "salary") sort = "salaire";
 
             query = "" +
-                    "m.nameLast AS nom, " +
-                    "m.nameFirst AS prenom" +
+                    "m.nameLast AS Nom, " +
+                    "m.nameFirst AS Prenom" +
                     (pera ? ", p.ERA" : "") +
                     (pbaopp ? ", p.BAOpp" : "") +
                     (pg ? ", p.G" : "") +
@@ -507,7 +502,7 @@ var querySql = function(field, year) {
                     (pso ? ", p.SO" : "") +
                     (ph ? ", p.H" : "") +
                     (pbb ? ", p.BB" : "") +
-                    (psalary ? ", NULL AS salaire" : "") +
+                    (psalary ? ", NULL AS Salaire" : "") +
                     (ppartant ? ", p.GS > 0 AS partant" : "") +
                 " FROM Master AS m " +
                     "INNER JOIN Pitching AS p ON m.playerID = p.playerID " +
@@ -597,7 +592,8 @@ var checkControl = function() {
             queryDetailCompSql(
                 "CONCAT(m.nameFirst, ' ', m.nameLast)",
                 "'manager'",
-                "Managers AS mn INNER JOIN Master AS m ON m.playerID = mn.playerID",
+                "Managers AS mn INNER JOIN Master AS m ON " +
+                "m.playerID = mn.playerID",
                 yearSelect
             ), false, true
         );

@@ -8,12 +8,22 @@
 * La procédure checkControl s'occupe de contrôler l'état de la case à cocher
 * pour le champion de la ligue américaine en s'assurant que l'usager ne
 * puisse sélectionner la case s'il n'a pas en premier lieu sélectionné sa ligue
-* correspondante
+* correspondante ainsi que l'affichage des tableaux selon les cases cochées
 **/
 
 var checkControl = function() {
+
+    var alCheck = $("#al").is(':checked'); //Case à cocher ligue américaine
+    var alcCheck = $("#alc").is(':checked'); //Case à cocher champ américain
+
     $('#alc').attr('disabled', !$('#alc').attr('disabled')); //Effet bascule
     $('#alc').prop('checked', false); //Décocher la case si cochée
+
+    if (alCheck) { //État d'affichage des tableaux américains
+        $("#al-data").show();
+    } else {
+        $("#al-data").hide();
+    }
 };
 
 /*
@@ -77,8 +87,19 @@ var loadTable = function(data, lg, div) {
     data.forEach(
         function(entry) {
 
+            var rowName = '<tr>';
+
+            if (wChamp && entry.WSC == 1) {
+
+                rowName = '<tr id="world-champ">';
+            } else if (((lg == 'nl' && nlChamp) || (lg == 'al' && alChamp))
+            && entry.LSC == 1) {
+
+                rowName = '<tr id="' + lg + '-champ">';
+            }
+
             table.append('' +
-                '<tr id="' + entry.equipe + '">' +
+                rowName +
                     '<td>' + entry.nom + '</td>' +
                     '<td>' + entry.moyenne + '</td>' +
                     '<td>' + entry.V + '</td>' +
@@ -86,19 +107,6 @@ var loadTable = function(data, lg, div) {
                     '<td>' + entry.diff + '</td>' +
                 '</tr>'
             );
-
-            //Condition pour indiquer champion de ligue
-            if (((lg == 'nl' && nlChamp) || (lg == 'al' && alChamp))
-            && entry.LSC == 1) {
-
-                $("#" + entry.equipe).css("background-color", "#ff9999");
-            }
-
-            //Condition pour indiquer champion mondial
-            if (wChamp && entry.WSC == 1) {
-
-                $("#" + entry.equipe).css("background-color", "#ff9933");
-            }
         }
     );
 };
@@ -118,41 +126,71 @@ var loadTable = function(data, lg, div) {
 
 var querySql = function(year, lg, div) {
 
-    var query = "" +
-            "ta.teamID AS equipe, " +
-            "ta.name AS nom, " +
-            "ta.W / (ta.W + ta.L) AS moyenne, " +
-            "ta.W AS V, " +
-            "ta.L AS D, " +
-            "tb.W - ta.W AS diff, " +
-            "ta.teamID = ls.teamIDWinner AS LSC, " +
-            "ta.teamID = ws.teamIDWinner AS WSC " +
-        "FROM Teams AS ta " +
-            "INNER JOIN " +
-                "(SELECT W, lgID, divID, yearID " +
-                    "FROM Teams " +
-                    "WHERE Rank = 1 " +
-                ") AS tb " +
-                "ON ta.lgID = tb.lgID " +
-                    "AND ta.divID = tb.divID " +
-                    "AND ta.yearID = tb.yearID " +
-            "INNER JOIN " +
-                "(SELECT teamIDWinner, yearID " +
-                    "FROM SeriesPost " +
-                    "WHERE round = '" + lg + "CS' " +
-                ") AS ls " +
-                "ON ta.yearID = ls.yearID " +
-            "INNER JOIN " +
-                "(SELECT teamIDWinner, yearID " +
-                    "FROM SeriesPost " +
-                    "WHERE round = 'WS' " +
-                ") AS ws " +
-                "ON ta.yearID = ws.yearID " +
-        "WHERE ta.lgID = '" + lg + "' " +
-            "AND ta.divID = '" + div + "' " +
-            "AND ta.yearID = " + year + " " +
-        "ORDER by V DESC;"
-    ;
+    var query = "";
+
+    if (year != 1994) {
+
+        query = "" +
+                "ta.teamID AS equipe, " +
+                "ta.name AS nom, " +
+                "ta.W / (ta.W + ta.L) AS moyenne, " +
+                "ta.W AS V, " +
+                "ta.L AS D, " +
+                "tb.W - ta.W AS diff, " +
+                "ta.teamID = ls.teamIDWinner AS LSC, " +
+                "ta.teamID = ws.teamIDWinner AS WSC " +
+            "FROM Teams AS ta " +
+                "INNER JOIN " +
+                    "(SELECT W, lgID, divID, yearID " +
+                        "FROM Teams " +
+                        "WHERE Rank = 1 " +
+                    ") AS tb " +
+                    "ON ta.lgID = tb.lgID " +
+                        "AND ta.divID = tb.divID " +
+                        "AND ta.yearID = tb.yearID " +
+                "INNER JOIN " +
+                    "(SELECT teamIDWinner, yearID " +
+                        "FROM SeriesPost " +
+                        "WHERE round = '" + lg + "CS' " +
+                    ") AS ls " +
+                    "ON ta.yearID = ls.yearID " +
+                "INNER JOIN " +
+                    "(SELECT teamIDWinner, yearID " +
+                        "FROM SeriesPost " +
+                        "WHERE round = 'WS' " +
+                    ") AS ws " +
+                    "ON ta.yearID = ws.yearID " +
+            "WHERE ta.lgID = '" + lg + "' " +
+                "AND ta.divID = '" + div + "' " +
+                "AND ta.yearID = " + year + " " +
+            "ORDER by V DESC;"
+        ;
+
+    } else {
+
+        query = "" +
+                "ta.teamID AS equipe, " +
+                "ta.name AS nom, " +
+                "ta.W / (ta.W + ta.L) AS moyenne, " +
+                "ta.W AS V, " +
+                "ta.L AS D, " +
+                "tb.W - ta.W AS diff " +
+            "FROM Teams AS ta " +
+                "INNER JOIN " +
+                    "(SELECT W, lgID, divID, yearID " +
+                        "FROM Teams " +
+                        "WHERE Rank = 1 " +
+                    ") AS tb " +
+                    "ON ta.lgID = tb.lgID " +
+                        "AND ta.divID = tb.divID " +
+                        "AND ta.yearID = tb.yearID " +
+            "WHERE ta.lgID = '" + lg + "' " +
+                "AND ta.divID = '" + div + "' " +
+                "AND ta.yearID = " + year + " " +
+            "ORDER by V DESC;"
+        ;
+
+    }
 
     return query;
 }
