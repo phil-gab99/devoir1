@@ -137,15 +137,21 @@ tr:nth-child(1n+2):hover {
     box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.5);
 }
 
-.attroff {
-    background-color: #d74242;
-    color: #eeee2b;
-    text-shadow: 1.5px 1.5px #000000;
-}
-
 .attrdef {
     background-color: #4267d7;
     color: #d7b242;
+    text-shadow: 1.5px 1.5px #000000;
+}
+
+.attrdetails {
+    text-align: center;
+    font-size: 150%;
+    font-weight: bold;
+}
+
+.attroff {
+    background-color: #d74242;
+    color: #eeee2b;
     text-shadow: 1.5px 1.5px #000000;
 }
 

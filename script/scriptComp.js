@@ -145,11 +145,17 @@ var loadTable = function(data, field) {
     //Booléen indiquant si l'usager à cocher la case partant pour les lanceurs
     var starting = (field ? false : $("#ppartant"));
 
-    var head  = ""; //String contenant la rangée de titres des colonnes
+    var head        = ""; //String contenant la rangée de titres des colonnes
+    var headDetails = ""; //String groupant les types d'attributs
 
     //Tableaux des attributs offensifs et défensifs respectivement
     var offStats = $("#offense span").text().split(":");
     var defStats = $("#defence span").text().split(":");
+
+    //Longueurs d'en tête pour l'identifiant du joueur et les types d'attributs
+    var idCount  = 2;
+    var offCount = 0;
+    var defCount = 0;
 
     var selector = ""; //Classe qui identifiera un titre de colonne
 
@@ -163,6 +169,7 @@ var loadTable = function(data, field) {
             for (var j = 0; j < offStats.length; j++) {
                 if (i == offStats[j]) {
                     selector = "attroff";
+                    offCount++;
                     break;
                 }
             }
@@ -171,6 +178,7 @@ var loadTable = function(data, field) {
             for (var k = 0; k < defStats.length; k++) {
                 if (i == defStats[k]) {
                     selector = "attrdef";
+                    defCount++;
                     break;
                 }
             }
@@ -189,7 +197,23 @@ var loadTable = function(data, field) {
         selector = ""; //Sélecteur réinitialisé pour prochain attribut
     }
 
-    table.append('<tr>' + head + '</tr>');
+    if (field) { //La longueur des en-têtes est ajustée
+        var headDetails = '' +
+        '<tr>' +
+            '<td colspan="' + idCount +
+            '" class="attrdetails">Identifiant</td>' +
+            (offCount != 0 ?
+                '<td colspan="' + offCount +
+                '" class="attrdetails">Offensive</td>' : ''
+            ) +
+            (defCount != 0 ?
+                '<td colspan="' + defCount +
+                '" class="attrdetails">Défensive</td>' : ''
+            ) +
+        '</tr>'
+    }
+
+    table.append(headDetails + '<tr>' + head + '</tr>');
 
     //Le tableau est rempli des données d'intérêts
     data.forEach(
