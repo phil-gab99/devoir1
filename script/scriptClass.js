@@ -17,6 +17,29 @@ var checkControl = function() {
 };
 
 /*
+* La procédure loadNoResult s'occupe d'informer à l'usager l'absence de
+* résultats pour une division donnée
+*
+* @param lg String indiquant la ligue pour laquelle les données ne sont pas
+* disponibles
+* @param div String indiquant la division pour laquelle les données ne sont pas
+* disponibles
+**/
+
+var loadNoResult = function(lg, div) {
+
+    var noContent = $("#" + lg + "-" + div + "-data");
+
+    noContent.html('' +
+        '<h3>Division ' + div + '</h3>' +
+        '<h4 class="no-result">' +
+            'La requête n\'a retourné aucun résultat pour cette division à ' +
+            'l\'année ' + $("#year option:selected").text() + '' +
+        '</h4>'
+    );
+};
+
+/*
 * La procédure loadTable génère les tables selons la requête initié par
 * l'usager
 *
@@ -163,7 +186,11 @@ var queryData = function(query, lg, div) {
             var obj = JSON.parse(data);
 
             if (obj.error == "") {
-                loadTable(obj.data, lg, div);
+                if (obj.data.length != 0) { //Cas ou aucun résultat retourné
+                    loadTable(obj.data, lg, div);
+                } else {
+                    loadNoResult(lg, div);
+                }
             } else { //En cas d'erreur
                 alert(obj.error);
             }
@@ -197,12 +224,14 @@ var init = function() {
             '<br>' +
             '<h2>Ligne nationale</h2>' +
             '<div id="nl-est-data"></div>' +
-            '<div id="nl-ouest-data"></div>'
+            '<div id="nl-ouest-data"></div>' +
+            '<div id="nl-centrale-data"></div>'
         );
 
         //Une requête pour chaque division est envoyée
-        queryData(querySql(yearSelect, 'NL', 'E'), 'nl', 'est')
-        queryData(querySql(yearSelect, 'NL', 'W'), 'nl', 'ouest')
+        queryData(querySql(yearSelect, 'NL', 'E'), 'nl', 'est');
+        queryData(querySql(yearSelect, 'NL', 'W'), 'nl', 'ouest');
+        queryData(querySql(yearSelect, 'NL', 'C'), 'nl', 'centrale');
     }
 
     if (alCheck) {
@@ -211,12 +240,14 @@ var init = function() {
             '<br>' +
             '<h2>Ligne américaine</h2>' +
             '<div id="al-est-data"></div>' +
-            '<div id="al-ouest-data"></div>'
+            '<div id="al-ouest-data"></div>' +
+            '<div id="al-centrale-data"></div>'
         );
 
         //Une requête pour chaque division est envoyée
         queryData(querySql(yearSelect, 'AL', 'E'), 'al', 'est');
         queryData(querySql(yearSelect, 'AL', 'W'), 'al', 'ouest');
+        queryData(querySql(yearSelect, 'AL', 'C'), 'al', 'centrale');
     }
 };
 
