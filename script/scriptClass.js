@@ -1,7 +1,7 @@
 /*
 * @Vincent Falardeau
 * @Philippe Gabriel
-* @Version 1.2.8 2020-04-17
+* @Version 1.11.2 2020-04-17
 **/
 
 /*
@@ -128,7 +128,7 @@ var querySql = function(year, lg, div) {
 
     var query = "";
 
-    if (year != 1994) {
+    if (year != 1994) { //Éviter l'année de grève où il n'y pas eu de champions
 
         query = "" +
                 "ta.teamID AS equipe, " +
@@ -189,7 +189,6 @@ var querySql = function(year, lg, div) {
                 "AND ta.yearID = " + year + " " +
             "ORDER by V DESC;"
         ;
-
     }
 
     return query;

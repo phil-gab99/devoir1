@@ -152,7 +152,7 @@ var loadTable = function(data, field) {
     var offCount = 0;
     var defCount = 0;
 
-    var selector = "attrid"; //Classe qui identifiera un titre de colonne
+    var selector = ""; //Classe qui identifiera un titre de colonne
 
     //Première entrée du tableau utilisée pour peupler le titre de colonnes
     for (var i in data[0]) {
@@ -177,19 +177,23 @@ var loadTable = function(data, field) {
                     break;
                 }
             }
+
+            //Vérification si attribut d'identifiant de joueur
+            if (selector == "") selector = "attrid";
         }
 
         if (i != "partant") { //Éviter l'ajout de la colonne des partants
 
             //L'attribut offensif ou défensif est appliqué selon le cas
             head += '' +
-                '<th class="' + selector + '">' +
+                '<th ' + (selector == "" ? '' : 'class="' + selector + '"') +
+                    '>' +
                     i +
                 '</th>'
             ;
         }
 
-        selector = "attrid"; //Sélecteur réinitialisé pour prochain attribut
+        selector = ""; //Sélecteur réinitialisé pour prochain attribut
     }
 
     if (field) { //La longueur des en-têtes est ajustée

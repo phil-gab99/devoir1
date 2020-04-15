@@ -61,6 +61,11 @@ body {
 button {
     float: right;
     padding: 10px;
+    font-size: 125%;
+    font-weight: bold;
+    border-radius: 16px;
+    background-color: #ffffcc;
+
 }
 
 dl {
