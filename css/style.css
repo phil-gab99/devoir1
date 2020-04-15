@@ -115,7 +115,6 @@ table {
     width: 100%;
     margin-top: 10px;
     border-collapse: collapse;
-    align: center;
 }
 
 table th h1 {
@@ -228,7 +227,7 @@ tr:nth-child(1n+2):hover {
 
 .start-pitch {
     color: #e05d06;
-    font-weight: 550;
+    font-weight: 600;
 }
 
 .stats {
