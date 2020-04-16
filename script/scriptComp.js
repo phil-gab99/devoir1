@@ -1,7 +1,7 @@
 /*
 * @Vincent Falardeau
 * @Philippe Gabriel
-* @Version 2.32.2 2020-04-17
+* @Version 2.32.5 2020-04-17
 **/
 
 /*
@@ -735,8 +735,8 @@ var attrSelect = function(field) {
 };
 
 /*
-* La procédure loadUI s'occupe de configurer un élément de sélection par
-* l'usager et initie une première requête
+* La procédure loadUI s'occupe de configurer les éléments de sélection de
+* l'usager au démarrage de la page
 **/
 
 var loadUI = function() {
