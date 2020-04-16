@@ -3,7 +3,7 @@
 /*Vincent Falardeau, Philippe Gabriel*/
 
 /*Champion de ligue*/
-#al-champ, #nl-champ {
+#al-champ-row, #nl-champ-row {
     background-color: #ff9999;
 }
 
@@ -17,7 +17,8 @@
     box-shadow: none;
 }
 
-#world-champ {
+/*Champion de la série mondiale*/
+#world-champ-row {
     background-color: #ff9933;
 }
 

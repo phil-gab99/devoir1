@@ -13,11 +13,11 @@
 
 var checkControl = function() {
 
-    var alCheck = $("#al").is(':checked'); //Case à cocher ligue américaine
-    var alcCheck = $("#alc").is(':checked'); //Case à cocher champ américain
+    var alCheck = $("#al-check").is(':checked'); //Case ligue américaine
 
-    $('#alc').attr('disabled', !$('#alc').attr('disabled')); //Effet bascule
-    $('#alc').prop('checked', false); //Décocher la case si cochée
+    //Effet bascule
+    $('#al-champ').attr('disabled', !$('#al-champ').attr('disabled'));
+    $('#al-champ').prop('checked', false); //Décocher la case si déjà cochée
 
     if (alCheck) { //État d'affichage des tableaux américains
         $("#al-data").show();
@@ -62,9 +62,9 @@ var loadNoResult = function(lg, div) {
 var loadTable = function(data, lg, div) {
 
     //La valeur de ces booléens dépend des choix de l'usager dans l'interface
-    var nlChamp = $("#nlc").is(':checked'); //Champion de la ligue nationale
-    var alChamp = $("#alc").is(':checked'); //Champion de la ligue américaine
-    var wChamp  = $("#wc").is(':checked');  //Champion de la série mondiale
+    var nlChamp = $("#nl-champ").is(':checked');    //Champion ligue nationale
+    var alChamp = $("#al-champ").is(':checked');    //Champion ligue américaine
+    var wChamp  = $("#world-champ").is(':checked'); //Champion série mondiale
 
     //Div contiendra les données relatives à la ligue et division en question
     var content = $("#" + lg + "-" + div + "-data");
@@ -91,11 +91,11 @@ var loadTable = function(data, lg, div) {
 
             if (wChamp && entry.WSC == 1) {
 
-                rowName = '<tr id="world-champ">';
+                rowName = '<tr id="world-champ-row">';
             } else if (((lg == 'nl' && nlChamp) || (lg == 'al' && alChamp))
             && entry.LSC == 1) {
 
-                rowName = '<tr id="' + lg + '-champ">';
+                rowName = '<tr id="' + lg + '-champ-row">';
             }
 
             table.append('' +
@@ -250,8 +250,8 @@ var init = function() {
     alData.html('');
 
     //La valeur de ces booléens dépend des choix de l'usager dans l'interface
-    var nlCheck = $("#nl").is(':checked'); //Case à cocher ligue nationale
-    var alCheck = $("#al").is(':checked'); //Case à cocher ligue américaine
+    var nlCheck = $("#nl-check").is(':checked'); //Case ligue nationale
+    var alCheck = $("#al-check").is(':checked'); //Case ligue américaine
 
     var yearSelect = $("#year option:selected").text(); //Année sélectionnée
 
@@ -259,7 +259,7 @@ var init = function() {
 
         nlData.html('' +
             '<br>' +
-            '<h2>Ligne nationale</h2>' +
+            '<h2>Ligne nationale en ' + yearSelect + '</h2>' +
             '<div id="nl-est-data"></div>' +
             '<div id="nl-ouest-data"></div>' +
             '<div id="nl-centrale-data"></div>'
@@ -275,7 +275,7 @@ var init = function() {
 
         alData.html('' +
             '<br>' +
-            '<h2>Ligne américaine</h2>' +
+            '<h2>Ligne américaine en ' + yearSelect + '</h2>' +
             '<div id="al-est-data"></div>' +
             '<div id="al-ouest-data"></div>' +
             '<div id="al-centrale-data"></div>'
