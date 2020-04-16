@@ -212,7 +212,7 @@ var loadTable = function(data, field) {
         '</tr>'
     }
 
-    table.append(headDetails + '<tr id="no-hover">' + head + '</tr>');
+    table.append(headDetails + '<tr>' + head + '</tr>');
 
     //Le tableau est rempli des données d'intérêts
     data.forEach(

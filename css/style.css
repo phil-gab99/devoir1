@@ -12,10 +12,10 @@
     margin-left: 20px;
 }
 
-#no-hover:hover {
+/* #no-hover:hover {
     background-color: #00FFFF;
     box-shadow: none;
-}
+} */
 
 /*Champion de la série mondiale*/
 #world-champ-row {
