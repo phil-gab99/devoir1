@@ -63,9 +63,10 @@ button {
     padding: 10px;
     font-size: 125%;
     font-weight: bold;
-    border-radius: 16px;
-    background-color: #ffffcc;
-
+    border-radius: 10px;
+    background-color: #ccffff;
+    position: relative;
+    right: 15px;
 }
 
 dl {
@@ -123,6 +124,7 @@ nav {
     position: sticky;
     top: 0;
     min-width: 1315px;
+    z-index: 1; /*https://www.w3schools.com/cssref/pr_pos_z-index.asp*/
 }
 
 nav a {
