@@ -12,14 +12,15 @@
     margin-left: 20px;
 }
 
-/* #no-hover:hover {
-    background-color: #00FFFF;
-    box-shadow: none;
-} */
-
 /*Champion de la série mondiale*/
 #world-champ-row {
     background-color: #ff9933;
+}
+
+#year1994 {
+    text-align: center;
+    display: block;
+    font-weight: bold;
 }
 
 article {

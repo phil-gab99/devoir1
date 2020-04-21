@@ -122,6 +122,7 @@ var loadTable = function(data, lg, div) {
 * @param div String indiquant la division pour laquelle l'information sera
 * recherchée
 * @return query String représentant la requête à être acheminée en format SQL
+* Source: https://www.sitepoint.com/community/t/how-do-i-link-jump-to-a-specific-section-on-a-different-page/5646
 **/
 
 var querySql = function(year, lg, div) {
@@ -167,6 +168,13 @@ var querySql = function(year, lg, div) {
         ;
 
     } else {
+
+        //Lien vers la page accueil expliquant l'absence de champions
+        $("#year1994").html('' +
+            '<a href="accueil.html#champ1994">' +
+                'En savoir plus: Pourquoi n\'y a-t-il pas de champions?' +
+            '</a>'
+        );
 
         query = "" +
                 "ta.teamID AS equipe, " +
