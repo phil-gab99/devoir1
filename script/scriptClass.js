@@ -257,6 +257,9 @@ var init = function() {
     nlData.html('');
     alData.html('');
 
+    //Le contenu du message informatif est réinitialisé
+    $("#year1994").html('');
+
     //La valeur de ces booléens dépend des choix de l'usager dans l'interface
     var nlCheck = $("#nl-check").is(':checked'); //Case ligue nationale
     var alCheck = $("#al-check").is(':checked'); //Case ligue américaine
