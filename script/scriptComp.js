@@ -1,7 +1,7 @@
 /*
 * @Vincent Falardeau
 * @Philippe Gabriel
-* @Version 2.32.5 2020-04-17
+* @Version 2.32.5 2020-04-18
 **/
 
 /*
@@ -382,7 +382,12 @@ var querySql = function(field, year) {
 
         } else { //Années où les salaires ne sont pas disponibles
 
-            if (sort == "salary") sort = "salaire";
+            //Pour éviter les problèmes de triage avant l'année 1985
+            if (fsalary) {
+                if (sort == "salary") sort = "salaire";
+            } else {
+                if (sort == "salary") sort = "Nom";
+            }
 
             query = "" +
                     "m.nameLast AS Nom, " +
@@ -433,7 +438,7 @@ var querySql = function(field, year) {
                                 ") " +
                     "AND b.AB > 10 " +
                 "GROUP BY m.playerID " +
-                "ORDER BY " + sort + " DESC;"
+                "ORDER BY " + sort + (sort != "Nom" ? " DESC;" : " ASC;")
             ;
         }
 
@@ -489,7 +494,12 @@ var querySql = function(field, year) {
 
         } else { //Années où les salaires ne sont pas disponibles
 
-            if (sort == "salary") sort = "salaire";
+            //Pour éviter les problèmes de triage avant l'année 1985
+            if (psalary) {
+                if (sort == "salary") sort = "salaire";
+            } else {
+                if (sort == "salary") sort = "Nom";
+            }
 
             query = "" +
                     "m.nameLast AS Nom, " +
@@ -512,7 +522,7 @@ var querySql = function(field, year) {
                     "INNER JOIN Pitching AS p ON m.playerID = p.playerID " +
                 "WHERE p.yearID = " + year + " " +
                     "AND p.teamID = 'MON' " +
-                "ORDER BY " + sort + " DESC;"
+                "ORDER BY " + sort + (sort != "Nom" ? " DESC;" : " ASC;")
             ;
         }
     }
