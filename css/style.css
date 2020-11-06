@@ -12,6 +12,37 @@
     margin-left: 20px;
 }
 
+#pie-option {
+    width: 40%;
+    height: 50px;
+    margin-left: 30%;
+    margin-right: 30%;
+    line-height: 50px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+#salaire-nl {
+    max-width: 85%;
+    float: left;
+}
+
+#team-legend {
+    width: 50px;
+    margin-top: 10%;
+    float: right;
+}
+
+#team-legend tr {
+    pointer-events: none;
+}
+
+#team-legend tr td {
+    color: #000000;
+    font-weight: bold;
+    text-align: center;
+}
+
 /*Champion de la série mondiale*/
 #world-champ-row {
     background-color: #ff9933;
@@ -71,6 +102,10 @@ button {
     right: 15px;
 }
 
+canvas {
+    margin-bottom: 200px;
+}
+
 dl {
     line-height: 1.6;
 }
@@ -111,8 +146,8 @@ i {
 main, footer {
     margin-right: 10%;
     margin-left: 10%;
-    margin-bottom: 300px;
-    max-width: 2000px;
+    margin-bottom: 250px;
+    max-width: 80%;
 }
 
 nav {
@@ -138,10 +173,6 @@ table {
     width: 100%;
     margin-top: 10px;
     border-collapse: collapse;
-}
-
-table th h1 {
-    text-align: center;
 }
 
 th {

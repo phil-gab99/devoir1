@@ -7,10 +7,20 @@
         <link rel="icon" href="images/icon.ico" type="image/x-icon">
         <link href="css/style.css" rel="stylesheet" media="all"
               type="text/css">
+        <script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+        </script>
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js">
+        </script>
+        <script
+        src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.4.0/dist/chartjs-plugin-datalabels.min.js">
+        </script>
+        <script src="script/scriptEvol.js"></script>
         <meta charset="UTF-8">
         <title>Évolution des équipes</title>
     </head>
-    <body>
+    <body onload="init()">
         <nav>
             <a href="accueil.html">
                 <div class="navbar-item-logo">
@@ -35,5 +45,28 @@
                 <div class="navbar-item">Les auteurs</div>
             </a>
         </nav>
+        <main>
+            <h1>Évolution des Victoires des Expos</h1>
+            <canvas id="fiche-Expos"></canvas>
+            <h1>Évolution de l'Assistance des Expos</h1>
+            <canvas id="assist-Expos"></canvas>
+            <h1>Évolution de la Masse Salariale des Expos</h1>
+            <canvas id="salaire-Expos"></canvas>
+            <h1>
+                Évolution de la Masse Salariale (USD) des équipes de la
+                Division Est de la Ligue Nationale<span id="salaire-annee"
+                ></span>
+            </h1>
+            <fieldset id="pie-option">
+                <label>Année:
+                    <select id="year"></select>
+                </label>
+                <button
+                onclick="queryData(querySql('SalNl'), 'salaire-nl', 'SalNl')"
+                >Lancer la requête</button>
+            </fieldset>
+            <table id="team-legend"></table>
+            <canvas id="salaire-nl"></canvas>
+        </main>
     </body>
 </html>
